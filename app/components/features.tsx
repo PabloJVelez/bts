@@ -12,12 +12,13 @@ import {
   Mail,
   Wrench,
 } from "lucide-react";
+import { cn } from "~/lib/utils";
 import { FadeInUp, StaggerContainer, StaggerItem, HoverScale } from "~/components/motion-wrapper";
 
 const features = [
   {
     icon: Store,
-    title: "Branded Storefront",
+    title: "Branded Website",
     description:
       "Your own website with your name, bio, photos, and branding. SEO-ready so clients find you on Google.",
   },
@@ -29,9 +30,9 @@ const features = [
   },
   {
     icon: ChefHat,
-    title: "Three Experience Types",
+    title: "Experiences you define",
     description:
-      "Plated dinners, cooking classes, and buffet-style events, each with its own pricing and structure.",
+      "Create and manage your own experience types, pricing, and structure, so your site matches how you actually work, not a fixed template.",
   },
   {
     icon: ClipboardList,
@@ -41,15 +42,15 @@ const features = [
   },
   {
     icon: ShieldCheck,
-    title: "Admin Approvals",
+    title: "Your Decision",
     description:
-      "Accept or decline every request from your dashboard. Add chef notes or a rejection reason.",
+      "Every request lands in your dashboard. You decide what gets booked: accept or decline, add chef notes, or send a clear decline reason.",
   },
   {
     icon: Ticket,
     title: "Per-Seat Ticketed Checkout",
     description:
-      "Approved events become bookable products. Inventory equals party size. Guests pay per seat.",
+      "Once you approve, tickets for that event become purchasable for your customers. Guests pay per seat.",
   },
   {
     icon: Share2,
@@ -67,13 +68,13 @@ const features = [
     icon: Mail,
     title: "Automated Email Notifications",
     description:
-      "Clients get instant confirmations, acceptance emails with booking links, or polite decline notices. Powered by Resend.",
+      "Clients get instant confirmations, acceptance emails with booking links, or polite decline notices.",
   },
   {
     icon: Wrench,
     title: "Done-for-You Setup",
     description:
-      "We build your storefront, upload your menus, and configure your admin. You provide content; we handle the rest.",
+      "We build your website, upload your menus, and configure your admin. You provide content; we handle the rest.",
   },
 ];
 
@@ -95,16 +96,24 @@ export function Features() {
 
         {/* Features Grid */}
         <StaggerContainer className="mt-16">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {features.map((feature) => (
-              <StaggerItem key={feature.title}>
-                <HoverScale>
-                  <div className="h-full rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-md">
-                    <feature.icon className="mb-4 h-8 w-8 text-primary" />
+          <div className="grid auto-rows-fr gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {features.map((feature, index) => (
+              <StaggerItem
+                key={feature.title}
+                className={cn(
+                  "h-full min-h-0",
+                  /* center last row when the grid has empty slots */
+                  index === 8 && "xl:col-start-2",
+                  index === 9 && "lg:col-start-2 xl:col-start-auto",
+                )}
+              >
+                <HoverScale className="h-full">
+                  <div className="flex h-full min-h-0 flex-col rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-md">
+                    <feature.icon className="mb-4 h-8 w-8 shrink-0 text-primary" />
                     <h3 className="mb-2 font-serif text-lg font-semibold text-foreground">
                       {feature.title}
                     </h3>
-                    <p className="text-sm leading-relaxed text-muted-foreground">
+                    <p className="min-h-0 flex-1 text-sm leading-relaxed text-muted-foreground">
                       {feature.description}
                     </p>
                   </div>

@@ -3,7 +3,7 @@ import { Hero } from "~/components/hero";
 import { HowItWorks } from "~/components/how-it-works";
 import { Features } from "~/components/features";
 import { WhyChefsLoveIt } from "~/components/why-chefs-love-it";
-import { Pricing } from "~/components/pricing";
+// import { Pricing } from "~/components/pricing"; // Re-enable when pricing is finalized
 import { SocialProof } from "~/components/social-proof";
 import { FAQ } from "~/components/faq";
 import { FinalCTA } from "~/components/final-cta";
@@ -18,7 +18,7 @@ export default function Home() {
         <HowItWorks />
         <Features />
         <WhyChefsLoveIt />
-        <Pricing />
+        {/* <Pricing /> */}
         <SocialProof />
         <FAQ />
         <FinalCTA />

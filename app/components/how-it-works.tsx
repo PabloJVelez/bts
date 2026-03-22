@@ -9,7 +9,7 @@ const steps = [
     icon: UtensilsCrossed,
     title: "Clients browse your menus & experiences",
     description:
-      "Your storefront showcases your full menu catalog: courses, dishes, pricing, plus experience types like plated dinners, cooking classes, and buffets. No more PDF attachments.",
+      "Your website showcases your full menu catalog with courses, dishes, and pricing, plus the experience types you create and manage. No more PDF attachments.",
   },
   {
     number: 2,
@@ -30,7 +30,7 @@ const steps = [
     icon: CreditCard,
     title: "Guests pay per seat via a shareable link",
     description:
-      "Approved events auto-generate a bookable product. Share the link with the host: they can pay for everyone, or each guest pays for their own seat.",
+      "Once you approve, tickets for the event become purchasable. Share the link with the host: they can pay for everyone, or each guest pays for their own seat.",
   },
 ];
 
@@ -52,10 +52,10 @@ export function HowItWorks() {
 
         {/* Steps */}
         <StaggerContainer className="mt-16">
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid auto-rows-fr gap-8 md:grid-cols-2 lg:grid-cols-4">
             {steps.map((step, index) => (
-              <StaggerItem key={step.number}>
-                <div className="group relative">
+              <StaggerItem key={step.number} className="h-full min-h-0">
+                <div className="group relative flex h-full min-h-0 flex-col">
                   {/* Connector Line (hidden on last item and mobile) */}
                   {index < steps.length - 1 && (
                     <div className="absolute left-full top-12 z-0 hidden w-8 border-t-2 border-dashed border-border lg:block">
@@ -64,22 +64,22 @@ export function HowItWorks() {
                   )}
 
                   {/* Step Card */}
-                  <div className="relative rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-md">
+                  <div className="relative flex h-full min-h-0 flex-col rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-md">
                     {/* Number Badge */}
-                    <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground">
+                    <div className="mb-4 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground">
                       {step.number}
                     </div>
 
                     {/* Icon */}
-                    <step.icon className="mb-4 h-8 w-8 text-primary" />
+                    <step.icon className="mb-4 h-8 w-8 shrink-0 text-primary" />
 
                     {/* Title */}
                     <h3 className="mb-2 font-serif text-lg font-semibold text-foreground">
                       {step.title}
                     </h3>
 
-                    {/* Description */}
-                    <p className="text-sm leading-relaxed text-muted-foreground">
+                    {/* Description grows so card bottoms line up */}
+                    <p className="min-h-0 flex-1 text-sm leading-relaxed text-muted-foreground">
                       {step.description}
                     </p>
                   </div>

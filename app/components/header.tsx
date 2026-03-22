@@ -8,7 +8,7 @@ import { openCalendlyPopup } from "~/components/calendly-badge";
 const navLinks = [
   { href: "#how-it-works", label: "How It Works" },
   { href: "#features", label: "Features" },
-  { href: "#pricing", label: "Pricing" },
+  // { href: "#pricing", label: "Pricing" }, // Re-enable with <Pricing /> on home
   { href: "#faq", label: "FAQ" },
 ];
 

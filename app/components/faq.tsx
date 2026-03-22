@@ -17,7 +17,7 @@ const faqs = [
   {
     question: "How do guests pay per seat?",
     answer:
-      "When you accept a request, the system auto-creates a bookable product where inventory equals the party size. You share the link with the host, and they can either pay for all seats or forward the link so each guest pays individually.",
+      "When you accept a request, tickets for that event become purchasable. You share the link with the host, and they can either pay for all seats or forward the link so each guest pays individually.",
   },
   {
     question: "Do you support deposits?",
@@ -36,12 +36,12 @@ const faqs = [
   {
     question: "What if I already have a website?",
     answer:
-      "Behind the Sauté works as your booking and storefront system. You can link to it from your existing site, or use it as your primary web presence with a custom domain.",
+      "That's very common. We handle the technical setup so you can keep the domain your clients already know, and your website becomes where they browse menus and book.",
   },
   {
     question: "How long does setup take?",
     answer:
-      "Most chefs are live within 48 hours. We handle the technical setup; you just provide your menus, photos, and branding preferences.",
+      "We handle the technical setup while you provide menus, photos, and branding preferences. How fast you go live depends on your content and availability, and we work with you on a realistic timeline.",
   },
   {
     question: "Do I need any technical skills?",

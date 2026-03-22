@@ -16,11 +16,6 @@ const personas = [
     description:
       "You're booking 10-20 events a month and need to stop being the bottleneck. You want clients to self-serve and pay upfront.",
   },
-  {
-    name: "The Chef Collective",
-    description:
-      "You run a small team of chefs and need each one to have their own branded page while you manage operations centrally.",
-  },
 ];
 
 export function SocialProof() {
@@ -41,13 +36,13 @@ export function SocialProof() {
 
         {/* Persona Cards */}
         <StaggerContainer className="mt-16">
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="mx-auto grid max-w-4xl gap-8 sm:grid-cols-2">
             {personas.map((persona) => (
-              <StaggerItem key={persona.name}>
-                <HoverScale>
-                  <div className="h-full rounded-xl border border-border bg-card p-6 text-center transition-all duration-300 hover:border-primary/50 hover:shadow-md">
+              <StaggerItem key={persona.name} className="h-full min-h-0">
+                <HoverScale className="h-full">
+                  <div className="flex h-full min-h-0 flex-col rounded-xl border border-border bg-card p-6 text-center transition-all duration-300 hover:border-primary/50 hover:shadow-md">
                     {/* Avatar */}
-                    <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-secondary">
+                    <div className="mx-auto mb-4 flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-secondary">
                       <User className="h-8 w-8 text-muted-foreground" />
                     </div>
 
@@ -57,7 +52,7 @@ export function SocialProof() {
                     </h3>
 
                     {/* Description */}
-                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    <p className="mt-3 min-h-0 flex-1 text-sm leading-relaxed text-muted-foreground">
                       {persona.description}
                     </p>
                   </div>

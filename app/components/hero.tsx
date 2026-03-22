@@ -1,6 +1,6 @@
 "use client";
 
-import { ChefHat, CreditCard, Sparkles, Clock } from "lucide-react";
+import { ChefHat, CreditCard, Sparkles } from "lucide-react";
 // ChefHat is used in trust indicators
 import { Button } from "~/components/ui/button";
 import { openCalendlyPopup } from "~/components/calendly-badge";
@@ -10,7 +10,6 @@ const trustIndicators = [
   { icon: ChefHat, label: "Built for private chefs" },
   { icon: CreditCard, label: "Stripe payments" },
   { icon: Sparkles, label: "Done-for-you setup" },
-  { icon: Clock, label: "Live in 48 hours" },
 ];
 
 export function Hero() {
@@ -31,7 +30,7 @@ export function Hero() {
 
             <FadeInUp delay={0.1}>
               <p className="mt-6 text-lg leading-relaxed text-muted-foreground sm:text-xl text-pretty">
-                Your own branded storefront where clients browse menus, request events, and pay per seat. You just approve.
+                Your own branded website where clients browse menus, request events, and pay per seat. You just approve.
               </p>
             </FadeInUp>
 

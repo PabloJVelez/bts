@@ -12,7 +12,7 @@ const tiers = [
     price: "$99",
     description: "Perfect for solo chefs getting started",
     features: [
-      "Branded storefront",
+      "Branded website",
       "Menu & experience pages",
       "Request form + admin dashboard",
       "Automated email notifications",

@@ -7,7 +7,7 @@ import {
 } from "react-router";
 import type { LinksFunction, MetaFunction } from "react-router";
 import "./globals.css";
-import { CalendlyBadge } from "~/components/calendly-badge";
+import { CalendlyScriptLoader } from "~/components/calendly-badge";
 
 export const links: LinksFunction = () => [
   {
@@ -22,10 +22,10 @@ export const links: LinksFunction = () => [
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "Behind the Sauté | Branded Storefronts & Booking for Private Chefs" },
-    { name: "description", content: "Turn chef inquiries into paid bookings. Give your clients a real storefront with menus, experiences, and per-seat checkout. Built for private chefs." },
+    { title: "Behind the Sauté | Branded Websites & Booking for Private Chefs" },
+    { name: "description", content: "Turn chef inquiries into paid bookings. Give your clients a real website with menus, experiences, and per-seat checkout. Built for private chefs." },
     { property: "og:title", content: "Behind the Sauté | Booking & Payments for Private Chefs" },
-    { property: "og:description", content: "Your own branded storefront where clients browse menus, request events, and pay per seat. You just approve." },
+    { property: "og:description", content: "Your own branded website where clients browse menus, request events, and pay per seat. You just approve." },
     { property: "og:url", content: "https://behindthesaute.com" },
     { name: "twitter:card", content: "summary_large_image" },
   ];
@@ -42,7 +42,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         {children}
-        <CalendlyBadge />
+        <CalendlyScriptLoader />
         <ScrollRestoration />
         <Scripts />
       </body>

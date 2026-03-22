@@ -13,28 +13,6 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Links */}
-          <nav className="flex flex-wrap justify-center gap-6">
-            <a
-              href="#"
-              className="text-sm text-footer-foreground/70 transition-colors hover:text-footer-foreground"
-            >
-              Privacy Policy
-            </a>
-            <a
-              href="#"
-              className="text-sm text-footer-foreground/70 transition-colors hover:text-footer-foreground"
-            >
-              Terms of Service
-            </a>
-            <a
-              href="#"
-              className="text-sm text-footer-foreground/70 transition-colors hover:text-footer-foreground"
-            >
-              Refund Policy
-            </a>
-          </nav>
-
           {/* Contact */}
           <div className="text-center md:text-right">
             <p className="text-sm text-footer-foreground/70">Contact:</p>
