@@ -5,7 +5,7 @@ import { ServerRouter, UNSAFE_withComponentProps, Outlet, Meta, Links, ScrollRes
 import { isbot } from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
 import { useEffect, useState } from "react";
-import { X, Menu, ChefHat, CreditCard, Sparkles, UtensilsCrossed, CalendarCheck, CheckCircle, ArrowRight, Store, BookOpen, ClipboardList, ShieldCheck, Ticket, Share2, Wallet, Mail, Wrench, XCircle, CheckCircle2, Check, User, ChevronDownIcon } from "lucide-react";
+import { X, Menu, ChefHat, CreditCard, Sparkles, UtensilsCrossed, CalendarCheck, CheckCircle, Store, BookOpen, ClipboardList, ShieldCheck, Ticket, Share2, Wallet, Mail, Wrench, XCircle, CheckCircle2, User, ChevronDownIcon } from "lucide-react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
 import { clsx } from "clsx";
@@ -117,16 +117,16 @@ const links = () => [{
 }];
 const meta = () => {
   return [{
-    title: "Behind the Sauté | Branded Storefronts & Booking for Private Chefs"
+    title: "Behind the Sauté | Branded Websites & Booking for Private Chefs"
   }, {
     name: "description",
-    content: "Turn chef inquiries into paid bookings. Give your clients a real storefront with menus, experiences, and per-seat checkout. Built for private chefs."
+    content: "Turn chef inquiries into paid bookings. Give your clients a real website with menus, experiences, and per-seat checkout. Built for private chefs."
   }, {
     property: "og:title",
     content: "Behind the Sauté | Booking & Payments for Private Chefs"
   }, {
     property: "og:description",
-    content: "Your own branded storefront where clients browse menus, request events, and pay per seat. You just approve."
+    content: "Your own branded website where clients browse menus, request events, and pay per seat. You just approve."
   }, {
     property: "og:url",
     content: "https://behindthesaute.com"
@@ -212,7 +212,7 @@ function Button({
 const navLinks = [
   { href: "#how-it-works", label: "How It Works" },
   { href: "#features", label: "Features" },
-  { href: "#pricing", label: "Pricing" },
+  // { href: "#pricing", label: "Pricing" }, // Re-enable with <Pricing /> on home
   { href: "#faq", label: "FAQ" }
 ];
 function Header() {
@@ -352,7 +352,7 @@ function Hero() {
     /* @__PURE__ */ jsx("div", { className: "relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "grid items-center gap-12 lg:grid-cols-2 lg:gap-16", children: [
       /* @__PURE__ */ jsxs("div", { className: "text-center lg:text-left", children: [
         /* @__PURE__ */ jsx(FadeInUp, { children: /* @__PURE__ */ jsx("h1", { className: "font-serif text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl text-balance", children: "Turn chef inquiries into paid bookings, without the back-and-forth." }) }),
-        /* @__PURE__ */ jsx(FadeInUp, { delay: 0.1, children: /* @__PURE__ */ jsx("p", { className: "mt-6 text-lg leading-relaxed text-muted-foreground sm:text-xl text-pretty", children: "Your own branded storefront where clients browse menus, request events, and pay per seat. You just approve." }) }),
+        /* @__PURE__ */ jsx(FadeInUp, { delay: 0.1, children: /* @__PURE__ */ jsx("p", { className: "mt-6 text-lg leading-relaxed text-muted-foreground sm:text-xl text-pretty", children: "Your own branded website where clients browse menus, request events, and pay per seat. You just approve." }) }),
         /* @__PURE__ */ jsx(FadeInUp, { delay: 0.2, children: /* @__PURE__ */ jsxs("div", { className: "mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start", children: [
           /* @__PURE__ */ jsx(
             Button,
@@ -395,19 +395,25 @@ const steps = [
     number: 1,
     icon: UtensilsCrossed,
     title: "Clients browse your menus & experiences",
-    description: "Your storefront showcases your full menu catalog—courses, dishes, pricing—and the experience types you create and manage. No more PDF attachments."
+    description: "Your website showcases your full menu catalog with courses, dishes, and pricing, plus the experience types you create and manage. No more PDF attachments.",
+    previewSrc: "/chefevethub-menus.png",
+    previewAlt: "Example storefront menus page showing catalog cards with images, course counts, and pricing."
   },
   {
     number: 2,
     icon: CalendarCheck,
     title: "They submit one structured request",
-    description: "Date, time, party size, location, dietary needs, special requests: everything captured in a single guided form. No more back-and-forth DMs."
+    description: "Date, time, party size, location, dietary needs, special requests: everything captured in a single guided form. No more back-and-forth DMs.",
+    previewSrc: "/chefeventhub-request.png",
+    previewAlt: "Example multi-step request form for choosing experience type, menu, and guest count."
   },
   {
     number: 3,
     icon: CheckCircle,
     title: "You review and approve from your dashboard",
-    description: "See every request in your admin panel. Accept with one click or decline with a reason. You stay in full control of your calendar."
+    description: "See every request in your admin panel. Accept with one click or decline with a reason. You stay in full control of your calendar.",
+    previewSrc: "/chefeventhub-admin-request.png",
+    previewAlt: "Example admin screen for reviewing an event request with accept and reject actions."
   },
   {
     number: 4,
@@ -422,21 +428,46 @@ function HowItWorks() {
       /* @__PURE__ */ jsx("h2", { className: "font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl", children: "How It Works" }),
       /* @__PURE__ */ jsx("p", { className: "mt-4 text-lg text-muted-foreground", children: "From inquiry to paid booking in four simple steps." })
     ] }) }),
-    /* @__PURE__ */ jsx(StaggerContainer, { className: "mt-16", children: /* @__PURE__ */ jsx("div", { className: "grid auto-rows-fr gap-8 md:grid-cols-2 lg:grid-cols-4", children: steps.map((step, index) => /* @__PURE__ */ jsx(StaggerItem, { className: "h-full min-h-0", children: /* @__PURE__ */ jsxs("div", { className: "group relative flex h-full min-h-0 flex-col", children: [
-      index < steps.length - 1 && /* @__PURE__ */ jsx("div", { className: "absolute left-full top-12 z-0 hidden w-8 border-t-2 border-dashed border-border lg:block", children: /* @__PURE__ */ jsx(ArrowRight, { className: "absolute -right-1 -top-2.5 h-5 w-5 text-primary" }) }),
-      /* @__PURE__ */ jsxs("div", { className: "relative flex h-full min-h-0 flex-col rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-md", children: [
-        /* @__PURE__ */ jsx("div", { className: "mb-4 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground", children: step.number }),
-        /* @__PURE__ */ jsx(step.icon, { className: "mb-4 h-8 w-8 shrink-0 text-primary" }),
-        /* @__PURE__ */ jsx("h3", { className: "mb-2 font-serif text-lg font-semibold text-foreground", children: step.title }),
-        /* @__PURE__ */ jsx("p", { className: "min-h-0 flex-1 text-sm leading-relaxed text-muted-foreground", children: step.description })
-      ] })
-    ] }) }, step.number)) }) })
+    /* @__PURE__ */ jsx(StaggerContainer, { className: "mt-16 flex flex-col gap-16 md:gap-20 lg:gap-24", children: steps.map((step, index) => {
+      const hasPreview = Boolean(step.previewSrc);
+      const reverseOnLarge = index % 2 === 1;
+      return /* @__PURE__ */ jsx(StaggerItem, { children: /* @__PURE__ */ jsxs(
+        "div",
+        {
+          className: hasPreview ? `flex flex-col gap-8 lg:items-center lg:gap-12 ${reverseOnLarge ? "lg:flex-row-reverse" : "lg:flex-row"}` : "flex justify-center",
+          children: [
+            /* @__PURE__ */ jsxs(
+              "div",
+              {
+                className: hasPreview ? "flex min-w-0 flex-1 flex-col rounded-xl border border-border bg-card p-6 shadow-sm transition-colors duration-300 hover:border-primary/40 md:p-8" : "w-full max-w-3xl rounded-xl border border-border bg-card p-6 shadow-sm transition-colors duration-300 hover:border-primary/40 md:p-8",
+                children: [
+                  /* @__PURE__ */ jsx("div", { className: "mb-4 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground", children: step.number }),
+                  /* @__PURE__ */ jsx(step.icon, { className: "mb-4 h-8 w-8 shrink-0 text-primary", "aria-hidden": true }),
+                  /* @__PURE__ */ jsx("h3", { className: "mb-2 font-serif text-xl font-semibold text-foreground sm:text-2xl", children: step.title }),
+                  /* @__PURE__ */ jsx("p", { className: "text-sm leading-relaxed text-muted-foreground sm:text-base", children: step.description })
+                ]
+              }
+            ),
+            hasPreview && step.previewSrc && step.previewAlt ? /* @__PURE__ */ jsx("div", { className: "min-w-0 flex-1 lg:max-w-none", children: /* @__PURE__ */ jsx("figure", { className: "overflow-hidden rounded-xl border border-border bg-muted/30 shadow-md ring-1 ring-black/5 dark:ring-white/10", children: /* @__PURE__ */ jsx(
+              "img",
+              {
+                src: step.previewSrc,
+                alt: step.previewAlt,
+                className: "aspect-16/10 w-full object-cover object-top",
+                loading: index === 0 ? "eager" : "lazy",
+                decoding: "async"
+              }
+            ) }) }) : null
+          ]
+        }
+      ) }, step.number);
+    }) })
   ] }) });
 }
 const features = [
   {
     icon: Store,
-    title: "Branded Storefront",
+    title: "Branded Website",
     description: "Your own website with your name, bio, photos, and branding. SEO-ready so clients find you on Google."
   },
   {
@@ -447,7 +478,7 @@ const features = [
   {
     icon: ChefHat,
     title: "Experiences you define",
-    description: "Create and manage your own experience types, pricing, and structure—so your storefront matches how you actually work, not a fixed template."
+    description: "Create and manage your own experience types, pricing, and structure, so your site matches how you actually work, not a fixed template."
   },
   {
     icon: ClipboardList,
@@ -456,8 +487,8 @@ const features = [
   },
   {
     icon: ShieldCheck,
-    title: "You approve",
-    description: "Every request lands in your dashboard. You decide what gets booked—accept or decline, add chef notes, or send a clear decline reason."
+    title: "Your Decision",
+    description: "Every request lands in your dashboard. You decide what gets booked: accept or decline, add chef notes, or send a clear decline reason."
   },
   {
     icon: Ticket,
@@ -482,7 +513,7 @@ const features = [
   {
     icon: Wrench,
     title: "Done-for-You Setup",
-    description: "We build your storefront, upload your menus, and configure your admin. You provide content; we handle the rest."
+    description: "We build your website, upload your menus, and configure your admin. You provide content; we handle the rest."
   }
 ];
 function Features() {
@@ -539,105 +570,6 @@ function WhyChefsLoveIt() {
     ] }) }, index)) }) })
   ] }) });
 }
-const badgeVariants = cva(
-  "inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none transition-[color,box-shadow] overflow-hidden",
-  {
-    variants: {
-      variant: {
-        default: "border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
-        secondary: "border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
-        destructive: "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90",
-        outline: "text-foreground [a&]:hover:bg-secondary"
-      }
-    },
-    defaultVariants: {
-      variant: "default"
-    }
-  }
-);
-function Badge({
-  className,
-  variant,
-  asChild = false,
-  ...props
-}) {
-  const Comp = asChild ? Slot : "span";
-  return /* @__PURE__ */ jsx(
-    Comp,
-    {
-      "data-slot": "badge",
-      className: cn(badgeVariants({ variant }), className),
-      ...props
-    }
-  );
-}
-const tiers = [
-  {
-    name: "Launch",
-    price: "$99",
-    description: "Perfect for solo chefs getting started",
-    features: [
-      "Branded storefront",
-      "Menu & experience pages",
-      "Request form + admin dashboard",
-      "Automated email notifications",
-      "Stripe checkout",
-      "Done-for-you setup"
-    ],
-    note: "+ per-booking commission (agreed per chef)",
-    popular: false
-  },
-  {
-    name: "Growth",
-    price: "$149",
-    description: "For chefs scaling to more events",
-    features: [
-      "Everything in Launch, plus:",
-      "Custom domain",
-      "Priority support",
-      "Lower commission rate"
-    ],
-    note: "+ per-booking commission (agreed per chef)",
-    popular: true
-  }
-];
-function Pricing() {
-  return /* @__PURE__ */ jsx("section", { id: "pricing", className: "bg-secondary/30 py-16 md:py-24", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", children: [
-    /* @__PURE__ */ jsx(FadeInUp, { children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-2xl text-center", children: [
-      /* @__PURE__ */ jsx("h2", { className: "font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl", children: "Simple, transparent pricing" }),
-      /* @__PURE__ */ jsx("p", { className: "mt-4 text-lg text-muted-foreground", children: "No hidden fees. Cancel anytime." })
-    ] }) }),
-    /* @__PURE__ */ jsx(StaggerContainer, { className: "mt-16", children: /* @__PURE__ */ jsx("div", { className: "mx-auto grid max-w-4xl gap-8 md:grid-cols-2", children: tiers.map((tier) => /* @__PURE__ */ jsx(StaggerItem, { children: /* @__PURE__ */ jsx(HoverScale, { children: /* @__PURE__ */ jsxs(
-      "div",
-      {
-        className: `relative h-full rounded-xl border-2 bg-card p-8 transition-all duration-300 ${tier.popular ? "border-primary shadow-lg" : "border-border hover:border-primary/50"}`,
-        children: [
-          tier.popular && /* @__PURE__ */ jsx(Badge, { className: "absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground", children: "Most Popular" }),
-          /* @__PURE__ */ jsx("h3", { className: "font-serif text-2xl font-bold text-foreground", children: tier.name }),
-          /* @__PURE__ */ jsxs("div", { className: "mt-4 flex items-baseline gap-1", children: [
-            /* @__PURE__ */ jsx("span", { className: "text-4xl font-bold text-foreground", children: tier.price }),
-            /* @__PURE__ */ jsx("span", { className: "text-muted-foreground", children: "/mo" })
-          ] }),
-          /* @__PURE__ */ jsx("p", { className: "mt-2 text-sm text-muted-foreground", children: tier.description }),
-          /* @__PURE__ */ jsx("ul", { className: "mt-8 space-y-3", children: tier.features.map((feature) => /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
-            /* @__PURE__ */ jsx(Check, { className: "mt-0.5 h-5 w-5 shrink-0 text-primary" }),
-            /* @__PURE__ */ jsx("span", { className: "text-sm text-foreground", children: feature })
-          ] }, feature)) }),
-          /* @__PURE__ */ jsx("p", { className: "mt-6 text-xs text-muted-foreground", children: tier.note }),
-          /* @__PURE__ */ jsx(
-            Button,
-            {
-              onClick: openCalendlyPopup,
-              className: "mt-8 w-full bg-primary text-primary-foreground hover:bg-accent-hover",
-              children: "Book a Demo"
-            }
-          )
-        ]
-      }
-    ) }) }, tier.name)) }) }),
-    /* @__PURE__ */ jsx(FadeInUp, { delay: 0.3, children: /* @__PURE__ */ jsx("p", { className: "mt-12 text-center text-sm text-muted-foreground", children: "Exact commission structure is agreed individually per chef. White-glove setup included in all plans." }) })
-  ] }) });
-}
 const personas = [
   {
     name: "The Solo Chef",
@@ -646,10 +578,6 @@ const personas = [
   {
     name: "The Growing Operation",
     description: "You're booking 10-20 events a month and need to stop being the bottleneck. You want clients to self-serve and pay upfront."
-  },
-  {
-    name: "The Chef Collective",
-    description: "You run a small team of chefs and need each one to have their own branded page while you manage operations centrally."
   }
 ];
 function SocialProof() {
@@ -658,10 +586,10 @@ function SocialProof() {
       /* @__PURE__ */ jsx("h2", { className: "font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl", children: "Built for chefs like you" }),
       /* @__PURE__ */ jsx("p", { className: "mt-4 text-lg text-muted-foreground", children: "Here's who we're building this for." })
     ] }) }),
-    /* @__PURE__ */ jsx(StaggerContainer, { className: "mt-16", children: /* @__PURE__ */ jsx("div", { className: "grid gap-8 md:grid-cols-3", children: personas.map((persona) => /* @__PURE__ */ jsx(StaggerItem, { children: /* @__PURE__ */ jsx(HoverScale, { children: /* @__PURE__ */ jsxs("div", { className: "h-full rounded-xl border border-border bg-card p-6 text-center transition-all duration-300 hover:border-primary/50 hover:shadow-md", children: [
-      /* @__PURE__ */ jsx("div", { className: "mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-secondary", children: /* @__PURE__ */ jsx(User, { className: "h-8 w-8 text-muted-foreground" }) }),
+    /* @__PURE__ */ jsx(StaggerContainer, { className: "mt-16", children: /* @__PURE__ */ jsx("div", { className: "mx-auto grid max-w-4xl gap-8 sm:grid-cols-2", children: personas.map((persona) => /* @__PURE__ */ jsx(StaggerItem, { className: "h-full min-h-0", children: /* @__PURE__ */ jsx(HoverScale, { className: "h-full", children: /* @__PURE__ */ jsxs("div", { className: "flex h-full min-h-0 flex-col rounded-xl border border-border bg-card p-6 text-center transition-all duration-300 hover:border-primary/50 hover:shadow-md", children: [
+      /* @__PURE__ */ jsx("div", { className: "mx-auto mb-4 flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-secondary", children: /* @__PURE__ */ jsx(User, { className: "h-8 w-8 text-muted-foreground" }) }),
       /* @__PURE__ */ jsx("h3", { className: "font-serif text-lg font-semibold text-foreground", children: persona.name }),
-      /* @__PURE__ */ jsx("p", { className: "mt-3 text-sm leading-relaxed text-muted-foreground", children: persona.description })
+      /* @__PURE__ */ jsx("p", { className: "mt-3 min-h-0 flex-1 text-sm leading-relaxed text-muted-foreground", children: persona.description })
     ] }) }) }, persona.name)) }) }),
     /* @__PURE__ */ jsx(FadeInUp, { delay: 0.3, children: /* @__PURE__ */ jsxs("div", { className: "mt-12 text-center", children: [
       /* @__PURE__ */ jsx("p", { className: "mb-4 text-muted-foreground", children: "Join the early access waitlist" }),
@@ -753,11 +681,11 @@ const faqs = [
   },
   {
     question: "What if I already have a website?",
-    answer: "Behind the Sauté works as your booking and storefront system. You can link to it from your existing site, or use it as your primary web presence with a custom domain."
+    answer: "That's very common. We handle the technical setup so you can keep the domain your clients already know, and your website becomes where they browse menus and book."
   },
   {
     question: "How long does setup take?",
-    answer: "We handle the technical setup while you provide menus, photos, and branding preferences. How fast you go live depends on your content and availability—we work with you on a realistic timeline."
+    answer: "We handle the technical setup while you provide menus, photos, and branding preferences. How fast you go live depends on your content and availability, and we work with you on a realistic timeline."
   },
   {
     question: "Do I need any technical skills?",
@@ -821,32 +749,6 @@ function Footer() {
         ] }),
         /* @__PURE__ */ jsx("p", { className: "mt-2 text-sm text-footer-foreground/70", children: "© 2025 Behind the Sauté. All rights reserved." })
       ] }),
-      /* @__PURE__ */ jsxs("nav", { className: "flex flex-wrap justify-center gap-6", children: [
-        /* @__PURE__ */ jsx(
-          "a",
-          {
-            href: "#",
-            className: "text-sm text-footer-foreground/70 transition-colors hover:text-footer-foreground",
-            children: "Privacy Policy"
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          "a",
-          {
-            href: "#",
-            className: "text-sm text-footer-foreground/70 transition-colors hover:text-footer-foreground",
-            children: "Terms of Service"
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          "a",
-          {
-            href: "#",
-            className: "text-sm text-footer-foreground/70 transition-colors hover:text-footer-foreground",
-            children: "Refund Policy"
-          }
-        )
-      ] }),
       /* @__PURE__ */ jsxs("div", { className: "text-center md:text-right", children: [
         /* @__PURE__ */ jsx("p", { className: "text-sm text-footer-foreground/70", children: "Contact:" }),
         /* @__PURE__ */ jsx(
@@ -866,7 +768,7 @@ const home = UNSAFE_withComponentProps(function Home() {
   return /* @__PURE__ */ jsxs("div", {
     className: "flex min-h-screen flex-col",
     children: [/* @__PURE__ */ jsx(Header, {}), /* @__PURE__ */ jsxs("main", {
-      children: [/* @__PURE__ */ jsx(Hero, {}), /* @__PURE__ */ jsx(HowItWorks, {}), /* @__PURE__ */ jsx(Features, {}), /* @__PURE__ */ jsx(WhyChefsLoveIt, {}), /* @__PURE__ */ jsx(Pricing, {}), /* @__PURE__ */ jsx(SocialProof, {}), /* @__PURE__ */ jsx(FAQ, {}), /* @__PURE__ */ jsx(FinalCTA, {})]
+      children: [/* @__PURE__ */ jsx(Hero, {}), /* @__PURE__ */ jsx(HowItWorks, {}), /* @__PURE__ */ jsx(Features, {}), /* @__PURE__ */ jsx(WhyChefsLoveIt, {}), /* @__PURE__ */ jsx(SocialProof, {}), /* @__PURE__ */ jsx(FAQ, {}), /* @__PURE__ */ jsx(FinalCTA, {})]
     }), /* @__PURE__ */ jsx(Footer, {})]
   });
 });
@@ -874,7 +776,7 @@ const route1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
   __proto__: null,
   default: home
 }, Symbol.toStringTag, { value: "Module" }));
-const serverManifest = { "entry": { "module": "/assets/entry.client-UUx4C3gi.js", "imports": ["/assets/chunk-LFPYN7LY-BwAHFOGz.js", "/assets/index-BaexvpaO.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/root-D_6PqkQA.js", "imports": ["/assets/chunk-LFPYN7LY-BwAHFOGz.js", "/assets/index-BaexvpaO.js", "/assets/calendly-badge-8JLwNPOE.js"], "css": ["/assets/root-DtMYBt58.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/home": { "id": "routes/home", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/home-DI3uSfF6.js", "imports": ["/assets/chunk-LFPYN7LY-BwAHFOGz.js", "/assets/calendly-badge-8JLwNPOE.js", "/assets/index-BaexvpaO.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 } }, "url": "/assets/manifest-1e8e2e3f.js", "version": "1e8e2e3f", "sri": void 0 };
+const serverManifest = { "entry": { "module": "/assets/entry.client-UUx4C3gi.js", "imports": ["/assets/chunk-LFPYN7LY-BwAHFOGz.js", "/assets/index-BaexvpaO.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/root-BFQUzEk5.js", "imports": ["/assets/chunk-LFPYN7LY-BwAHFOGz.js", "/assets/index-BaexvpaO.js", "/assets/calendly-badge-8JLwNPOE.js"], "css": ["/assets/root-9uDnDwZS.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/home": { "id": "routes/home", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/home-3rLFNoHY.js", "imports": ["/assets/chunk-LFPYN7LY-BwAHFOGz.js", "/assets/calendly-badge-8JLwNPOE.js", "/assets/index-BaexvpaO.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 } }, "url": "/assets/manifest-d5ecdaa1.js", "version": "d5ecdaa1", "sri": void 0 };
 const assetsBuildDirectory = "build/client";
 const basename = "/";
 const future = { "unstable_optimizeDeps": false, "unstable_subResourceIntegrity": false, "unstable_trailingSlashAwareDataRequests": false, "unstable_previewServerPrerendering": false, "v8_middleware": false, "v8_splitRouteModules": false, "v8_viteEnvironmentApi": false };
