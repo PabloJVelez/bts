@@ -5,7 +5,7 @@ import { ServerRouter, UNSAFE_withComponentProps, Outlet, Meta, Links, ScrollRes
 import { isbot } from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
 import { useEffect, useState } from "react";
-import { X, Menu, ChefHat, CreditCard, Sparkles, UtensilsCrossed, CalendarCheck, CheckCircle, Store, BookOpen, ClipboardList, ShieldCheck, Ticket, Share2, Wallet, Mail, Wrench, XCircle, CheckCircle2, User, ChevronDownIcon } from "lucide-react";
+import { X, Menu, ChefHat, CreditCard, Sparkles, UtensilsCrossed, CalendarCheck, CheckCircle, Store, BookOpen, ClipboardList, ShieldCheck, Ticket, Share2, Wallet, Mail, Wrench, XCircle, CheckCircle2, User, ChevronDownIcon, ExternalLink } from "lucide-react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
 import { clsx } from "clsx";
@@ -209,10 +209,12 @@ function Button({
     }
   );
 }
+const DEMO_STOREFRONT_URL = "https://store.chefeventhub.com/";
 const navLinks = [
   { href: "#how-it-works", label: "How It Works" },
   { href: "#features", label: "Features" },
   // { href: "#pricing", label: "Pricing" }, // Re-enable with <Pricing /> on home
+  { href: DEMO_STOREFRONT_URL, label: "Live demo", external: true },
   { href: "#faq", label: "FAQ" }
 ];
 function Header() {
@@ -227,6 +229,7 @@ function Header() {
         "a",
         {
           href: link.href,
+          ..."external" in link && link.external ? { target: "_blank", rel: "noopener noreferrer" } : {},
           className: "text-sm font-medium text-muted-foreground transition-colors hover:text-foreground",
           children: link.label
         },
@@ -255,6 +258,7 @@ function Header() {
         "a",
         {
           href: link.href,
+          ..."external" in link && link.external ? { target: "_blank", rel: "noopener noreferrer" } : {},
           className: "text-base font-medium text-muted-foreground transition-colors hover:text-foreground",
           onClick: () => setIsOpen(false),
           children: link.label
@@ -353,27 +357,43 @@ function Hero() {
       /* @__PURE__ */ jsxs("div", { className: "text-center lg:text-left", children: [
         /* @__PURE__ */ jsx(FadeInUp, { children: /* @__PURE__ */ jsx("h1", { className: "font-serif text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl text-balance", children: "Turn chef inquiries into paid bookings, without the back-and-forth." }) }),
         /* @__PURE__ */ jsx(FadeInUp, { delay: 0.1, children: /* @__PURE__ */ jsx("p", { className: "mt-6 text-lg leading-relaxed text-muted-foreground sm:text-xl text-pretty", children: "Your own branded website where clients browse menus, request events, and pay per seat. You just approve." }) }),
-        /* @__PURE__ */ jsx(FadeInUp, { delay: 0.2, children: /* @__PURE__ */ jsxs("div", { className: "mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start", children: [
-          /* @__PURE__ */ jsx(
-            Button,
-            {
-              onClick: openCalendlyPopup,
-              size: "lg",
-              className: "bg-primary px-8 text-lg text-primary-foreground hover:bg-accent-hover",
-              children: "Book a Demo"
-            }
-          ),
-          /* @__PURE__ */ jsx(
-            Button,
-            {
-              variant: "outline",
-              size: "lg",
-              asChild: true,
-              className: "border-border px-8 text-lg",
-              children: /* @__PURE__ */ jsx("a", { href: "#how-it-works", children: "See How It Works" })
-            }
-          )
-        ] }) }),
+        /* @__PURE__ */ jsxs(FadeInUp, { delay: 0.2, children: [
+          /* @__PURE__ */ jsxs("div", { className: "mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start", children: [
+            /* @__PURE__ */ jsx(
+              Button,
+              {
+                onClick: openCalendlyPopup,
+                size: "lg",
+                className: "bg-primary px-8 text-lg text-primary-foreground hover:bg-accent-hover",
+                children: "Book a Demo"
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              Button,
+              {
+                variant: "outline",
+                size: "lg",
+                asChild: true,
+                className: "border-border px-8 text-lg",
+                children: /* @__PURE__ */ jsx("a", { href: "#how-it-works", children: "See How It Works" })
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxs("p", { className: "mt-4 text-center text-sm text-muted-foreground sm:text-base lg:text-left", children: [
+            /* @__PURE__ */ jsx(
+              "a",
+              {
+                href: DEMO_STOREFRONT_URL,
+                target: "_blank",
+                rel: "noopener noreferrer",
+                className: "font-medium text-primary underline-offset-4 hover:underline",
+                children: "View live demo storefront"
+              }
+            ),
+            " ",
+            "— see what your clients would see."
+          ] })
+        ] }),
         /* @__PURE__ */ jsx(StaggerContainer, { className: "mt-12 grid grid-cols-2 gap-4 sm:flex sm:flex-wrap sm:justify-center lg:justify-start", children: trustIndicators.map((item) => /* @__PURE__ */ jsx(StaggerItem, { children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm text-muted-foreground", children: [
           /* @__PURE__ */ jsx(item.icon, { className: "h-4 w-4 text-primary" }),
           /* @__PURE__ */ jsx("span", { children: item.label })
@@ -419,7 +439,9 @@ const steps = [
     number: 4,
     icon: CreditCard,
     title: "Guests pay per seat via a shareable link",
-    description: "Once you approve, tickets for the event become purchasable. Share the link with the host: they can pay for everyone, or each guest pays for their own seat."
+    description: "Once you approve, your client receives an email confirmation with a secure payment link to complete the booking. They can pay for everyone, or each guest can cover their own seat.",
+    previewSrc: "/chefeventhub-request-accepted.png",
+    previewAlt: "Example email confirmation with event details, payment summary, and a purchase tickets link."
   }
 ];
 function HowItWorks() {
@@ -442,7 +464,13 @@ function HowItWorks() {
                 className: hasPreview ? "flex min-w-0 flex-1 flex-col rounded-xl border border-border bg-card p-6 shadow-sm transition-colors duration-300 hover:border-primary/40 md:p-8" : "w-full max-w-3xl rounded-xl border border-border bg-card p-6 shadow-sm transition-colors duration-300 hover:border-primary/40 md:p-8",
                 children: [
                   /* @__PURE__ */ jsx("div", { className: "mb-4 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground", children: step.number }),
-                  /* @__PURE__ */ jsx(step.icon, { className: "mb-4 h-8 w-8 shrink-0 text-primary", "aria-hidden": true }),
+                  /* @__PURE__ */ jsx(
+                    step.icon,
+                    {
+                      className: "mb-4 h-8 w-8 shrink-0 text-primary",
+                      "aria-hidden": true
+                    }
+                  ),
                   /* @__PURE__ */ jsx("h3", { className: "mb-2 font-serif text-xl font-semibold text-foreground sm:text-2xl", children: step.title }),
                   /* @__PURE__ */ jsx("p", { className: "text-sm leading-relaxed text-muted-foreground sm:text-base", children: step.description })
                 ]
@@ -461,7 +489,21 @@ function HowItWorks() {
           ]
         }
       ) }, step.number);
-    }) })
+    }) }),
+    /* @__PURE__ */ jsx(FadeInUp, { className: "mt-20", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-2xl rounded-xl border border-border bg-card px-6 py-8 text-center shadow-sm md:px-10", children: [
+      /* @__PURE__ */ jsx("p", { className: "font-serif text-lg font-semibold text-foreground", children: "Want to click through a real site?" }),
+      /* @__PURE__ */ jsx("p", { className: "mt-2 text-sm text-muted-foreground sm:text-base", children: "Explore our demo storefront—the same experience your clients get." }),
+      /* @__PURE__ */ jsx(
+        "a",
+        {
+          href: DEMO_STOREFRONT_URL,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          className: "mt-4 inline-flex text-sm font-medium text-primary underline-offset-4 hover:underline sm:text-base",
+          children: "Open live demo →"
+        }
+      )
+    ] }) })
   ] }) });
 }
 const features = [
@@ -520,7 +562,22 @@ function Features() {
   return /* @__PURE__ */ jsx("section", { id: "features", className: "bg-secondary/30 py-16 md:py-24", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", children: [
     /* @__PURE__ */ jsx(FadeInUp, { children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-2xl text-center", children: [
       /* @__PURE__ */ jsx("h2", { className: "font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl", children: "Everything you need to run your business" }),
-      /* @__PURE__ */ jsx("p", { className: "mt-4 text-lg text-muted-foreground", children: "Less admin. More cooking." })
+      /* @__PURE__ */ jsx("p", { className: "mt-4 text-lg text-muted-foreground", children: "Less admin. More cooking." }),
+      /* @__PURE__ */ jsxs("p", { className: "mt-4 text-base text-muted-foreground", children: [
+        "Want to see it in action?",
+        " ",
+        /* @__PURE__ */ jsx(
+          "a",
+          {
+            href: DEMO_STOREFRONT_URL,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            className: "font-medium text-primary underline-offset-4 hover:underline",
+            children: "Browse our live demo storefront"
+          }
+        ),
+        "."
+      ] })
     ] }) }),
     /* @__PURE__ */ jsx(StaggerContainer, { className: "mt-16", children: /* @__PURE__ */ jsx("div", { className: "grid auto-rows-fr gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4", children: features.map((feature, index) => /* @__PURE__ */ jsx(
       StaggerItem,
@@ -713,7 +770,7 @@ function FinalCTA() {
   return /* @__PURE__ */ jsx("section", { className: "bg-gradient-to-b from-secondary to-background py-16 md:py-24", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8", children: [
     /* @__PURE__ */ jsx(FadeInUp, { children: /* @__PURE__ */ jsx("h2", { className: "font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl text-balance", children: "Ready to stop chasing leads and start getting paid?" }) }),
     /* @__PURE__ */ jsx(FadeInUp, { delay: 0.1, children: /* @__PURE__ */ jsx("p", { className: "mx-auto mt-6 max-w-2xl text-lg text-muted-foreground text-pretty", children: "Book a 15-minute demo and we'll show you how it works for your business." }) }),
-    /* @__PURE__ */ jsx(FadeInUp, { delay: 0.2, children: /* @__PURE__ */ jsxs("div", { className: "mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row", children: [
+    /* @__PURE__ */ jsx(FadeInUp, { delay: 0.2, children: /* @__PURE__ */ jsxs("div", { className: "mt-10 flex flex-col items-stretch justify-center gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center", children: [
       /* @__PURE__ */ jsx(
         Button,
         {
@@ -730,12 +787,25 @@ function FinalCTA() {
           size: "lg",
           asChild: true,
           className: "border-border px-8 text-lg",
-          children: /* @__PURE__ */ jsxs("a", { href: "mailto:pmltechpile@gmail.com", className: "flex items-center gap-2", children: [
+          children: /* @__PURE__ */ jsxs("a", { href: "mailto:pmltechpile@gmail.com", className: "flex items-center justify-center gap-2", children: [
             /* @__PURE__ */ jsx(Mail, { className: "h-5 w-5" }),
             "Email Us"
           ] })
         }
-      )
+      ),
+      /* @__PURE__ */ jsx(Button, { variant: "outline", size: "lg", asChild: true, className: "border-border px-8 text-lg", children: /* @__PURE__ */ jsxs(
+        "a",
+        {
+          href: DEMO_STOREFRONT_URL,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          className: "flex items-center justify-center gap-2",
+          children: [
+            /* @__PURE__ */ jsx(ExternalLink, { className: "h-5 w-5" }),
+            "Explore demo site"
+          ]
+        }
+      ) })
     ] }) })
   ] }) });
 }
@@ -758,6 +828,16 @@ function Footer() {
             className: "text-sm text-footer-foreground transition-colors hover:text-primary",
             children: "pmltechpile@gmail.com"
           }
+        ),
+        /* @__PURE__ */ jsx(
+          "a",
+          {
+            href: DEMO_STOREFRONT_URL,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            className: "mt-2 block text-sm text-footer-foreground/70 transition-colors hover:text-primary",
+            children: "Demo chef storefront"
+          }
         )
       ] })
     ] }),
@@ -776,7 +856,7 @@ const route1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
   __proto__: null,
   default: home
 }, Symbol.toStringTag, { value: "Module" }));
-const serverManifest = { "entry": { "module": "/assets/entry.client-UUx4C3gi.js", "imports": ["/assets/chunk-LFPYN7LY-BwAHFOGz.js", "/assets/index-BaexvpaO.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/root-BFQUzEk5.js", "imports": ["/assets/chunk-LFPYN7LY-BwAHFOGz.js", "/assets/index-BaexvpaO.js", "/assets/calendly-badge-8JLwNPOE.js"], "css": ["/assets/root-9uDnDwZS.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/home": { "id": "routes/home", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/home-3rLFNoHY.js", "imports": ["/assets/chunk-LFPYN7LY-BwAHFOGz.js", "/assets/calendly-badge-8JLwNPOE.js", "/assets/index-BaexvpaO.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 } }, "url": "/assets/manifest-d5ecdaa1.js", "version": "d5ecdaa1", "sri": void 0 };
+const serverManifest = { "entry": { "module": "/assets/entry.client-UUx4C3gi.js", "imports": ["/assets/chunk-LFPYN7LY-BwAHFOGz.js", "/assets/index-BaexvpaO.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/root-BO3eo0dZ.js", "imports": ["/assets/chunk-LFPYN7LY-BwAHFOGz.js", "/assets/index-BaexvpaO.js", "/assets/calendly-badge-8JLwNPOE.js"], "css": ["/assets/root-Dc1YY4CN.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/home": { "id": "routes/home", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/home-CIUqcBJa.js", "imports": ["/assets/chunk-LFPYN7LY-BwAHFOGz.js", "/assets/calendly-badge-8JLwNPOE.js", "/assets/index-BaexvpaO.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 } }, "url": "/assets/manifest-577814ad.js", "version": "577814ad", "sri": void 0 };
 const assetsBuildDirectory = "build/client";
 const basename = "/";
 const future = { "unstable_optimizeDeps": false, "unstable_subResourceIntegrity": false, "unstable_trailingSlashAwareDataRequests": false, "unstable_previewServerPrerendering": false, "v8_middleware": false, "v8_splitRouteModules": false, "v8_viteEnvironmentApi": false };

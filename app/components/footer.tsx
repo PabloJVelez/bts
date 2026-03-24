@@ -1,3 +1,5 @@
+import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
+
 export function Footer() {
   return (
     <footer className="bg-footer-bg py-12 text-footer-foreground">
@@ -21,6 +23,14 @@ export function Footer() {
               className="text-sm text-footer-foreground transition-colors hover:text-primary"
             >
               pmltechpile@gmail.com
+            </a>
+            <a
+              href={DEMO_STOREFRONT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 block text-sm text-footer-foreground/70 transition-colors hover:text-primary"
+            >
+              Demo chef storefront
             </a>
           </div>
         </div>

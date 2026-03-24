@@ -12,6 +12,7 @@ import {
   StaggerContainer,
   StaggerItem,
 } from "~/components/motion-wrapper";
+import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
 
 type Step = {
   number: number;
@@ -134,6 +135,25 @@ export function HowItWorks() {
             );
           })}
         </StaggerContainer>
+
+        <FadeInUp className="mt-20">
+          <div className="mx-auto max-w-2xl rounded-xl border border-border bg-card px-6 py-8 text-center shadow-sm md:px-10">
+            <p className="font-serif text-lg font-semibold text-foreground">
+              Want to click through a real site?
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground sm:text-base">
+              Explore our demo storefront. It's the same experience your clients get.
+            </p>
+            <a
+              href={DEMO_STOREFRONT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex text-sm font-medium text-primary underline-offset-4 hover:underline sm:text-base"
+            >
+              Open live demo →
+            </a>
+          </div>
+        </FadeInUp>
       </div>
     </section>
   );

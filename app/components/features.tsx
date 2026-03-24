@@ -13,6 +13,7 @@ import {
   Wrench,
 } from "lucide-react";
 import { cn } from "~/lib/utils";
+import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
 import { FadeInUp, StaggerContainer, StaggerItem, HoverScale } from "~/components/motion-wrapper";
 
 const features = [
@@ -90,6 +91,18 @@ export function Features() {
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
               Less admin. More cooking.
+            </p>
+            <p className="mt-4 text-base text-muted-foreground">
+              Want to see it in action?{" "}
+              <a
+                href={DEMO_STOREFRONT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-primary underline-offset-4 hover:underline"
+              >
+                Browse our live demo storefront
+              </a>
+              .
             </p>
           </div>
         </FadeInUp>

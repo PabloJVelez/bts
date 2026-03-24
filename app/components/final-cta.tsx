@@ -1,8 +1,9 @@
 "use client";
 
-import { Mail } from "lucide-react";
+import { ExternalLink, Mail } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { openCalendlyPopup } from "~/components/calendly-badge";
+import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
 import { FadeInUp } from "~/components/motion-wrapper";
 
 export function FinalCTA() {
@@ -22,7 +23,7 @@ export function FinalCTA() {
         </FadeInUp>
 
         <FadeInUp delay={0.2}>
-          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div className="mt-10 flex flex-col items-stretch justify-center gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center">
             <Button
               onClick={openCalendlyPopup}
               size="lg"
@@ -36,9 +37,20 @@ export function FinalCTA() {
               asChild
               className="border-border px-8 text-lg"
             >
-              <a href="mailto:pmltechpile@gmail.com" className="flex items-center gap-2">
+              <a href="mailto:pmltechpile@gmail.com" className="flex items-center justify-center gap-2">
                 <Mail className="h-5 w-5" />
                 Email Us
+              </a>
+            </Button>
+            <Button variant="outline" size="lg" asChild className="border-border px-8 text-lg">
+              <a
+                href={DEMO_STOREFRONT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2"
+              >
+                <ExternalLink className="h-5 w-5" />
+                Explore demo site
               </a>
             </Button>
           </div>

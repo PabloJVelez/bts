@@ -4,6 +4,7 @@ import { ChefHat, CreditCard, Sparkles } from "lucide-react";
 // ChefHat is used in trust indicators
 import { Button } from "~/components/ui/button";
 import { openCalendlyPopup } from "~/components/calendly-badge";
+import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
 import { FadeInUp, StaggerContainer, StaggerItem } from "~/components/motion-wrapper";
 
 const trustIndicators = [
@@ -52,6 +53,17 @@ export function Hero() {
                   <a href="#how-it-works">See How It Works</a>
                 </Button>
               </div>
+              <p className="mt-4 text-center text-sm text-muted-foreground sm:text-base lg:text-left">
+                <a
+                  href={DEMO_STOREFRONT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-primary underline-offset-4 hover:underline"
+                >
+                  View live demo storefront
+                </a>
+                . See what your clients would see.
+              </p>
             </FadeInUp>
 
             {/* Trust Indicators */}

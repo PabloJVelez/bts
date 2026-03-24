@@ -4,11 +4,13 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { openCalendlyPopup } from "~/components/calendly-badge";
+import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
 
 const navLinks = [
   { href: "#how-it-works", label: "How It Works" },
   { href: "#features", label: "Features" },
   // { href: "#pricing", label: "Pricing" }, // Re-enable with <Pricing /> on home
+  { href: DEMO_STOREFRONT_URL, label: "Live demo", external: true as const },
   { href: "#faq", label: "FAQ" },
 ];
 
@@ -31,6 +33,9 @@ export function Header() {
             <a
               key={link.href}
               href={link.href}
+              {...("external" in link && link.external
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
               {link.label}
@@ -66,6 +71,9 @@ export function Header() {
               <a
                 key={link.href}
                 href={link.href}
+                {...("external" in link && link.external
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
                 className="text-base font-medium text-muted-foreground transition-colors hover:text-foreground"
                 onClick={() => setIsOpen(false)}
               >
