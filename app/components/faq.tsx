@@ -12,41 +12,41 @@ const faqs = [
   {
     question: "Do I still control which events I accept?",
     answer:
-      "Absolutely. Every request goes to your admin dashboard. You review the details (date, party size, menu, location) and accept or decline with one click. Nothing gets booked without your approval.",
+      "Yes. Every request lands in your dashboard first. You review it, then accept or decline. Nothing is booked without your approval.",
   },
   {
-    question: "How do guests pay per seat?",
+    question: "Can I collect deposits?",
     answer:
-      "When you accept a request, tickets for that event become purchasable. You share the link with the host, and they can either pay for all seats or forward the link so each guest pays individually.",
+      "Yes. You can collect a deposit or full payment, and everything runs through Stripe.",
   },
   {
-    question: "Do you support deposits?",
+    question: "Can guests split the payment?",
     answer:
-      "Yes. For larger parties, the system supports partial deposits with a deadline for the remaining balance. For smaller events, full payment is collected upfront. The exact rules are configurable per chef.",
+      "Yes. The host can pay for everyone, or share the link so guests can chip in.",
   },
   {
     question: "What payment processor do you use?",
-    answer: "All payments are processed securely through Stripe.",
+    answer: "We use Stripe for payments.",
   },
   {
-    question: "Can I customize my menus and experiences?",
+    question: "What if I want to keep texting my clients?",
     answer:
-      "Yes. You get a full menu management system: organize by course, add dishes with ingredients and descriptions, set pricing, and upload photos. You can offer plated dinners, cooking classes, buffets, or any combination.",
+      "Keep texting. This gives you one link for details and payment, so you stop losing info and chasing money in long threads.",
   },
   {
     question: "What if I already have a website?",
     answer:
-      "That's very common. We handle the technical setup so you can keep the domain your clients already know, and your website becomes where they browse menus and book.",
+      "That is common. We handle setup and can work with the domain your clients already know.",
   },
   {
     question: "How long does setup take?",
     answer:
-      "We handle the technical setup while you provide menus, photos, and branding preferences. How fast you go live depends on your content and availability, and we work with you on a realistic timeline.",
+      "You send your menu, photos, and branding. We do the build. Timeline depends on how fast content is ready.",
   },
   {
     question: "Do I need any technical skills?",
     answer:
-      "None. We do the setup for you. Your day-to-day is reviewing requests and clicking approve. That's it.",
+      "No. We set it up for you. Your day to day is reviewing requests and clicking approve.",
   },
 ];
 
@@ -58,7 +58,7 @@ export function FAQ() {
         <FadeInUp>
           <div className="text-center">
             <h2 className="font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Frequently Asked Questions
+              Questions chefs ask
             </h2>
           </div>
         </FadeInUp>

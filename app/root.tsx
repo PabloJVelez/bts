@@ -22,14 +22,22 @@ export const links: LinksFunction = () => [
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "Behind the Sauté | Branded Websites & Booking for Private Chefs" },
-    { name: "description", content: "Turn chef inquiries into paid bookings. Give your clients a real website with menus, experiences, and per-seat checkout. Built for private chefs." },
-    { property: "og:title", content: "Behind the Sauté | Booking & Payments for Private Chefs" },
-    { property: "og:description", content: "Your own branded website where clients browse menus, request events, and pay per seat. You just approve." },
+    { title: "Behind the Sauté | Booking and Payments Page for Private Chefs" },
+    {
+      name: "description",
+      content:
+        "Behind the Sauté gives private chefs a branded booking page where clients pick menus, send event details, and pay deposits or full payment. You approve or decline each request.",
+    },
+    { property: "og:title", content: "Behind the Sauté | One Booking Link for Private Chefs" },
+    {
+      property: "og:description",
+      content:
+        "Send one link. Clients pick a menu, share event details, and pay through Stripe. You stay in control by approving each request.",
+    },
     { property: "og:url", content: "https://behindthesaute.com" },
     { name: "twitter:card", content: "summary_large_image" },
   ];
-}
+};
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (

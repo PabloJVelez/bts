@@ -27,9 +27,9 @@ const steps: Step[] = [
   {
     number: 1,
     icon: UtensilsCrossed,
-    title: "Clients browse your menus & experiences",
+    title: "Share your link",
     description:
-      "Your website showcases your full menu catalog with courses, dishes, and pricing, plus the experience types you create and manage. No more PDF attachments.",
+      "Send your booking page in a text, email, or Instagram DM. Clients can see your menus and experiences without asking for screenshots.",
     previewSrc: "/chefevethub-menus.png",
     previewAlt:
       "Example storefront menus page showing catalog cards with images, course counts, and pricing.",
@@ -37,9 +37,9 @@ const steps: Step[] = [
   {
     number: 2,
     icon: CalendarCheck,
-    title: "They submit one structured request",
+    title: "Client answers the questions you always ask",
     description:
-      "Date, time, party size, location, dietary needs, special requests: everything captured in a single guided form. No more back-and-forth DMs.",
+      "They add date, timing, headcount, kitchen address, allergies, and notes in one guided form.",
     previewSrc: "/chefeventhub-request.png",
     previewAlt:
       "Example multi-step request form for choosing experience type, menu, and guest count.",
@@ -47,9 +47,9 @@ const steps: Step[] = [
   {
     number: 3,
     icon: CheckCircle,
-    title: "You review and approve from your dashboard",
+    title: "You approve or decline",
     description:
-      "See every request in your admin panel. Accept with one click or decline with a reason. You stay in full control of your calendar.",
+      "Every request lands in your dashboard. Accept the ones you want and decline the ones that do not fit your calendar.",
     previewSrc: "/chefeventhub-admin-request.png",
     previewAlt:
       "Example admin screen for reviewing an event request with accept and reject actions.",
@@ -57,9 +57,9 @@ const steps: Step[] = [
   {
     number: 4,
     icon: CreditCard,
-    title: "Guests pay per seat via a shareable link",
+    title: "Payment happens and details stay in one place",
     description:
-      "Once you approve, your client receives an email confirmation with a secure payment link to complete the booking. They can pay for everyone, or each guest can cover their own seat.",
+      "After approval, they get a Stripe payment link by email. You can collect a deposit, full payment, or let guests chip in.",
     previewSrc: "/chefeventhub-request-accepted.png",
     previewAlt:
       "Example email confirmation with event details, payment summary, and a purchase tickets link.",
@@ -76,7 +76,7 @@ export function HowItWorks() {
               How It Works
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              From inquiry to paid booking in four simple steps.
+              From first message to confirmed booking in four steps.
             </p>
           </div>
         </FadeInUp>
@@ -139,10 +139,10 @@ export function HowItWorks() {
         <FadeInUp className="mt-20">
           <div className="mx-auto max-w-2xl rounded-xl border border-border bg-card px-6 py-8 text-center shadow-sm md:px-10">
             <p className="font-serif text-lg font-semibold text-foreground">
-              Want to click through a real site?
+              Want to click through a real booking page?
             </p>
             <p className="mt-2 text-sm text-muted-foreground sm:text-base">
-              Explore our demo storefront. It's the same experience your clients get.
+              Open the live demo. It is the same flow your clients use.
             </p>
             <a
               href={DEMO_STOREFRONT_URL}
@@ -150,7 +150,7 @@ export function HowItWorks() {
               rel="noopener noreferrer"
               className="mt-4 inline-flex text-sm font-medium text-primary underline-offset-4 hover:underline sm:text-base"
             >
-              Open live demo →
+              Open live demo
             </a>
           </div>
         </FadeInUp>

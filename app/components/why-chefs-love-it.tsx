@@ -5,19 +5,19 @@ import { FadeInUp, StaggerContainer, StaggerItem } from "~/components/motion-wra
 
 const painPoints = [
   {
-    pain: "You're copy-pasting menus into DMs and losing track of inquiries",
+    pain: "I got three booking requests today and each one is buried in a different text thread.",
     solution:
-      "Clients browse your full menu catalog with courses, dishes, and pricing, then submit one clean request.",
+      "Send one link. People pick a menu and submit details in one place, so you stop hunting through old messages.",
   },
   {
-    pain: "You spend hours going back and forth on dates, sizes, and dietary needs",
+    pain: "I am still asking for headcount, allergies, and the kitchen address the day before the event.",
     solution:
-      "One structured form captures everything upfront. You review a complete request, not a thread of messages.",
+      "The form collects those details up front. You get one clean request before you start prep or grocery shopping.",
   },
   {
-    pain: "You chase deposits and lose bookings to no-shows",
+    pain: "I spend too much time chasing deposits, then people ghost.",
     solution:
-      "Approved events auto-generate a pay link. Guests pay per seat before the event, not after.",
+      "After you approve, payment goes out through Stripe right away. You can collect a deposit or full payment.",
   },
 ];
 
@@ -29,7 +29,7 @@ export function WhyChefsLoveIt() {
         <FadeInUp>
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Built for how private chefs actually work
+              Why chefs stick with it
             </h2>
           </div>
         </FadeInUp>

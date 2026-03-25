@@ -8,9 +8,9 @@ import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
 
 const navLinks = [
   { href: "#how-it-works", label: "How It Works" },
-  { href: "#features", label: "Features" },
+  { href: "#features", label: "What You Get" },
   // { href: "#pricing", label: "Pricing" }, // Re-enable with <Pricing /> on home
-  { href: DEMO_STOREFRONT_URL, label: "Live demo", external: true as const },
+  { href: DEMO_STOREFRONT_URL, label: "Live Demo Storefront", external: true as const },
   { href: "#faq", label: "FAQ" },
 ];
 
@@ -18,7 +18,7 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <a href="#" className="flex items-center gap-2">
@@ -49,7 +49,7 @@ export function Header() {
             onClick={openCalendlyPopup}
             className="bg-primary text-primary-foreground hover:bg-accent-hover"
           >
-            Book a Demo
+            Get a Walkthrough
           </Button>
         </div>
 
@@ -87,7 +87,7 @@ export function Header() {
               }}
               className="mt-2 w-full bg-primary text-primary-foreground hover:bg-accent-hover"
             >
-              Book a Demo
+              Get a Walkthrough
             </Button>
           </nav>
         </div>

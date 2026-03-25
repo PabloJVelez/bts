@@ -37,7 +37,7 @@ export function Footer() {
 
         {/* Tagline */}
         <p className="mt-8 text-center text-xs text-footer-foreground/50">
-          Built with love for private chefs everywhere.
+          Booking details and payments in one place for private chefs.
         </p>
       </div>
     </footer>
