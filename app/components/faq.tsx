@@ -17,7 +17,7 @@ const faqs = [
   {
     question: "Can I collect deposits?",
     answer:
-      "Yes. You can collect a deposit or full payment, and everything runs through Stripe.",
+      "Yes. You can collect a deposit or full payment online.",
   },
   {
     question: "Can guests split the payment?",
@@ -26,7 +26,7 @@ const faqs = [
   },
   {
     question: "What payment processor do you use?",
-    answer: "We use Stripe for payments.",
+    answer: "Payments go through a normal online checkout your clients can use on their phone.",
   },
   {
     question: "What if I want to keep texting my clients?",

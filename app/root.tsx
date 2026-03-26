@@ -32,7 +32,7 @@ export const meta: MetaFunction = () => {
     {
       property: "og:description",
       content:
-        "Send one link. Clients pick a menu, share event details, and pay through Stripe. You stay in control by approving each request.",
+        "Send one link. Clients pick a menu, share event details, and pay online. You stay in control by approving each request.",
     },
     { property: "og:url", content: "https://behindthesaute.com" },
     { name: "twitter:card", content: "summary_large_image" },

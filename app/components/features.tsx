@@ -21,7 +21,7 @@ const featureBuckets = [
         icon: Wallet,
         title: "Collect deposits or full payment online",
         description:
-          "Payments run through Stripe. Take a deposit, charge in full, or split it so guests can each pay their part.",
+          "Take a deposit, charge in full, or split it so guests can each pay their part online.",
       },
       {
         icon: Mail,

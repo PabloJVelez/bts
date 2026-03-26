@@ -59,7 +59,7 @@ const steps: Step[] = [
     icon: CreditCard,
     title: "Payment happens and details stay in one place",
     description:
-      "After approval, they get a Stripe payment link by email. You can collect a deposit, full payment, or let guests chip in.",
+      "After approval, they get a payment link by email. You can collect a deposit, full payment, or let guests chip in.",
     previewSrc: "/chefeventhub-request-accepted.png",
     previewAlt:
       "Example email confirmation with event details, payment summary, and a purchase tickets link.",

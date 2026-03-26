@@ -17,7 +17,7 @@ const painPoints = [
   {
     pain: "I spend too much time chasing deposits, then people ghost.",
     solution:
-      "After you approve, payment goes out through Stripe right away. You can collect a deposit or full payment.",
+      "After you approve, the payment link goes out right away. You can collect a deposit or full payment.",
   },
 ];
 

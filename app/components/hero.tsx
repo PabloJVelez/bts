@@ -5,11 +5,15 @@ import { ChefHat, CreditCard, Sparkles } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { openCalendlyPopup } from "~/components/calendly-badge";
 import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
-import { FadeInUp, StaggerContainer, StaggerItem } from "~/components/motion-wrapper";
+import {
+  FadeInUp,
+  StaggerContainer,
+  StaggerItem,
+} from "~/components/motion-wrapper";
 
 const trustIndicators = [
   { icon: ChefHat, label: "Made for private chefs" },
-  { icon: CreditCard, label: "Collect payments with Stripe" },
+  { icon: CreditCard, label: "Collect payments online" },
   { icon: Sparkles, label: "We set it up for you" },
 ];
 
@@ -25,19 +29,24 @@ export function Hero() {
           <div className="text-center lg:text-left">
             <FadeInUp>
               <p className="mb-4 text-sm font-medium uppercase tracking-wide text-primary">
-                Behind the Sauté is a booking and payment page for private chefs.
+                Behind the Sauté is a booking and payment page for private
+                chefs.
               </p>
               <h1 className="font-serif text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl text-balance">
-                Send one link. Get the booking details. Get paid.
+                Send one link. Get booking details. Get paid.
               </h1>
             </FadeInUp>
 
             <FadeInUp delay={0.1}>
               <p className="mt-6 text-lg leading-relaxed text-muted-foreground sm:text-xl text-pretty">
-                Your client picks a menu, fills out a short request, pays a deposit or full amount, and you approve or decline from one dashboard.
+                Your client picks a menu, fills out a short request, pays a
+                deposit or full amount, and you approve or decline from one
+                dashboard.
               </p>
               <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-                If this sounds like you, this helps: you are chasing deposits, missing allergy notes, or double-checking headcount from old texts.
+                If this sounds like you, this helps: you are chasing deposits,
+                missing allergy notes, or double-checking headcount from old
+                texts.
               </p>
             </FadeInUp>
 
@@ -56,7 +65,11 @@ export function Hero() {
                   asChild
                   className="border-border px-8 text-lg"
                 >
-                  <a href={DEMO_STOREFRONT_URL} target="_blank" rel="noopener noreferrer">
+                  <a
+                    href={DEMO_STOREFRONT_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     See the booking link demo
                   </a>
                 </Button>
