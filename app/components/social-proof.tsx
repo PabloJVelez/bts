@@ -7,14 +7,14 @@ import { FadeInUp, StaggerContainer, StaggerItem, HoverScale } from "~/component
 
 const personas = [
   {
-    name: "The Solo Chef",
+    name: "Private chefs doing regular events",
     description:
-      "You do 3-8 events a month, manage everything yourself, and lose leads in your inbox. You need a system, not more apps.",
+      "You book a few events every month, handle client messages yourself, and want one clean way to collect details and payment.",
   },
   {
-    name: "The Growing Operation",
+    name: "Chefs growing a small team",
     description:
-      "You're booking 10-20 events a month and need to stop being the bottleneck. You want clients to self-serve and pay upfront.",
+      "You are juggling more dates, trying to avoid double-booking, and need requests, payments, and confirmations in one place.",
   },
 ];
 
@@ -26,10 +26,10 @@ export function SocialProof() {
         <FadeInUp>
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Built for chefs like you
+              Who this is for
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              Here's who we're building this for.
+              If booking work comes through texts and email, this will feel familiar.
             </p>
           </div>
         </FadeInUp>
@@ -62,15 +62,24 @@ export function SocialProof() {
           </div>
         </StaggerContainer>
 
+        <FadeInUp delay={0.25}>
+          <div className="mx-auto mt-8 max-w-3xl rounded-xl border border-border bg-secondary/20 p-6 text-left">
+            <h3 className="font-serif text-xl font-semibold text-foreground">Who this is not for</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:text-base">
+              Chefs who only do one event every few months and do not care about deposits or keeping event details organized.
+            </p>
+          </div>
+        </FadeInUp>
+
         {/* CTA */}
         <FadeInUp delay={0.3}>
           <div className="mt-12 text-center">
-            <p className="mb-4 text-muted-foreground">Join the early access waitlist</p>
+            <p className="mb-4 text-muted-foreground">Want to see if it fits your workflow?</p>
             <Button
               onClick={openCalendlyPopup}
               className="bg-primary px-8 text-primary-foreground hover:bg-accent-hover"
             >
-              Book a Demo
+              Get a walkthrough
             </Button>
           </div>
         </FadeInUp>

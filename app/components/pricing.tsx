@@ -16,7 +16,7 @@ const tiers = [
       "Menu & experience pages",
       "Request form + admin dashboard",
       "Automated email notifications",
-      "Stripe checkout",
+      "Online checkout",
       "Done-for-you setup",
     ],
     note: "+ per-booking commission (agreed per chef)",
