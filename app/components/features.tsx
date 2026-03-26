@@ -81,24 +81,24 @@ const featureBuckets = [
 
 export function Features() {
   return (
-    <section id="features" className="bg-secondary/30 py-16 md:py-24">
+    <section id="features" className="bg-background py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <FadeInUp>
-          <div className="mx-auto max-w-2xl text-center">
+          <div className="mx-auto max-w-3xl text-center">
             <h2 className="font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
               Built to solve real booking problems
             </h2>
-            <p className="mt-4 text-lg text-muted-foreground">
+            <p className="mt-4 text-lg leading-relaxed text-muted-foreground sm:text-xl">
               Keep texting clients if you want. Use one link when it is time to collect details and payment.
             </p>
-            <p className="mt-4 text-base text-muted-foreground">
+            <p className="mt-4 text-sm text-muted-foreground sm:text-base">
               Want to see it in action?{" "}
               <a
                 href={DEMO_STOREFRONT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-medium text-primary underline-offset-4 hover:underline"
+                className="font-medium text-primary underline-offset-4 transition-colors hover:text-primary/85 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 Browse our live demo storefront
               </a>
@@ -108,23 +108,27 @@ export function Features() {
         </FadeInUp>
 
         {/* Feature Buckets */}
-        <StaggerContainer className="mt-16">
-          <div className="space-y-10">
+        <StaggerContainer className="mt-14">
+          <div className="space-y-12 md:space-y-14">
             {featureBuckets.map((bucket) => (
               <StaggerItem key={bucket.heading}>
                 <div>
-                  <h3 className="mb-4 font-serif text-2xl font-semibold text-foreground">
+                  <h3 className="mb-5 font-serif text-2xl font-semibold tracking-tight text-foreground">
                     {bucket.heading}
                   </h3>
-                  <div className="grid auto-rows-fr gap-6 sm:grid-cols-2">
+                  <div className="grid auto-rows-fr gap-5 sm:grid-cols-2 lg:gap-6">
                     {bucket.items.map((feature) => (
                       <HoverScale key={feature.title} className="h-full">
-                        <div className="flex h-full min-h-0 flex-col rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:border-primary/50 hover:shadow-md">
-                          <feature.icon className="mb-4 h-8 w-8 shrink-0 text-primary" />
-                          <h4 className="mb-2 font-serif text-lg font-semibold text-foreground">
+                        <div className="flex h-full min-h-0 flex-col rounded-xl border border-border/80 bg-card p-6 shadow-sm shadow-black/5 ring-1 ring-black/5 transition-all duration-300 hover:border-primary/35 hover:shadow-md">
+                          <div className="mb-4 flex items-center gap-3">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-background/70 ring-1 ring-black/5">
+                              <feature.icon className="h-5 w-5 text-primary" aria-hidden />
+                            </div>
+                          </div>
+                          <h4 className="mb-2 max-w-[28ch] font-serif text-lg font-semibold tracking-tight text-foreground sm:text-xl">
                             {feature.title}
                           </h4>
-                          <p className="min-h-0 flex-1 text-sm leading-relaxed text-muted-foreground">
+                          <p className="min-h-0 flex-1 max-w-prose text-sm leading-relaxed text-muted-foreground/90 sm:text-base">
                             {feature.description}
                           </p>
                         </div>

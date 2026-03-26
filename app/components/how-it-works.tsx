@@ -98,28 +98,28 @@ export function HowItWorks() {
                   <div
                     className={
                       hasPreview
-                        ? "flex min-w-0 flex-1 flex-col rounded-xl border border-border bg-card p-6 shadow-sm transition-colors duration-300 hover:border-primary/40 md:p-8"
-                        : "w-full max-w-3xl rounded-xl border border-border bg-card p-6 shadow-sm transition-colors duration-300 hover:border-primary/40 md:p-8"
+                        ? "flex min-w-0 flex-1 flex-col rounded-xl border border-border/80 bg-card p-6 shadow-sm shadow-black/5 ring-1 ring-black/5 transition-all duration-200 hover:border-primary/35 hover:shadow-md md:p-8"
+                        : "w-full max-w-3xl rounded-xl border border-border/80 bg-card p-6 shadow-sm shadow-black/5 ring-1 ring-black/5 transition-all duration-200 hover:border-primary/35 hover:shadow-md md:p-8"
                     }
                   >
                     <div className="mb-4 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground">
                       {step.number}
                     </div>
                     <step.icon
-                      className="mb-4 h-8 w-8 shrink-0 text-primary"
+                      className="mb-4 h-7 w-7 shrink-0 text-primary"
                       aria-hidden
                     />
                     <h3 className="mb-2 font-serif text-xl font-semibold text-foreground sm:text-2xl">
                       {step.title}
                     </h3>
-                    <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
+                    <p className="text-sm leading-relaxed text-muted-foreground/90 sm:text-base">
                       {step.description}
                     </p>
                   </div>
 
                   {hasPreview && step.previewSrc && step.previewAlt ? (
                     <div className="min-w-0 flex-1 lg:max-w-none">
-                      <figure className="overflow-hidden rounded-xl border border-border bg-muted/30 shadow-md ring-1 ring-black/5 dark:ring-white/10">
+                      <figure className="overflow-hidden rounded-xl border border-border/80 bg-muted/30 shadow-sm shadow-black/5 ring-1 ring-black/5">
                         <img
                           src={step.previewSrc}
                           alt={step.previewAlt}
@@ -137,7 +137,7 @@ export function HowItWorks() {
         </StaggerContainer>
 
         <FadeInUp className="mt-20">
-          <div className="mx-auto max-w-2xl rounded-xl border border-border bg-card px-6 py-8 text-center shadow-sm md:px-10">
+          <div className="mx-auto max-w-2xl rounded-xl border border-border/80 bg-card px-6 py-8 text-center shadow-sm shadow-black/5 ring-1 ring-black/5 md:px-10">
             <p className="font-serif text-lg font-semibold text-foreground">
               Want to click through a real booking page?
             </p>
@@ -148,7 +148,7 @@ export function HowItWorks() {
               href={DEMO_STOREFRONT_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 inline-flex text-sm font-medium text-primary underline-offset-4 hover:underline sm:text-base"
+              className="mt-4 inline-flex text-sm font-medium text-primary underline-offset-4 transition-colors hover:text-primary/85 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:text-base"
             >
               Open live demo
             </a>

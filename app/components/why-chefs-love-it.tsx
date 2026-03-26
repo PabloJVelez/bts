@@ -39,7 +39,7 @@ export function WhyChefsLoveIt() {
           <div className="grid gap-8 md:grid-cols-3">
             {painPoints.map((item, index) => (
               <StaggerItem key={index}>
-                <div className="h-full overflow-hidden rounded-xl border border-border bg-card">
+                <div className="h-full overflow-hidden rounded-xl border border-border/80 bg-card shadow-sm shadow-black/5 ring-1 ring-black/5">
                   {/* Pain Section */}
                   <div className="border-b border-border bg-destructive/5 p-6">
                     <div className="mb-3 flex items-start gap-3">

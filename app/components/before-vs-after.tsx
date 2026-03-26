@@ -16,7 +16,7 @@ const afterItems = [
 
 export function BeforeVsAfter() {
   return (
-    <section className="bg-secondary/20 py-14 md:py-20">
+    <section className="bg-secondary/20 py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeInUp>
           <div className="mx-auto max-w-3xl text-center">
@@ -31,7 +31,7 @@ export function BeforeVsAfter() {
 
         <div className="mt-10 grid gap-6 md:grid-cols-2">
           <FadeInUp delay={0.1}>
-            <div className="h-full rounded-xl border border-border bg-card p-6">
+            <div className="h-full rounded-xl border border-border/80 bg-card p-6 shadow-sm shadow-black/5 ring-1 ring-black/5 md:p-7">
               <h3 className="font-serif text-xl font-semibold text-foreground">Before</h3>
               <ul className="mt-4 space-y-3">
                 {beforeItems.map((item) => (
@@ -44,7 +44,7 @@ export function BeforeVsAfter() {
           </FadeInUp>
 
           <FadeInUp delay={0.2}>
-            <div className="h-full rounded-xl border border-primary/30 bg-primary/5 p-6">
+            <div className="h-full rounded-xl border border-border/80 bg-primary/5 p-6 shadow-sm shadow-black/5 ring-1 ring-black/5 md:p-7">
               <h3 className="font-serif text-xl font-semibold text-foreground">After</h3>
               <ul className="mt-4 space-y-3">
                 {afterItems.map((item) => (

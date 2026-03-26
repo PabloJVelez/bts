@@ -40,10 +40,10 @@ export function SocialProof() {
             {personas.map((persona) => (
               <StaggerItem key={persona.name} className="h-full min-h-0">
                 <HoverScale className="h-full">
-                  <div className="flex h-full min-h-0 flex-col rounded-xl border border-border bg-card p-6 text-center transition-all duration-300 hover:border-primary/50 hover:shadow-md">
+                  <div className="flex h-full min-h-0 flex-col rounded-xl border border-border/80 bg-card p-6 text-center shadow-sm shadow-black/5 ring-1 ring-black/5 transition-all duration-200 hover:border-primary/35 hover:shadow-md">
                     {/* Avatar */}
-                    <div className="mx-auto mb-4 flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-secondary">
-                      <User className="h-8 w-8 text-muted-foreground" />
+                    <div className="mx-auto mb-4 flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-secondary/70 ring-1 ring-black/5">
+                      <User className="h-7 w-7 text-muted-foreground" />
                     </div>
 
                     {/* Name */}
@@ -52,7 +52,7 @@ export function SocialProof() {
                     </h3>
 
                     {/* Description */}
-                    <p className="mt-3 min-h-0 flex-1 text-sm leading-relaxed text-muted-foreground">
+                    <p className="mt-3 min-h-0 flex-1 text-sm leading-relaxed text-muted-foreground/90 sm:text-base">
                       {persona.description}
                     </p>
                   </div>
@@ -63,7 +63,7 @@ export function SocialProof() {
         </StaggerContainer>
 
         <FadeInUp delay={0.25}>
-          <div className="mx-auto mt-8 max-w-3xl rounded-xl border border-border bg-secondary/20 p-6 text-left">
+          <div className="mx-auto mt-8 max-w-3xl rounded-xl border border-border/80 bg-secondary/20 p-6 shadow-sm shadow-black/5 ring-1 ring-black/5 text-left md:p-7">
             <h3 className="font-serif text-xl font-semibold text-foreground">Who this is not for</h3>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:text-base">
               Chefs who only do one event every few months and do not care about deposits or keeping event details organized.

@@ -1,6 +1,6 @@
 "use client";
 
-import { ExternalLink, Mail } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { openCalendlyPopup } from "~/components/calendly-badge";
 import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
@@ -23,11 +23,11 @@ export function FinalCTA() {
         </FadeInUp>
 
         <FadeInUp delay={0.2}>
-          <div className="mt-10 flex flex-col items-stretch justify-center gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center">
+          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:flex-wrap sm:items-center">
             <Button
               onClick={openCalendlyPopup}
               size="lg"
-              className="bg-primary px-8 text-lg text-primary-foreground hover:bg-accent-hover"
+              className="px-8 text-lg"
             >
               Get a walkthrough
             </Button>
@@ -35,14 +35,8 @@ export function FinalCTA() {
               variant="outline"
               size="lg"
               asChild
-              className="border-border px-8 text-lg"
+              className="px-8 text-lg"
             >
-              <a href="mailto:pmltechpile@gmail.com" className="flex items-center justify-center gap-2">
-                <Mail className="h-5 w-5" />
-                Send us your menu
-              </a>
-            </Button>
-            <Button variant="outline" size="lg" asChild className="border-border px-8 text-lg">
               <a
                 href={DEMO_STOREFRONT_URL}
                 target="_blank"
@@ -54,6 +48,16 @@ export function FinalCTA() {
               </a>
             </Button>
           </div>
+          <p className="mt-4 text-sm text-muted-foreground">
+            Prefer email?{" "}
+            <a
+              href="mailto:pmltechpile@gmail.com"
+              className="font-medium text-primary underline-offset-4 transition-colors hover:text-primary/85 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            >
+              Send us your menu
+            </a>
+            .
+          </p>
         </FadeInUp>
       </div>
     </section>

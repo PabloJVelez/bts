@@ -1,5 +1,6 @@
 import { Header } from "~/components/header";
 import { Hero } from "~/components/hero";
+import { TrustRail } from "~/components/trust-rail";
 import { BeforeVsAfter } from "~/components/before-vs-after";
 import { HowItWorks } from "~/components/how-it-works";
 import { Features } from "~/components/features";
@@ -16,6 +17,7 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
+        <TrustRail />
         <BeforeVsAfter />
         <HowItWorks />
         <Features />
