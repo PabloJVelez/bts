@@ -20,19 +20,15 @@ export function Hero() {
                 Built for private chefs who book through DMs, texts, and email.
               </p>
               <h1 className="mx-auto max-w-xl font-serif text-4xl font-semibold leading-[1.06] tracking-[-0.02em] text-foreground sm:text-5xl lg:mx-0 lg:max-w-none lg:text-6xl text-balance">
-                Turn chef inquiries into paid deposits without chasing messages.
+                Turn private chef inquiries into paid deposits.
               </h1>
             </FadeInUp>
 
             <FadeInUp delay={0.1}>
               <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl text-pretty lg:mx-0">
-                We build you a branded booking page where clients browse menus,
-                submit complete event requests, and pay after you approve.
-              </p>
-              <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground/90 sm:text-base lg:mx-0">
-                Replace the old DM spiral: missing allergy notes, shifting
-                headcounts, buried kitchen addresses, and awkward deposit
-                reminders.
+                BTS builds you a branded booking page where clients choose a
+                menu, submit event details, and pay after you approve. No more
+                chasing DMs, texts, or deposit reminders.
               </p>
             </FadeInUp>
 
