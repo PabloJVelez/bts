@@ -2,69 +2,50 @@
 
 import {
   Store,
-  BookOpen,
   ClipboardList,
-  ShieldCheck,
   Wallet,
-  Mail,
-  Wrench,
-  CalendarCheck,
   BadgeCheck,
   ArrowRight,
+  Check,
 } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { openCalendlyPopup } from "~/components/calendly-badge";
 import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
 import { FadeInUp, StaggerContainer, StaggerItem, HoverScale } from "~/components/motion-wrapper";
 
-const offerItems = [
+const offerGroups = [
   {
     icon: Store,
-    title: "Branded booking page",
+    title: "Your branded storefront",
     description:
-      "A polished page for your chef brand, photos, menus, event types, and booking CTA.",
-  },
-  {
-    icon: BookOpen,
-    title: "Menu and experience upload",
-    description:
-      "Your tasting menus, family-style dinners, add-ons, pricing, and course details organized clearly.",
+      "A polished booking page that makes your chef brand easy to trust, browse, and book.",
+    items: [
+      "Brand, photos, event types, and booking CTA",
+      "Tasting menus, family-style dinners, add-ons, and pricing",
+      "A live demo-style page your clients can open from any DM or email",
+    ],
   },
   {
     icon: ClipboardList,
-    title: "Event request intake",
+    title: "Your inquiry-to-approval flow",
     description:
-      "Clients submit date, headcount, timing, address, allergies, notes, and the context you need.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Approval-first workflow",
-    description:
-      "Every request waits for your approval, so you never accept a booking before checking fit.",
+      "A guided request flow that collects the details you usually have to chase manually.",
+    items: [
+      "Date, timing, headcount, address, allergies, notes, and event context",
+      "Every request waits for your approval before anything is booked",
+      "A dashboard where event details stay together instead of scattered across threads",
+    ],
   },
   {
     icon: Wallet,
-    title: "Deposit or full-payment flow",
+    title: "Your payment and follow-up system",
     description:
-      "After approval, clients get the payment link. Collect a deposit, full payment, or guest split.",
-  },
-  {
-    icon: Mail,
-    title: "Email confirmations",
-    description:
-      "Clients get clear next steps and booking details without another round of manual follow-up.",
-  },
-  {
-    icon: CalendarCheck,
-    title: "Booking dashboard",
-    description:
-      "Review requests, keep event details together, and reduce the calendar risk of scattered threads.",
-  },
-  {
-    icon: Wrench,
-    title: "Done-for-you setup",
-    description:
-      "Send your menu, photos, and branding. We build the first version and walk you through it.",
+      "A clean handoff from approved request to paid deposit, confirmation, and next steps.",
+    items: [
+      "Deposit, full-payment, or guest-split payment flow",
+      "Email confirmations with the booking details and next step",
+      "Done-for-you setup from your menu, photos, branding, and booking rules",
+    ],
   },
 ];
 
@@ -76,7 +57,7 @@ const setupSteps = [
 
 export function Features() {
   return (
-    <section id="features" className="bg-background py-16 md:py-24">
+    <section id="features" className="scroll-mt-20 bg-background py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <FadeInUp>
@@ -85,10 +66,10 @@ export function Features() {
               The offer
             </p>
             <h2 className="font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Everything you need to turn interest into a payable booking request
+              Your private chef booking system, built for you.
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-muted-foreground sm:text-xl">
-              BTS is not another profile page. It is the booking system private chefs wish they had before the next serious inquiry lands.
+              BTS turns your menus, request forms, approvals, payments, and client follow-up into one branded flow.
             </p>
             <p className="mt-4 text-sm text-muted-foreground sm:text-base">
               Want proof before a walkthrough?{" "}
@@ -105,20 +86,35 @@ export function Features() {
           </div>
         </FadeInUp>
 
-        <StaggerContainer className="mt-14 grid auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-          {offerItems.map((item) => (
-            <StaggerItem key={item.title}>
+        <StaggerContainer className="mt-12 grid gap-5 lg:grid-cols-3 lg:gap-6">
+          {offerGroups.map((group, index) => (
+            <StaggerItem key={group.title}>
               <HoverScale className="h-full">
-                <div className="flex h-full min-h-0 flex-col rounded-xl border border-border/80 bg-card p-6 shadow-sm shadow-black/5 ring-1 ring-black/5 transition-all duration-300 hover:border-primary/35 hover:shadow-md">
-                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-background/70 ring-1 ring-black/5">
-                    <item.icon className="h-5 w-5 text-primary" aria-hidden />
+                <div className="flex h-full min-h-0 flex-col rounded-xl border border-border/80 bg-card p-5 shadow-sm shadow-black/5 ring-1 ring-black/5 transition-all duration-300 hover:border-primary/35 hover:shadow-md sm:p-6">
+                  <div className="mb-5 flex items-center gap-3">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/10 ring-1 ring-primary/15">
+                      <group.icon className="h-5 w-5 text-primary" aria-hidden />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs font-medium uppercase tracking-[0.14em] text-primary/80">
+                        0{index + 1}
+                      </p>
+                      <h3 className="font-serif text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
+                        {group.title}
+                      </h3>
+                    </div>
                   </div>
-                  <h3 className="mb-2 max-w-[24ch] font-serif text-lg font-semibold tracking-tight text-foreground sm:text-xl">
-                    {item.title}
-                  </h3>
-                  <p className="min-h-0 flex-1 text-sm leading-relaxed text-muted-foreground/90 sm:text-base">
-                    {item.description}
+                  <p className="text-sm leading-relaxed text-muted-foreground/90 sm:text-base">
+                    {group.description}
                   </p>
+                  <ul className="mt-5 space-y-3 border-t border-border/70 pt-5">
+                    {group.items.map((item) => (
+                      <li key={item} className="flex gap-3 text-sm leading-relaxed text-foreground/85 sm:text-base">
+                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </HoverScale>
             </StaggerItem>
@@ -132,7 +128,7 @@ export function Features() {
                 <BadgeCheck className="h-5 w-5" aria-hidden />
               </div>
               <h3 className="font-serif text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-                Built for you, then walked through with you
+                Built for you, then walked through with you.
               </h3>
               <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
                 You do not need to stitch together forms, payment links, menu PDFs, and follow-up emails. We turn your existing material into a working booking flow.
