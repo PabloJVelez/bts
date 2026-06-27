@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "react-router dev",
     "build": "react-router build",
+    "generate:demo-video": "node scripts/generate-demo-video.mjs",
     "start": "react-router-serve ./build/server/index.js"
   },
   "dependencies": {

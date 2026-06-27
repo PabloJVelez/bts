@@ -5,7 +5,7 @@ import { ServerRouter, UNSAFE_withComponentProps, Outlet, Meta, Links, ScrollRes
 import { isbot } from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
 import { useEffect, useState } from "react";
-import { X, Menu, ChefHat, CreditCard, Sparkles, UtensilsCrossed, CalendarCheck, CheckCircle, Wallet, Mail, ClipboardList, ShieldCheck, Store, BookOpen, Wrench, XCircle, CheckCircle2, User, ChevronDownIcon, ExternalLink } from "lucide-react";
+import { X, Menu, ChefHat, Sparkles, BadgeCheck, CreditCard, MousePointerClick, ExternalLink, UtensilsCrossed, CalendarCheck, CheckCircle, Check, Store, ClipboardList, Wallet, ArrowRight, XCircle, CheckCircle2, User, ChevronDownIcon } from "lucide-react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
 import { clsx } from "clsx";
@@ -214,7 +214,7 @@ const navLinks = [
   { href: "#how-it-works", label: "How It Works" },
   { href: "#features", label: "What You Get" },
   // { href: "#pricing", label: "Pricing" }, // Re-enable with <Pricing /> on home
-  { href: DEMO_STOREFRONT_URL, label: "Live Demo Storefront", external: true },
+  { href: DEMO_STOREFRONT_URL, label: "Live Booking Flow", external: true },
   { href: "#faq", label: "FAQ" }
 ];
 function Header() {
@@ -240,7 +240,7 @@ function Header() {
         {
           onClick: openCalendlyPopup,
           className: "bg-primary text-primary-foreground hover:bg-accent-hover",
-          children: "Get a Walkthrough"
+          children: "Get My Booking Page Built"
         }
       ) }),
       /* @__PURE__ */ jsx(
@@ -273,7 +273,7 @@ function Header() {
             openCalendlyPopup();
           },
           className: "mt-2 w-full bg-primary text-primary-foreground hover:bg-accent-hover",
-          children: "Get a Walkthrough"
+          children: "Get My Booking Page Built"
         }
       )
     ] }) })
@@ -351,13 +351,10 @@ function Hero() {
     /* @__PURE__ */ jsx("div", { className: "relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsxs("div", { className: "grid items-center gap-12 lg:grid-cols-2 lg:gap-18", children: [
       /* @__PURE__ */ jsxs("div", { className: "text-center lg:text-left", children: [
         /* @__PURE__ */ jsxs(FadeInUp, { children: [
-          /* @__PURE__ */ jsx("p", { className: "mb-4 text-xs font-medium uppercase tracking-[0.14em] text-primary/90", children: "Behind the Sauté is a booking and payment page for private chefs." }),
-          /* @__PURE__ */ jsx("h1", { className: "mx-auto max-w-xl font-serif text-4xl font-semibold leading-[1.06] tracking-[-0.02em] text-foreground sm:text-5xl lg:mx-0 lg:max-w-none lg:text-6xl text-balance", children: "Send one link. Get booking details. Get paid." })
+          /* @__PURE__ */ jsx("p", { className: "mb-4 text-xs font-medium uppercase tracking-[0.14em] text-primary/90", children: "Built for private chefs who book through DMs, texts, and email." }),
+          /* @__PURE__ */ jsx("h1", { className: "mx-auto max-w-xl font-serif text-4xl font-semibold leading-[1.06] tracking-[-0.02em] text-foreground sm:text-5xl lg:mx-0 lg:max-w-none lg:text-6xl text-balance", children: "Turn private chef inquiries into paid deposits." })
         ] }),
-        /* @__PURE__ */ jsxs(FadeInUp, { delay: 0.1, children: [
-          /* @__PURE__ */ jsx("p", { className: "mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl text-pretty lg:mx-0", children: "Your client picks a menu, fills out a short request, pays a deposit or full amount, and you approve or decline from one dashboard." }),
-          /* @__PURE__ */ jsx("p", { className: "mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground/90 sm:text-base lg:mx-0", children: "If this sounds like you, this helps: you are chasing deposits, missing allergy notes, or double-checking headcount from old texts." })
-        ] }),
+        /* @__PURE__ */ jsx(FadeInUp, { delay: 0.1, children: /* @__PURE__ */ jsx("p", { className: "mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl text-pretty lg:mx-0", children: "BTS builds you a branded booking page where clients choose a menu, submit event details, and pay after you approve. No more chasing DMs, texts, or deposit reminders." }) }),
         /* @__PURE__ */ jsxs(FadeInUp, { delay: 0.2, children: [
           /* @__PURE__ */ jsxs("div", { className: "mt-9 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start", children: [
             /* @__PURE__ */ jsx(
@@ -366,7 +363,7 @@ function Hero() {
                 onClick: openCalendlyPopup,
                 size: "lg",
                 className: "bg-primary px-8 text-base text-primary-foreground shadow-sm shadow-black/5 hover:bg-accent-hover hover:shadow-md focus-visible:ring-offset-2 sm:text-lg",
-                children: "Get a walkthrough"
+                children: "Get My Booking Page Built"
               }
             ),
             /* @__PURE__ */ jsx(
@@ -382,7 +379,7 @@ function Hero() {
                     href: DEMO_STOREFRONT_URL,
                     target: "_blank",
                     rel: "noopener noreferrer",
-                    children: "See the booking link demo"
+                    children: "See Live Booking Flow"
                   }
                 )
               }
@@ -396,10 +393,10 @@ function Hero() {
                 target: "_blank",
                 rel: "noopener noreferrer",
                 className: "font-medium text-primary underline-offset-4 transition-colors hover:text-primary/85 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-                children: "View live demo storefront"
+                children: "View the live demo storefront"
               }
             ),
-            ". This is what your client sees before they book."
+            ". It shows the exact menu, request, approval, and payment flow."
           ] })
         ] })
       ] }),
@@ -417,12 +414,14 @@ function Hero() {
   ] });
 }
 const items = [
-  { icon: ChefHat, label: "Made for private chefs" },
-  { icon: CreditCard, label: "Collect payments online" },
-  { icon: Sparkles, label: "We set it up for you" }
+  { icon: ChefHat, label: "Built for private chefs" },
+  { icon: Sparkles, label: "Done-for-you setup" },
+  { icon: BadgeCheck, label: "You approve every booking" },
+  { icon: CreditCard, label: "Collect deposits or full payment" },
+  { icon: MousePointerClick, label: "Live booking demo available" }
 ];
 function TrustRail() {
-  return /* @__PURE__ */ jsx("section", { "aria-label": "Trust and proof", className: "bg-background", children: /* @__PURE__ */ jsx("div", { className: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsx(FadeInUp, { children: /* @__PURE__ */ jsx("div", { className: "border-y border-border/70 py-6 md:py-7", children: /* @__PURE__ */ jsx("ul", { className: "grid gap-y-3 gap-x-6 sm:grid-cols-3 sm:gap-y-2", children: items.map((item) => /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-3", children: [
+  return /* @__PURE__ */ jsx("section", { "aria-label": "Trust and proof", className: "bg-background", children: /* @__PURE__ */ jsx("div", { className: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", children: /* @__PURE__ */ jsx(FadeInUp, { children: /* @__PURE__ */ jsx("div", { className: "border-y border-border/70 py-6 md:py-7", children: /* @__PURE__ */ jsx("ul", { className: "grid gap-y-3 gap-x-6 sm:grid-cols-2 sm:gap-y-4 lg:grid-cols-5", children: items.map((item) => /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-3", children: [
     /* @__PURE__ */ jsx("div", { className: "flex h-8 w-8 items-center justify-center rounded-full bg-secondary/70 ring-1 ring-black/5", children: /* @__PURE__ */ jsx(item.icon, { className: "h-4 w-4 text-primary", "aria-hidden": true }) }),
     /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-foreground/85", children: item.label })
   ] }, item.label)) }) }) }) }) });
@@ -459,162 +458,174 @@ const steps = [
   {
     number: 1,
     icon: UtensilsCrossed,
-    title: "Share your link",
-    description: "Send your booking page in a text, email, or Instagram DM. Clients can see your menus and experiences without asking for screenshots.",
-    previewSrc: "/chefevethub-menus.png",
-    previewAlt: "Example storefront menus page showing catalog cards with images, course counts, and pricing."
+    eyebrow: "Client sees the menu"
   },
   {
     number: 2,
     icon: CalendarCheck,
-    title: "Client answers the questions you always ask",
-    description: "They add date, timing, headcount, kitchen address, allergies, and notes in one guided form.",
-    previewSrc: "/chefeventhub-request.png",
-    previewAlt: "Example multi-step request form for choosing experience type, menu, and guest count."
+    eyebrow: "Client submits the details"
   },
   {
     number: 3,
     icon: CheckCircle,
-    title: "You approve or decline",
-    description: "Every request lands in your dashboard. Accept the ones you want and decline the ones that do not fit your calendar.",
-    previewSrc: "/chefeventhub-admin-request.png",
-    previewAlt: "Example admin screen for reviewing an event request with accept and reject actions."
+    eyebrow: "Chef stays in control"
   },
   {
     number: 4,
     icon: CreditCard,
-    title: "Payment happens and details stay in one place",
-    description: "After approval, they get a payment link by email. You can collect a deposit, full payment, or let guests chip in.",
-    previewSrc: "/chefeventhub-request-accepted.png",
-    previewAlt: "Example email confirmation with event details, payment summary, and a purchase tickets link."
+    eyebrow: "Client gets the next step"
   }
 ];
 function HowItWorks() {
-  return /* @__PURE__ */ jsx("section", { id: "how-it-works", className: "bg-background py-16 md:py-24", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", children: [
-    /* @__PURE__ */ jsx(FadeInUp, { children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-2xl text-center", children: [
-      /* @__PURE__ */ jsx("h2", { className: "font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl", children: "How It Works" }),
-      /* @__PURE__ */ jsx("p", { className: "mt-4 text-lg text-muted-foreground", children: "From first message to confirmed booking in four steps." })
-    ] }) }),
-    /* @__PURE__ */ jsx(StaggerContainer, { className: "mt-16 flex flex-col gap-16 md:gap-20 lg:gap-24", children: steps.map((step, index) => {
-      const hasPreview = Boolean(step.previewSrc);
-      const reverseOnLarge = index % 2 === 1;
-      return /* @__PURE__ */ jsx(StaggerItem, { children: /* @__PURE__ */ jsxs(
-        "div",
-        {
-          className: hasPreview ? `flex flex-col gap-8 lg:items-center lg:gap-12 ${reverseOnLarge ? "lg:flex-row-reverse" : "lg:flex-row"}` : "flex justify-center",
-          children: [
-            /* @__PURE__ */ jsxs(
-              "div",
-              {
-                className: hasPreview ? "flex min-w-0 flex-1 flex-col rounded-xl border border-border/80 bg-card p-6 shadow-sm shadow-black/5 ring-1 ring-black/5 transition-all duration-200 hover:border-primary/35 hover:shadow-md md:p-8" : "w-full max-w-3xl rounded-xl border border-border/80 bg-card p-6 shadow-sm shadow-black/5 ring-1 ring-black/5 transition-all duration-200 hover:border-primary/35 hover:shadow-md md:p-8",
-                children: [
-                  /* @__PURE__ */ jsx("div", { className: "mb-4 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground", children: step.number }),
-                  /* @__PURE__ */ jsx(
-                    step.icon,
-                    {
-                      className: "mb-4 h-7 w-7 shrink-0 text-primary",
-                      "aria-hidden": true
-                    }
-                  ),
-                  /* @__PURE__ */ jsx("h3", { className: "mb-2 font-serif text-xl font-semibold text-foreground sm:text-2xl", children: step.title }),
-                  /* @__PURE__ */ jsx("p", { className: "text-sm leading-relaxed text-muted-foreground/90 sm:text-base", children: step.description })
-                ]
-              }
-            ),
-            hasPreview && step.previewSrc && step.previewAlt ? /* @__PURE__ */ jsx("div", { className: "min-w-0 flex-1 lg:max-w-none", children: /* @__PURE__ */ jsx("figure", { className: "overflow-hidden rounded-xl border border-border/80 bg-muted/30 shadow-sm shadow-black/5 ring-1 ring-black/5", children: /* @__PURE__ */ jsx(
-              "img",
-              {
-                src: step.previewSrc,
-                alt: step.previewAlt,
-                className: "aspect-16/10 w-full object-cover object-top",
-                loading: index === 0 ? "eager" : "lazy",
-                decoding: "async"
-              }
-            ) }) }) : null
-          ]
-        }
-      ) }, step.number);
-    }) }),
-    /* @__PURE__ */ jsx(FadeInUp, { className: "mt-20", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-2xl rounded-xl border border-border/80 bg-card px-6 py-8 text-center shadow-sm shadow-black/5 ring-1 ring-black/5 md:px-10", children: [
-      /* @__PURE__ */ jsx("p", { className: "font-serif text-lg font-semibold text-foreground", children: "Want to click through a real booking page?" }),
-      /* @__PURE__ */ jsx("p", { className: "mt-2 text-sm text-muted-foreground sm:text-base", children: "Open the live demo. It is the same flow your clients use." }),
+  return /* @__PURE__ */ jsx("section", { id: "how-it-works", className: "bg-secondary/25 py-16 md:py-24", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", children: [
+    /* @__PURE__ */ jsx(FadeInUp, { children: /* @__PURE__ */ jsxs("div", { className: "grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end", children: [
+      /* @__PURE__ */ jsxs("div", { className: "max-w-3xl text-center lg:text-left", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-xs font-medium uppercase tracking-[0.14em] text-primary/90", children: "Live template demo" }),
+        /* @__PURE__ */ jsx("h2", { className: "mt-3 font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl", children: "See the booking flow your clients would use." }),
+        /* @__PURE__ */ jsx("p", { className: "mt-4 text-lg leading-relaxed text-muted-foreground", children: "A short look at the working demo: clients choose a menu, send event details, wait for your approval, then get the payment handoff." })
+      ] }),
       /* @__PURE__ */ jsx(
-        "a",
+        Button,
         {
-          href: DEMO_STOREFRONT_URL,
-          target: "_blank",
-          rel: "noopener noreferrer",
-          className: "mt-4 inline-flex text-sm font-medium text-primary underline-offset-4 transition-colors hover:text-primary/85 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:text-base",
-          children: "Open live demo"
+          asChild: true,
+          size: "lg",
+          className: "mx-auto w-full bg-primary text-primary-foreground hover:bg-accent-hover sm:w-auto lg:mx-0",
+          children: /* @__PURE__ */ jsxs(
+            "a",
+            {
+              href: DEMO_STOREFRONT_URL,
+              target: "_blank",
+              rel: "noopener noreferrer",
+              children: [
+                "Open Live Demo",
+                /* @__PURE__ */ jsx(ExternalLink, { className: "h-4 w-4", "aria-hidden": true })
+              ]
+            }
+          )
         }
       )
-    ] }) })
+    ] }) }),
+    /* @__PURE__ */ jsx(FadeInUp, { className: "mt-12", children: /* @__PURE__ */ jsxs("div", { className: "overflow-hidden rounded-xl border border-border/80 bg-card shadow-sm shadow-black/5 ring-1 ring-black/5", children: [
+      /* @__PURE__ */ jsx("div", { className: "border-b border-border/70 bg-muted/30 p-2 sm:p-3", children: /* @__PURE__ */ jsx(
+        "video",
+        {
+          className: "aspect-video w-full rounded-lg bg-muted object-cover",
+          autoPlay: true,
+          loop: true,
+          muted: true,
+          playsInline: true,
+          preload: "auto",
+          poster: "/chefevethub-menus.png",
+          "aria-label": "Demo loop showing the private chef booking flow from menu browsing to payment handoff.",
+          children: /* @__PURE__ */ jsx(
+            "source",
+            {
+              src: "/videos/chef-booking-flow.webm",
+              type: "video/webm"
+            }
+          )
+        }
+      ) }),
+      /* @__PURE__ */ jsxs("div", { className: "grid gap-4 p-5 sm:p-6 lg:grid-cols-[1fr_auto] lg:items-center", children: [
+        /* @__PURE__ */ jsxs("div", { children: [
+          /* @__PURE__ */ jsx("p", { className: "font-serif text-xl font-semibold text-foreground sm:text-2xl", children: "One flow from first look to paid booking." }),
+          /* @__PURE__ */ jsx("p", { className: "mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base", children: "The demo keeps each next step clear, so serious inquiries do not disappear into screenshots, texts, and follow-up messages." })
+        ] }),
+        /* @__PURE__ */ jsx(
+          Button,
+          {
+            variant: "outline",
+            asChild: true,
+            className: "w-full bg-background sm:w-auto",
+            children: /* @__PURE__ */ jsxs(
+              "a",
+              {
+                href: DEMO_STOREFRONT_URL,
+                target: "_blank",
+                rel: "noopener noreferrer",
+                children: [
+                  "View demo storefront",
+                  /* @__PURE__ */ jsx(ExternalLink, { className: "h-4 w-4", "aria-hidden": true })
+                ]
+              }
+            )
+          }
+        )
+      ] })
+    ] }) }),
+    /* @__PURE__ */ jsx(StaggerContainer, { className: "mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4", children: steps.map((step) => /* @__PURE__ */ jsx(StaggerItem, { children: /* @__PURE__ */ jsxs("div", { className: "flex h-full items-center gap-3 rounded-lg border border-border/70 bg-background px-4 py-3 shadow-sm shadow-black/5", children: [
+      /* @__PURE__ */ jsx("div", { className: "flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary ring-1 ring-primary/15", children: /* @__PURE__ */ jsx(step.icon, { className: "h-4 w-4", "aria-hidden": true }) }),
+      /* @__PURE__ */ jsxs("div", { className: "min-w-0", children: [
+        /* @__PURE__ */ jsxs("p", { className: "text-xs font-medium uppercase tracking-[0.14em] text-primary/80", children: [
+          "Step ",
+          step.number
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "mt-0.5 truncate text-sm font-medium text-foreground", children: step.eyebrow })
+      ] })
+    ] }) }, step.number)) })
   ] }) });
 }
-const featureBuckets = [
+const bookingSystemGroups = [
   {
-    heading: "Get paid upfront",
+    icon: Store,
+    title: "A branded booking page",
+    description: "A polished page built from your real menus, photos, event types, and booking preferences.",
     items: [
-      {
-        icon: Wallet,
-        title: "Collect deposits or full payment online",
-        description: "Take a deposit, charge in full, or split it so guests can each pay their part online."
-      },
-      {
-        icon: Mail,
-        title: "Send payment links and confirmations automatically",
-        description: "After you approve, clients get a clear email with next steps and payment details so you are not chasing money."
-      }
+      "Your brand, photos, menus, add-ons, pricing, and event types",
+      "A simple path from browsing to starting a request",
+      "A shareable link clients can open from any DM, email, or bio"
     ]
   },
   {
-    heading: "Keep event details in one place",
+    icon: ClipboardList,
+    title: "A guided request flow",
+    description: "A guided form collects the details you usually have to chase manually before you quote.",
     items: [
-      {
-        icon: ClipboardList,
-        title: "Collect the details you need to cook",
-        description: "Date, headcount, timing, kitchen address, allergies, and notes are all captured in one guided form."
-      },
-      {
-        icon: ShieldCheck,
-        title: "Approve or decline from your dashboard",
-        description: "See each request in one view. Stay in control of your calendar and avoid accidental double-booking."
-      }
+      "Date, timing, headcount, address, allergies, notes, and event context",
+      "Every request waits for your approval before anything is booked",
+      "A dashboard where event details stay together instead of scattered across threads"
     ]
   },
   {
-    heading: "Look professional without extra work",
+    icon: Wallet,
+    title: "Payment and follow-up",
+    description: "Approved clients get a clean next step for payment, confirmation, and booking details.",
     items: [
-      {
-        icon: Store,
-        title: "Get your own branded chef website",
-        description: "Your name, photos, menus, and experiences all live on one page you can send to anyone who asks, 'Are you free?'"
-      },
-      {
-        icon: BookOpen,
-        title: "Show menus clearly",
-        description: "Clients browse your dishes and pricing on your site instead of asking for menu screenshots or old PDFs."
-      },
-      {
-        icon: ChefHat,
-        title: "Set up experiences your way",
-        description: "Offer the event types you actually run, from tasting menus to family-style dinners, with the pricing you choose."
-      },
-      {
-        icon: Wrench,
-        title: "Let us set everything up",
-        description: "Send us your menu, photos, and branding. We build the site and booking flow for you."
-      }
+      "Deposit, full payment, or guest-split payment options",
+      "Email confirmations with the booking details and next steps",
+      "Done-for-you setup from your menu, photos, branding, and booking rules"
     ]
   }
 ];
+const confidenceCues = [
+  "Built from your existing menus and photos",
+  "Reviewed with you before you send it to clients",
+  "Live demo available before the walkthrough"
+];
+const setupSteps = [
+  "You send your menu, photos, event types, and booking rules.",
+  "We build your first booking page and request flow.",
+  "You review the live flow before sending it to clients."
+];
 function Features() {
-  return /* @__PURE__ */ jsx("section", { id: "features", className: "bg-background py-16 md:py-24", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", children: [
+  return /* @__PURE__ */ jsx("section", { id: "features", className: "scroll-mt-20 bg-background py-16 md:py-24", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", children: [
     /* @__PURE__ */ jsx(FadeInUp, { children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-3xl text-center", children: [
-      /* @__PURE__ */ jsx("h2", { className: "font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl", children: "Built to solve real booking problems" }),
-      /* @__PURE__ */ jsx("p", { className: "mt-4 text-lg leading-relaxed text-muted-foreground sm:text-xl", children: "Keep texting clients if you want. Use one link when it is time to collect details and payment." }),
+      /* @__PURE__ */ jsx("p", { className: "text-xs font-medium uppercase tracking-[0.14em] text-primary/90", children: "What you get" }),
+      /* @__PURE__ */ jsx("h2", { className: "font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl", children: "Your private chef booking system, built for you." }),
+      /* @__PURE__ */ jsx("p", { className: "mt-4 text-lg leading-relaxed text-muted-foreground sm:text-xl", children: "BTS turns your menus, request forms, approvals, payments, and client follow-up into one branded flow." }),
+      /* @__PURE__ */ jsx("div", { className: "mt-6 grid gap-2 text-left sm:grid-cols-3", children: confidenceCues.map((cue) => /* @__PURE__ */ jsxs(
+        "div",
+        {
+          className: "flex items-start gap-2 rounded-lg border border-border/70 bg-card/70 px-3 py-3 text-sm leading-snug text-foreground/85 shadow-sm shadow-black/5",
+          children: [
+            /* @__PURE__ */ jsx(Check, { className: "mt-0.5 h-4 w-4 shrink-0 text-primary", "aria-hidden": true }),
+            /* @__PURE__ */ jsx("span", { children: cue })
+          ]
+        },
+        cue
+      )) }),
       /* @__PURE__ */ jsxs("p", { className: "mt-4 text-sm text-muted-foreground sm:text-base", children: [
-        "Want to see it in action?",
+        "Want proof before a walkthrough?",
         " ",
         /* @__PURE__ */ jsx(
           "a",
@@ -623,20 +634,66 @@ function Features() {
             target: "_blank",
             rel: "noopener noreferrer",
             className: "font-medium text-primary underline-offset-4 transition-colors hover:text-primary/85 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-            children: "Browse our live demo storefront"
+            children: "Browse our live demo booking page"
           }
         ),
         "."
       ] })
     ] }) }),
-    /* @__PURE__ */ jsx(StaggerContainer, { className: "mt-14", children: /* @__PURE__ */ jsx("div", { className: "space-y-12 md:space-y-14", children: featureBuckets.map((bucket) => /* @__PURE__ */ jsx(StaggerItem, { children: /* @__PURE__ */ jsxs("div", { children: [
-      /* @__PURE__ */ jsx("h3", { className: "mb-5 font-serif text-2xl font-semibold tracking-tight text-foreground", children: bucket.heading }),
-      /* @__PURE__ */ jsx("div", { className: "grid auto-rows-fr gap-5 sm:grid-cols-2 lg:gap-6", children: bucket.items.map((feature) => /* @__PURE__ */ jsx(HoverScale, { className: "h-full", children: /* @__PURE__ */ jsxs("div", { className: "flex h-full min-h-0 flex-col rounded-xl border border-border/80 bg-card p-6 shadow-sm shadow-black/5 ring-1 ring-black/5 transition-all duration-300 hover:border-primary/35 hover:shadow-md", children: [
-        /* @__PURE__ */ jsx("div", { className: "mb-4 flex items-center gap-3", children: /* @__PURE__ */ jsx("div", { className: "flex h-10 w-10 items-center justify-center rounded-full bg-background/70 ring-1 ring-black/5", children: /* @__PURE__ */ jsx(feature.icon, { className: "h-5 w-5 text-primary", "aria-hidden": true }) }) }),
-        /* @__PURE__ */ jsx("h4", { className: "mb-2 max-w-[28ch] font-serif text-lg font-semibold tracking-tight text-foreground sm:text-xl", children: feature.title }),
-        /* @__PURE__ */ jsx("p", { className: "min-h-0 flex-1 max-w-prose text-sm leading-relaxed text-muted-foreground/90 sm:text-base", children: feature.description })
-      ] }) }, feature.title)) })
-    ] }) }, bucket.heading)) }) })
+    /* @__PURE__ */ jsx(StaggerContainer, { className: "mt-12 grid gap-5 lg:grid-cols-3 lg:gap-6", children: bookingSystemGroups.map((group, index) => /* @__PURE__ */ jsx(StaggerItem, { children: /* @__PURE__ */ jsx(HoverScale, { className: "h-full", children: /* @__PURE__ */ jsxs("div", { className: "flex h-full min-h-0 flex-col rounded-xl border border-border/80 bg-card p-5 shadow-sm shadow-black/5 ring-1 ring-black/5 transition-all duration-300 hover:border-primary/35 hover:shadow-md sm:p-6", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mb-5 flex items-center gap-3", children: [
+        /* @__PURE__ */ jsx("div", { className: "flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/10 ring-1 ring-primary/15", children: /* @__PURE__ */ jsx(group.icon, { className: "h-5 w-5 text-primary", "aria-hidden": true }) }),
+        /* @__PURE__ */ jsxs("div", { className: "min-w-0", children: [
+          /* @__PURE__ */ jsxs("p", { className: "text-xs font-medium uppercase tracking-[0.14em] text-primary/80", children: [
+            "0",
+            index + 1
+          ] }),
+          /* @__PURE__ */ jsx("h3", { className: "font-serif text-xl font-semibold tracking-tight text-foreground sm:text-2xl", children: group.title })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsx("p", { className: "text-sm leading-relaxed text-muted-foreground/90 sm:text-base", children: group.description }),
+      /* @__PURE__ */ jsx("ul", { className: "mt-5 space-y-3 border-t border-border/70 pt-5", children: group.items.map((item) => /* @__PURE__ */ jsxs("li", { className: "flex gap-3 text-sm leading-relaxed text-foreground/85 sm:text-base", children: [
+        /* @__PURE__ */ jsx(Check, { className: "mt-0.5 h-4 w-4 shrink-0 text-primary", "aria-hidden": true }),
+        /* @__PURE__ */ jsx("span", { children: item })
+      ] }, item)) })
+    ] }) }) }, group.title)) }),
+    /* @__PURE__ */ jsx(FadeInUp, { className: "mt-8", children: /* @__PURE__ */ jsx("div", { className: "rounded-xl border border-primary/20 bg-primary/5 px-5 py-5 text-center shadow-sm shadow-black/5 sm:px-6", children: /* @__PURE__ */ jsx("p", { className: "mx-auto max-w-3xl text-base font-medium leading-relaxed text-foreground sm:text-lg", children: "The end result is simple: clients request a date, you approve the right fit, and payment happens before the event details get lost in messages." }) }) }),
+    /* @__PURE__ */ jsx(FadeInUp, { className: "mt-14", children: /* @__PURE__ */ jsxs("div", { className: "grid gap-8 border-y border-border/80 py-10 md:grid-cols-[1fr_1.1fr] md:items-center md:py-12", children: [
+      /* @__PURE__ */ jsxs("div", { children: [
+        /* @__PURE__ */ jsx("div", { className: "mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-primary text-primary-foreground", children: /* @__PURE__ */ jsx(BadgeCheck, { className: "h-5 w-5", "aria-hidden": true }) }),
+        /* @__PURE__ */ jsx("h3", { className: "font-serif text-2xl font-semibold tracking-tight text-foreground sm:text-3xl", children: "Built for you, then walked through with you." }),
+        /* @__PURE__ */ jsx("p", { className: "mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg", children: "You do not need to stitch together forms, payment links, menu PDFs, and follow-up emails. We turn your existing material into a working booking flow." })
+      ] }),
+      /* @__PURE__ */ jsx("div", { className: "space-y-4", children: setupSteps.map((step, index) => /* @__PURE__ */ jsxs("div", { className: "flex gap-4", children: [
+        /* @__PURE__ */ jsx("div", { className: "mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary text-sm font-semibold text-foreground ring-1 ring-border/80", children: index + 1 }),
+        /* @__PURE__ */ jsx("p", { className: "text-sm leading-relaxed text-muted-foreground sm:text-base", children: step })
+      ] }, step)) })
+    ] }) }),
+    /* @__PURE__ */ jsx(FadeInUp, { className: "mt-10", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center justify-between gap-5 rounded-xl border border-border/80 bg-secondary/35 px-5 py-6 text-center shadow-sm shadow-black/5 ring-1 ring-black/5 sm:px-6 md:flex-row md:text-left", children: [
+      /* @__PURE__ */ jsx("p", { className: "max-w-2xl text-base font-medium leading-relaxed text-foreground sm:text-lg", children: "See exactly what your client would click through before we build yours." }),
+      /* @__PURE__ */ jsxs("div", { className: "flex w-full flex-col gap-3 sm:w-auto sm:flex-row", children: [
+        /* @__PURE__ */ jsxs(
+          Button,
+          {
+            onClick: openCalendlyPopup,
+            className: "w-full bg-primary text-primary-foreground hover:bg-accent-hover sm:w-auto",
+            children: [
+              "Get My Booking Page Built",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "h-4 w-4", "aria-hidden": true })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsx(Button, { variant: "outline", asChild: true, className: "w-full bg-background/70 sm:w-auto", children: /* @__PURE__ */ jsx(
+          "a",
+          {
+            href: DEMO_STOREFRONT_URL,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            children: "Open live demo"
+          }
+        ) })
+      ] })
+    ] }) })
   ] }) });
 }
 const painPoints = [
@@ -700,7 +757,7 @@ function SocialProof() {
         {
           onClick: openCalendlyPopup,
           className: "bg-primary px-8 text-primary-foreground hover:bg-accent-hover",
-          children: "Get a walkthrough"
+          children: "Get My Booking Page Built"
         }
       )
     ] }) })
@@ -823,7 +880,7 @@ function FinalCTA() {
             onClick: openCalendlyPopup,
             size: "lg",
             className: "px-8 text-lg",
-            children: "Get a walkthrough"
+            children: "Get My Booking Page Built"
           }
         ),
         /* @__PURE__ */ jsx(
@@ -904,7 +961,7 @@ const home = UNSAFE_withComponentProps(function Home() {
   return /* @__PURE__ */ jsxs("div", {
     className: "flex min-h-screen flex-col",
     children: [/* @__PURE__ */ jsx(Header, {}), /* @__PURE__ */ jsxs("main", {
-      children: [/* @__PURE__ */ jsx(Hero, {}), /* @__PURE__ */ jsx(TrustRail, {}), /* @__PURE__ */ jsx(BeforeVsAfter, {}), /* @__PURE__ */ jsx(HowItWorks, {}), /* @__PURE__ */ jsx(Features, {}), /* @__PURE__ */ jsx(WhyChefsLoveIt, {}), /* @__PURE__ */ jsx(SocialProof, {}), /* @__PURE__ */ jsx(FAQ, {}), /* @__PURE__ */ jsx(FinalCTA, {})]
+      children: [/* @__PURE__ */ jsx(Hero, {}), /* @__PURE__ */ jsx(TrustRail, {}), /* @__PURE__ */ jsx(HowItWorks, {}), /* @__PURE__ */ jsx(BeforeVsAfter, {}), /* @__PURE__ */ jsx(Features, {}), /* @__PURE__ */ jsx(WhyChefsLoveIt, {}), /* @__PURE__ */ jsx(SocialProof, {}), /* @__PURE__ */ jsx(FAQ, {}), /* @__PURE__ */ jsx(FinalCTA, {})]
     }), /* @__PURE__ */ jsx(Footer, {})]
   });
 });
@@ -912,7 +969,7 @@ const route1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
   __proto__: null,
   default: home
 }, Symbol.toStringTag, { value: "Module" }));
-const serverManifest = { "entry": { "module": "/assets/entry.client-UUx4C3gi.js", "imports": ["/assets/chunk-LFPYN7LY-BwAHFOGz.js", "/assets/index-BaexvpaO.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/root-B8lb-l_h.js", "imports": ["/assets/chunk-LFPYN7LY-BwAHFOGz.js", "/assets/index-BaexvpaO.js", "/assets/calendly-badge-8JLwNPOE.js"], "css": ["/assets/root-D6CcXvYG.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/home": { "id": "routes/home", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/home-CLrHADJq.js", "imports": ["/assets/chunk-LFPYN7LY-BwAHFOGz.js", "/assets/calendly-badge-8JLwNPOE.js", "/assets/index-BaexvpaO.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 } }, "url": "/assets/manifest-b3c3a89f.js", "version": "b3c3a89f", "sri": void 0 };
+const serverManifest = { "entry": { "module": "/assets/entry.client-UUx4C3gi.js", "imports": ["/assets/chunk-LFPYN7LY-BwAHFOGz.js", "/assets/index-BaexvpaO.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/root-DVaPqctb.js", "imports": ["/assets/chunk-LFPYN7LY-BwAHFOGz.js", "/assets/index-BaexvpaO.js", "/assets/calendly-badge-8JLwNPOE.js"], "css": ["/assets/root-Bz3gMU2d.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/home": { "id": "routes/home", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasDefaultExport": true, "hasErrorBoundary": false, "module": "/assets/home-B-Dd6t9D.js", "imports": ["/assets/chunk-LFPYN7LY-BwAHFOGz.js", "/assets/calendly-badge-8JLwNPOE.js", "/assets/index-BaexvpaO.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 } }, "url": "/assets/manifest-d525e4ca.js", "version": "d525e4ca", "sri": void 0 };
 const assetsBuildDirectory = "build/client";
 const basename = "/";
 const future = { "unstable_optimizeDeps": false, "unstable_subResourceIntegrity": false, "unstable_trailingSlashAwareDataRequests": false, "unstable_previewServerPrerendering": false, "v8_middleware": false, "v8_splitRouteModules": false, "v8_viteEnvironmentApi": false };
