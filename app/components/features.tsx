@@ -18,18 +18,18 @@ const bookingSystemGroups = [
     icon: Store,
     title: "A branded booking page",
     description:
-      "A polished page that makes your chef brand easy to trust, browse, and book.",
+      "A polished page built from your real menus, photos, event types, and booking preferences.",
     items: [
-      "Your brand, photos, event types, and booking button",
-      "Tasting menus, family-style dinners, add-ons, and pricing",
-      "A shareable link clients can open from any DM or email",
+      "Your brand, photos, menus, add-ons, pricing, and event types",
+      "A simple path from browsing to starting a request",
+      "A shareable link clients can open from any DM, email, or bio",
     ],
   },
   {
     icon: ClipboardList,
     title: "A guided request flow",
     description:
-      "A guided request flow that collects the details you usually have to chase manually.",
+      "A guided form collects the details you usually have to chase manually before you quote.",
     items: [
       "Date, timing, headcount, address, allergies, notes, and event context",
       "Every request waits for your approval before anything is booked",
@@ -40,13 +40,19 @@ const bookingSystemGroups = [
     icon: Wallet,
     title: "Payment and follow-up",
     description:
-      "A clean handoff from approved request to paid deposit, confirmation, and next steps.",
+      "Approved clients get a clean next step for payment, confirmation, and booking details.",
     items: [
-      "Deposit, full payment, or guest-split payment option",
+      "Deposit, full payment, or guest-split payment options",
       "Email confirmations with the booking details and next steps",
       "Done-for-you setup from your menu, photos, branding, and booking rules",
     ],
   },
+];
+
+const confidenceCues = [
+  "Built from your existing menus and photos",
+  "Reviewed with you before you send it to clients",
+  "Live demo available before the walkthrough",
 ];
 
 const setupSteps = [
@@ -71,6 +77,17 @@ export function Features() {
             <p className="mt-4 text-lg leading-relaxed text-muted-foreground sm:text-xl">
               BTS turns your menus, request forms, approvals, payments, and client follow-up into one branded flow.
             </p>
+            <div className="mt-6 grid gap-2 text-left sm:grid-cols-3">
+              {confidenceCues.map((cue) => (
+                <div
+                  key={cue}
+                  className="flex items-start gap-2 rounded-lg border border-border/70 bg-card/70 px-3 py-3 text-sm leading-snug text-foreground/85 shadow-sm shadow-black/5"
+                >
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
+                  <span>{cue}</span>
+                </div>
+              ))}
+            </div>
             <p className="mt-4 text-sm text-muted-foreground sm:text-base">
               Want proof before a walkthrough?{" "}
               <a
@@ -120,6 +137,14 @@ export function Features() {
             </StaggerItem>
           ))}
         </StaggerContainer>
+
+        <FadeInUp className="mt-8">
+          <div className="rounded-xl border border-primary/20 bg-primary/5 px-5 py-5 text-center shadow-sm shadow-black/5 sm:px-6">
+            <p className="mx-auto max-w-3xl text-base font-medium leading-relaxed text-foreground sm:text-lg">
+              The end result is simple: clients request a date, you approve the right fit, and payment happens before the event details get lost in messages.
+            </p>
+          </div>
+        </FadeInUp>
 
         <FadeInUp className="mt-14">
           <div className="grid gap-8 border-y border-border/80 py-10 md:grid-cols-[1fr_1.1fr] md:items-center md:py-12">
