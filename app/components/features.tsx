@@ -3,80 +3,75 @@
 import {
   Store,
   BookOpen,
-  ChefHat,
   ClipboardList,
   ShieldCheck,
   Wallet,
   Mail,
   Wrench,
+  CalendarCheck,
+  BadgeCheck,
+  ArrowRight,
 } from "lucide-react";
+import { Button } from "~/components/ui/button";
+import { openCalendlyPopup } from "~/components/calendly-badge";
 import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
 import { FadeInUp, StaggerContainer, StaggerItem, HoverScale } from "~/components/motion-wrapper";
 
-const featureBuckets = [
+const offerItems = [
   {
-    heading: "Get paid upfront",
-    items: [
-      {
-        icon: Wallet,
-        title: "Collect deposits or full payment online",
-        description:
-          "Take a deposit, charge in full, or split it so guests can each pay their part online.",
-      },
-      {
-        icon: Mail,
-        title: "Send payment links and confirmations automatically",
-        description:
-          "After you approve, clients get a clear email with next steps and payment details so you are not chasing money.",
-      },
-    ],
+    icon: Store,
+    title: "Branded booking page",
+    description:
+      "A polished page for your chef brand, photos, menus, event types, and booking CTA.",
   },
   {
-    heading: "Keep event details in one place",
-    items: [
-      {
-        icon: ClipboardList,
-        title: "Collect the details you need to cook",
-        description:
-          "Date, headcount, timing, kitchen address, allergies, and notes are all captured in one guided form.",
-      },
-      {
-        icon: ShieldCheck,
-        title: "Approve or decline from your dashboard",
-        description:
-          "See each request in one view. Stay in control of your calendar and avoid accidental double-booking.",
-      },
-    ],
+    icon: BookOpen,
+    title: "Menu and experience upload",
+    description:
+      "Your tasting menus, family-style dinners, add-ons, pricing, and course details organized clearly.",
   },
   {
-    heading: "Look professional without extra work",
-    items: [
-      {
-        icon: Store,
-        title: "Get your own branded chef website",
-        description:
-          "Your name, photos, menus, and experiences all live on one page you can send to anyone who asks, 'Are you free?'",
-      },
-      {
-        icon: BookOpen,
-        title: "Show menus clearly",
-        description:
-          "Clients browse your dishes and pricing on your site instead of asking for menu screenshots or old PDFs.",
-      },
-      {
-        icon: ChefHat,
-        title: "Set up experiences your way",
-        description:
-          "Offer the event types you actually run, from tasting menus to family-style dinners, with the pricing you choose.",
-      },
-      {
-        icon: Wrench,
-        title: "Let us set everything up",
-        description:
-          "Send us your menu, photos, and branding. We build the site and booking flow for you.",
-      },
-    ],
+    icon: ClipboardList,
+    title: "Event request intake",
+    description:
+      "Clients submit date, headcount, timing, address, allergies, notes, and the context you need.",
   },
+  {
+    icon: ShieldCheck,
+    title: "Approval-first workflow",
+    description:
+      "Every request waits for your approval, so you never accept a booking before checking fit.",
+  },
+  {
+    icon: Wallet,
+    title: "Deposit or full-payment flow",
+    description:
+      "After approval, clients get the payment link. Collect a deposit, full payment, or guest split.",
+  },
+  {
+    icon: Mail,
+    title: "Email confirmations",
+    description:
+      "Clients get clear next steps and booking details without another round of manual follow-up.",
+  },
+  {
+    icon: CalendarCheck,
+    title: "Booking dashboard",
+    description:
+      "Review requests, keep event details together, and reduce the calendar risk of scattered threads.",
+  },
+  {
+    icon: Wrench,
+    title: "Done-for-you setup",
+    description:
+      "Send your menu, photos, and branding. We build the first version and walk you through it.",
+  },
+];
+
+const setupSteps = [
+  "You send your menu, photos, event types, and booking rules.",
+  "We build your first booking page and request flow.",
+  "You review the live flow before sending it to clients.",
 ];
 
 export function Features() {
@@ -86,14 +81,17 @@ export function Features() {
         {/* Section Header */}
         <FadeInUp>
           <div className="mx-auto max-w-3xl text-center">
+            <p className="text-xs font-medium uppercase tracking-[0.14em] text-primary/90">
+              The offer
+            </p>
             <h2 className="font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Built to solve real booking problems
+              Everything you need to turn interest into a payable booking request
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-muted-foreground sm:text-xl">
-              Keep texting clients if you want. Use one link when it is time to collect details and payment.
+              BTS is not another profile page. It is the booking system private chefs wish they had before the next serious inquiry lands.
             </p>
             <p className="mt-4 text-sm text-muted-foreground sm:text-base">
-              Want to see it in action?{" "}
+              Want proof before a walkthrough?{" "}
               <a
                 href={DEMO_STOREFRONT_URL}
                 target="_blank"
@@ -107,39 +105,80 @@ export function Features() {
           </div>
         </FadeInUp>
 
-        {/* Feature Buckets */}
-        <StaggerContainer className="mt-14">
-          <div className="space-y-12 md:space-y-14">
-            {featureBuckets.map((bucket) => (
-              <StaggerItem key={bucket.heading}>
-                <div>
-                  <h3 className="mb-5 font-serif text-2xl font-semibold tracking-tight text-foreground">
-                    {bucket.heading}
-                  </h3>
-                  <div className="grid auto-rows-fr gap-5 sm:grid-cols-2 lg:gap-6">
-                    {bucket.items.map((feature) => (
-                      <HoverScale key={feature.title} className="h-full">
-                        <div className="flex h-full min-h-0 flex-col rounded-xl border border-border/80 bg-card p-6 shadow-sm shadow-black/5 ring-1 ring-black/5 transition-all duration-300 hover:border-primary/35 hover:shadow-md">
-                          <div className="mb-4 flex items-center gap-3">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-background/70 ring-1 ring-black/5">
-                              <feature.icon className="h-5 w-5 text-primary" aria-hidden />
-                            </div>
-                          </div>
-                          <h4 className="mb-2 max-w-[28ch] font-serif text-lg font-semibold tracking-tight text-foreground sm:text-xl">
-                            {feature.title}
-                          </h4>
-                          <p className="min-h-0 flex-1 max-w-prose text-sm leading-relaxed text-muted-foreground/90 sm:text-base">
-                            {feature.description}
-                          </p>
-                        </div>
-                      </HoverScale>
-                    ))}
+        <StaggerContainer className="mt-14 grid auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+          {offerItems.map((item) => (
+            <StaggerItem key={item.title}>
+              <HoverScale className="h-full">
+                <div className="flex h-full min-h-0 flex-col rounded-xl border border-border/80 bg-card p-6 shadow-sm shadow-black/5 ring-1 ring-black/5 transition-all duration-300 hover:border-primary/35 hover:shadow-md">
+                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-background/70 ring-1 ring-black/5">
+                    <item.icon className="h-5 w-5 text-primary" aria-hidden />
                   </div>
+                  <h3 className="mb-2 max-w-[24ch] font-serif text-lg font-semibold tracking-tight text-foreground sm:text-xl">
+                    {item.title}
+                  </h3>
+                  <p className="min-h-0 flex-1 text-sm leading-relaxed text-muted-foreground/90 sm:text-base">
+                    {item.description}
+                  </p>
                 </div>
-              </StaggerItem>
-            ))}
-          </div>
+              </HoverScale>
+            </StaggerItem>
+          ))}
         </StaggerContainer>
+
+        <FadeInUp className="mt-14">
+          <div className="grid gap-8 border-y border-border/80 py-10 md:grid-cols-[1fr_1.1fr] md:items-center md:py-12">
+            <div>
+              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                <BadgeCheck className="h-5 w-5" aria-hidden />
+              </div>
+              <h3 className="font-serif text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+                Built for you, then walked through with you
+              </h3>
+              <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+                You do not need to stitch together forms, payment links, menu PDFs, and follow-up emails. We turn your existing material into a working booking flow.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              {setupSteps.map((step, index) => (
+                <div key={step} className="flex gap-4">
+                  <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary text-sm font-semibold text-foreground ring-1 ring-border/80">
+                    {index + 1}
+                  </div>
+                  <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
+                    {step}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </FadeInUp>
+
+        <FadeInUp className="mt-10">
+          <div className="flex flex-col items-center justify-between gap-5 rounded-xl border border-border/80 bg-secondary/35 px-5 py-6 text-center shadow-sm shadow-black/5 ring-1 ring-black/5 sm:px-6 md:flex-row md:text-left">
+            <p className="max-w-2xl text-base font-medium leading-relaxed text-foreground sm:text-lg">
+              See exactly what your client would click through before we build yours.
+            </p>
+            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+              <Button
+                onClick={openCalendlyPopup}
+                className="w-full bg-primary text-primary-foreground hover:bg-accent-hover sm:w-auto"
+              >
+                Get My Booking Page Built
+                <ArrowRight className="h-4 w-4" aria-hidden />
+              </Button>
+              <Button variant="outline" asChild className="w-full bg-background/70 sm:w-auto">
+                <a
+                  href={DEMO_STOREFRONT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Open live demo
+                </a>
+              </Button>
+            </div>
+          </div>
+        </FadeInUp>
       </div>
     </section>
   );
