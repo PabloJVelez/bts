@@ -13,21 +13,21 @@ import { openCalendlyPopup } from "~/components/calendly-badge";
 import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
 import { FadeInUp, StaggerContainer, StaggerItem, HoverScale } from "~/components/motion-wrapper";
 
-const offerGroups = [
+const bookingSystemGroups = [
   {
     icon: Store,
-    title: "Your branded storefront",
+    title: "A branded booking page",
     description:
-      "A polished booking page that makes your chef brand easy to trust, browse, and book.",
+      "A polished page that makes your chef brand easy to trust, browse, and book.",
     items: [
-      "Brand, photos, event types, and booking CTA",
+      "Your brand, photos, event types, and booking button",
       "Tasting menus, family-style dinners, add-ons, and pricing",
-      "A live demo-style page your clients can open from any DM or email",
+      "A shareable link clients can open from any DM or email",
     ],
   },
   {
     icon: ClipboardList,
-    title: "Your inquiry-to-approval flow",
+    title: "A guided request flow",
     description:
       "A guided request flow that collects the details you usually have to chase manually.",
     items: [
@@ -38,12 +38,12 @@ const offerGroups = [
   },
   {
     icon: Wallet,
-    title: "Your payment and follow-up system",
+    title: "Payment and follow-up",
     description:
       "A clean handoff from approved request to paid deposit, confirmation, and next steps.",
     items: [
-      "Deposit, full-payment, or guest-split payment flow",
-      "Email confirmations with the booking details and next step",
+      "Deposit, full payment, or guest-split payment option",
+      "Email confirmations with the booking details and next steps",
       "Done-for-you setup from your menu, photos, branding, and booking rules",
     ],
   },
@@ -63,7 +63,7 @@ export function Features() {
         <FadeInUp>
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-xs font-medium uppercase tracking-[0.14em] text-primary/90">
-              The offer
+              What you get
             </p>
             <h2 className="font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
               Your private chef booking system, built for you.
@@ -79,7 +79,7 @@ export function Features() {
                 rel="noopener noreferrer"
                 className="font-medium text-primary underline-offset-4 transition-colors hover:text-primary/85 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
-                Browse our live demo storefront
+                Browse our live demo booking page
               </a>
               .
             </p>
@@ -87,7 +87,7 @@ export function Features() {
         </FadeInUp>
 
         <StaggerContainer className="mt-12 grid gap-5 lg:grid-cols-3 lg:gap-6">
-          {offerGroups.map((group, index) => (
+          {bookingSystemGroups.map((group, index) => (
             <StaggerItem key={group.title}>
               <HoverScale className="h-full">
                 <div className="flex h-full min-h-0 flex-col rounded-xl border border-border/80 bg-card p-5 shadow-sm shadow-black/5 ring-1 ring-black/5 transition-all duration-300 hover:border-primary/35 hover:shadow-md sm:p-6">
