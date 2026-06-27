@@ -18,8 +18,8 @@ export default function Home() {
       <main>
         <Hero />
         <TrustRail />
-        <BeforeVsAfter />
         <HowItWorks />
+        <BeforeVsAfter />
         <Features />
         <WhyChefsLoveIt />
         {/* <Pricing /> */}

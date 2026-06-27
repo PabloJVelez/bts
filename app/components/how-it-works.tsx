@@ -6,7 +6,9 @@ import {
   CalendarCheck,
   CheckCircle,
   CreditCard,
+  ExternalLink,
 } from "lucide-react";
+import { Button } from "~/components/ui/button";
 import {
   FadeInUp,
   StaggerContainer,
@@ -17,143 +19,131 @@ import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
 type Step = {
   number: number;
   icon: LucideIcon;
-  title: string;
-  description: string;
-  previewSrc?: string;
-  previewAlt?: string;
+  eyebrow: string;
 };
 
 const steps: Step[] = [
   {
     number: 1,
     icon: UtensilsCrossed,
-    title: "Share your link",
-    description:
-      "Send your booking page in a text, email, or Instagram DM. Clients can see your menus and experiences without asking for screenshots.",
-    previewSrc: "/chefevethub-menus.png",
-    previewAlt:
-      "Example storefront menus page showing catalog cards with images, course counts, and pricing.",
+    eyebrow: "Client sees the menu",
   },
   {
     number: 2,
     icon: CalendarCheck,
-    title: "Client answers the questions you always ask",
-    description:
-      "They add date, timing, headcount, kitchen address, allergies, and notes in one guided form.",
-    previewSrc: "/chefeventhub-request.png",
-    previewAlt:
-      "Example multi-step request form for choosing experience type, menu, and guest count.",
+    eyebrow: "Client submits the details",
   },
   {
     number: 3,
     icon: CheckCircle,
-    title: "You approve or decline",
-    description:
-      "Every request lands in your dashboard. Accept the ones you want and decline the ones that do not fit your calendar.",
-    previewSrc: "/chefeventhub-admin-request.png",
-    previewAlt:
-      "Example admin screen for reviewing an event request with accept and reject actions.",
+    eyebrow: "Chef stays in control",
   },
   {
     number: 4,
     icon: CreditCard,
-    title: "Payment happens and details stay in one place",
-    description:
-      "After approval, they get a payment link by email. You can collect a deposit, full payment, or let guests chip in.",
-    previewSrc: "/chefeventhub-request-accepted.png",
-    previewAlt:
-      "Example email confirmation with event details, payment summary, and a purchase tickets link.",
+    eyebrow: "Client gets the next step",
   },
 ];
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="bg-background py-16 md:py-24">
+    <section id="how-it-works" className="bg-secondary/25 py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeInUp>
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              How It Works
-            </h2>
-            <p className="mt-4 text-lg text-muted-foreground">
-              From first message to confirmed booking in four steps.
-            </p>
-          </div>
-        </FadeInUp>
-
-        <StaggerContainer className="mt-16 flex flex-col gap-16 md:gap-20 lg:gap-24">
-          {steps.map((step, index) => {
-            const hasPreview = Boolean(step.previewSrc);
-            const reverseOnLarge = index % 2 === 1;
-
-            return (
-              <StaggerItem key={step.number}>
-                <div
-                  className={
-                    hasPreview
-                      ? `flex flex-col gap-8 lg:items-center lg:gap-12 ${reverseOnLarge ? "lg:flex-row-reverse" : "lg:flex-row"}`
-                      : "flex justify-center"
-                  }
-                >
-                  <div
-                    className={
-                      hasPreview
-                        ? "flex min-w-0 flex-1 flex-col rounded-xl border border-border/80 bg-card p-6 shadow-sm shadow-black/5 ring-1 ring-black/5 transition-all duration-200 hover:border-primary/35 hover:shadow-md md:p-8"
-                        : "w-full max-w-3xl rounded-xl border border-border/80 bg-card p-6 shadow-sm shadow-black/5 ring-1 ring-black/5 transition-all duration-200 hover:border-primary/35 hover:shadow-md md:p-8"
-                    }
-                  >
-                    <div className="mb-4 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground">
-                      {step.number}
-                    </div>
-                    <step.icon
-                      className="mb-4 h-7 w-7 shrink-0 text-primary"
-                      aria-hidden
-                    />
-                    <h3 className="mb-2 font-serif text-xl font-semibold text-foreground sm:text-2xl">
-                      {step.title}
-                    </h3>
-                    <p className="text-sm leading-relaxed text-muted-foreground/90 sm:text-base">
-                      {step.description}
-                    </p>
-                  </div>
-
-                  {hasPreview && step.previewSrc && step.previewAlt ? (
-                    <div className="min-w-0 flex-1 lg:max-w-none">
-                      <figure className="overflow-hidden rounded-xl border border-border/80 bg-muted/30 shadow-sm shadow-black/5 ring-1 ring-black/5">
-                        <img
-                          src={step.previewSrc}
-                          alt={step.previewAlt}
-                          className="aspect-16/10 w-full object-cover object-top"
-                          loading={index === 0 ? "eager" : "lazy"}
-                          decoding="async"
-                        />
-                      </figure>
-                    </div>
-                  ) : null}
-                </div>
-              </StaggerItem>
-            );
-          })}
-        </StaggerContainer>
-
-        <FadeInUp className="mt-20">
-          <div className="mx-auto max-w-2xl rounded-xl border border-border/80 bg-card px-6 py-8 text-center shadow-sm shadow-black/5 ring-1 ring-black/5 md:px-10">
-            <p className="font-serif text-lg font-semibold text-foreground">
-              Want to click through a real booking page?
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground sm:text-base">
-              Open the live demo. It is the same flow your clients use.
-            </p>
-            <a
-              href={DEMO_STOREFRONT_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 inline-flex text-sm font-medium text-primary underline-offset-4 transition-colors hover:text-primary/85 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:text-base"
+          <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+            <div className="max-w-3xl text-center lg:text-left">
+              <p className="text-xs font-medium uppercase tracking-[0.14em] text-primary/90">
+                Live template demo
+              </p>
+              <h2 className="mt-3 font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                See the booking flow your clients would use.
+              </h2>
+              <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+                A short look at the working demo: clients choose a menu, send event details, wait for your approval, then get the payment handoff.
+              </p>
+            </div>
+            <Button
+              asChild
+              size="lg"
+              className="mx-auto w-full bg-primary text-primary-foreground hover:bg-accent-hover sm:w-auto lg:mx-0"
             >
-              Open live demo
-            </a>
+              <a
+                href={DEMO_STOREFRONT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Open Live Demo
+                <ExternalLink className="h-4 w-4" aria-hidden />
+              </a>
+            </Button>
           </div>
         </FadeInUp>
+
+        <FadeInUp className="mt-12">
+          <div className="overflow-hidden rounded-xl border border-border/80 bg-card shadow-sm shadow-black/5 ring-1 ring-black/5">
+            <div className="border-b border-border/70 bg-muted/30 p-2 sm:p-3">
+              <video
+                className="aspect-video w-full rounded-lg bg-muted object-cover"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                poster="/chefevethub-menus.png"
+                aria-label="Demo loop showing the private chef booking flow from menu browsing to payment handoff."
+              >
+                <source
+                  src="/videos/chef-booking-flow.webm"
+                  type="video/webm"
+                />
+              </video>
+            </div>
+            <div className="grid gap-4 p-5 sm:p-6 lg:grid-cols-[1fr_auto] lg:items-center">
+              <div>
+                <p className="font-serif text-xl font-semibold text-foreground sm:text-2xl">
+                  One flow from first look to paid booking.
+                </p>
+                <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+                  The demo keeps each next step clear, so serious inquiries do not disappear into screenshots, texts, and follow-up messages.
+                </p>
+              </div>
+              <Button
+                variant="outline"
+                asChild
+                className="w-full bg-background sm:w-auto"
+              >
+                <a
+                  href={DEMO_STOREFRONT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View demo storefront
+                  <ExternalLink className="h-4 w-4" aria-hidden />
+                </a>
+              </Button>
+            </div>
+          </div>
+        </FadeInUp>
+
+        <StaggerContainer className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {steps.map((step) => (
+            <StaggerItem key={step.number}>
+              <div className="flex h-full items-center gap-3 rounded-lg border border-border/70 bg-background px-4 py-3 shadow-sm shadow-black/5">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary ring-1 ring-primary/15">
+                  <step.icon className="h-4 w-4" aria-hidden />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xs font-medium uppercase tracking-[0.14em] text-primary/80">
+                    Step {step.number}
+                  </p>
+                  <p className="mt-0.5 truncate text-sm font-medium text-foreground">
+                    {step.eyebrow}
+                  </p>
+                </div>
+              </div>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
       </div>
     </section>
   );
