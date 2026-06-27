@@ -79,7 +79,7 @@ export function SocialProof() {
               onClick={openCalendlyPopup}
               className="bg-primary px-8 text-primary-foreground hover:bg-accent-hover"
             >
-              Get a walkthrough
+              Get My Booking Page Built
             </Button>
           </div>
         </FadeInUp>

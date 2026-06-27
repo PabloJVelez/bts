@@ -17,24 +17,18 @@ export function Hero() {
           <div className="text-center lg:text-left">
             <FadeInUp>
               <p className="mb-4 text-xs font-medium uppercase tracking-[0.14em] text-primary/90">
-                Behind the Sauté is a booking and payment page for private
-                chefs.
+                Built for private chefs who book through DMs, texts, and email.
               </p>
               <h1 className="mx-auto max-w-xl font-serif text-4xl font-semibold leading-[1.06] tracking-[-0.02em] text-foreground sm:text-5xl lg:mx-0 lg:max-w-none lg:text-6xl text-balance">
-                Send one link. Get booking details. Get paid.
+                Turn private chef inquiries into paid deposits.
               </h1>
             </FadeInUp>
 
             <FadeInUp delay={0.1}>
               <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl text-pretty lg:mx-0">
-                Your client picks a menu, fills out a short request, pays a
-                deposit or full amount, and you approve or decline from one
-                dashboard.
-              </p>
-              <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground/90 sm:text-base lg:mx-0">
-                If this sounds like you, this helps: you are chasing deposits,
-                missing allergy notes, or double-checking headcount from old
-                texts.
+                BTS builds you a branded booking page where clients choose a
+                menu, submit event details, and pay after you approve. No more
+                chasing DMs, texts, or deposit reminders.
               </p>
             </FadeInUp>
 
@@ -45,7 +39,7 @@ export function Hero() {
                   size="lg"
                   className="bg-primary px-8 text-base text-primary-foreground shadow-sm shadow-black/5 hover:bg-accent-hover hover:shadow-md focus-visible:ring-offset-2 sm:text-lg"
                 >
-                  Get a walkthrough
+                  Get My Booking Page Built
                 </Button>
                 <Button
                   variant="outline"
@@ -58,7 +52,7 @@ export function Hero() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    See the booking link demo
+                    See Live Booking Flow
                   </a>
                 </Button>
               </div>
@@ -69,9 +63,9 @@ export function Hero() {
                   rel="noopener noreferrer"
                   className="font-medium text-primary underline-offset-4 transition-colors hover:text-primary/85 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
-                  View live demo storefront
+                  View the live demo storefront
                 </a>
-                . This is what your client sees before they book.
+                . It shows the exact menu, request, approval, and payment flow.
               </p>
             </FadeInUp>
           </div>

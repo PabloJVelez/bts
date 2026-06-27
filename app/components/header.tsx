@@ -10,7 +10,7 @@ const navLinks = [
   { href: "#how-it-works", label: "How It Works" },
   { href: "#features", label: "What You Get" },
   // { href: "#pricing", label: "Pricing" }, // Re-enable with <Pricing /> on home
-  { href: DEMO_STOREFRONT_URL, label: "Live Demo Storefront", external: true as const },
+  { href: DEMO_STOREFRONT_URL, label: "Live Booking Flow", external: true as const },
   { href: "#faq", label: "FAQ" },
 ];
 
@@ -49,7 +49,7 @@ export function Header() {
             onClick={openCalendlyPopup}
             className="bg-primary text-primary-foreground hover:bg-accent-hover"
           >
-            Get a Walkthrough
+            Get My Booking Page Built
           </Button>
         </div>
 
@@ -87,7 +87,7 @@ export function Header() {
               }}
               className="mt-2 w-full bg-primary text-primary-foreground hover:bg-accent-hover"
             >
-              Get a Walkthrough
+              Get My Booking Page Built
             </Button>
           </nav>
         </div>
