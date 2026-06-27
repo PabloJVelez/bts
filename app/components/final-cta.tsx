@@ -29,7 +29,7 @@ export function FinalCTA() {
               size="lg"
               className="px-8 text-lg"
             >
-              Get a walkthrough
+              Get My Booking Page Built
             </Button>
             <Button
               variant="outline"
