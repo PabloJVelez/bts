@@ -1,4 +1,5 @@
 import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
+import { legalNavItems } from "~/lib/legal-content";
 
 export function Footer() {
   return (
@@ -11,7 +12,7 @@ export function Footer() {
               Behind the <span className="text-primary">Sauté</span>
             </span>
             <p className="mt-2 text-sm text-footer-foreground/70">
-              © 2025 Behind the Sauté. All rights reserved.
+              © 2026 Behind the Sauté. All rights reserved.
             </p>
           </div>
 
@@ -39,6 +40,20 @@ export function Footer() {
         <p className="mt-8 text-center text-xs text-footer-foreground/50">
           Booking details and payments in one place for private chefs.
         </p>
+        <nav
+          aria-label="Legal"
+          className="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs text-footer-foreground/60"
+        >
+          {legalNavItems.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="transition-colors hover:text-primary"
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
       </div>
     </footer>
   );
