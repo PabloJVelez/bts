@@ -1,1 +1,0 @@
-import{w as e,p as o}from"./chunk-LFPYN7LY-ILpJT5Eq.js";import{L as a}from"./legal-page-4mZOFRdn.js";import{l as i}from"./footer-C0WFfMtY.js";import"./calendly-badge-CyR92gdK.js";const t=i.privacy,c=()=>[{title:`${t.title} | Behind the Sauté`},{name:"description",content:t.description}],l=e(function(){return o.jsx(a,{page:t})});export{l as default,c as meta};

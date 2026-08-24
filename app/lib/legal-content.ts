@@ -17,8 +17,6 @@ export type LegalPageContent = {
 
 const contactDetails = [
   "Behind the Sauté",
-  "A product of PMLTECH PILE LLC",
-  "Austin, Texas",
   "Email: pmltechpile@gmail.com",
 ];
 

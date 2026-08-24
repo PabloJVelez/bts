@@ -1,1 +1,0 @@
-import{w as o,p as e}from"./chunk-LFPYN7LY-ILpJT5Eq.js";import{L as n}from"./legal-page-4mZOFRdn.js";import{l as a}from"./footer-C0WFfMtY.js";import"./calendly-badge-CyR92gdK.js";const t=a["cancellation-policy"],p=()=>[{title:`${t.title} | Behind the Sauté`},{name:"description",content:t.description}],m=o(function(){return e.jsx(n,{page:t})});export{m as default,p as meta};
