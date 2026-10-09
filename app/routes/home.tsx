@@ -3,12 +3,8 @@ import { Hero } from "~/components/hero";
 import { TrustRail } from "~/components/trust-rail";
 import { SpeedToLead } from "~/components/speed-to-lead";
 import { BookingStory } from "~/components/booking-story";
-import { BeforeVsAfter } from "~/components/before-vs-after";
-import { HowItWorks } from "~/components/how-it-works";
-import { Features } from "~/components/features";
-import { WhyChefsLoveIt } from "~/components/why-chefs-love-it";
+import { StoryContinuation } from "~/components/story-continuation";
 // import { Pricing } from "~/components/pricing"; // Re-enable when pricing is finalized
-import { SocialProof } from "~/components/social-proof";
 import { FAQ } from "~/components/faq";
 import { FinalCTA } from "~/components/final-cta";
 import { Footer } from "~/components/footer";
@@ -22,12 +18,8 @@ export default function Home() {
         <TrustRail />
         <SpeedToLead />
         <BookingStory />
-        <HowItWorks />
-        <BeforeVsAfter />
-        <Features />
-        <WhyChefsLoveIt />
+        <StoryContinuation />
         {/* <Pricing /> */}
-        <SocialProof />
         <FAQ />
         <FinalCTA />
       </main>

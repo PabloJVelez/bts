@@ -333,9 +333,6 @@ export function BookingStory() {
       </div>
 
       <div className="px-4 pt-20 text-center sm:px-6 lg:px-8 lg:pt-28">
-        <p className="text-xs font-medium uppercase text-[#f2a96f]">
-          The booking story
-        </p>
         <h2 className="mx-auto mt-3 max-w-3xl font-serif text-4xl font-semibold leading-tight text-white sm:text-5xl">
           From warm inquiry to paid event.
         </h2>
