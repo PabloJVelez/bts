@@ -14,6 +14,7 @@ import { Check, Clock3, CreditCard, MessageSquareText, Send } from "lucide-react
 
 type StoryBeat = {
   eyebrow: string;
+  role: "intro" | "chef" | "bts";
   title: string;
   copy?: string;
   metric?: string;
@@ -23,42 +24,49 @@ type StoryBeat = {
 const storyBeats: StoryBeat[] = [
   {
     eyebrow: "Why a good booking flow matters",
+    role: "intro",
     title: "The right flow turns an inquiry into a paid deposit before the lead cools.",
     range: [0, 0.06, 0.15],
   },
   {
-    eyebrow: "Question 01",
+    eyebrow: "Chef asks",
+    role: "chef",
     title: "What happens when a ready-to-book client has to wait?",
     range: [0.12, 0.19, 0.29],
   },
   {
-    eyebrow: "Answer 01",
-    title: "They keep looking. Speed keeps you in the running.",
-    copy: "A fast, clear next step can make you",
-    metric: "7x more likely",
+    eyebrow: "BTS answers",
+    role: "bts",
+    title: "They keep looking. Speed helps you win the booking.",
+    copy: "A fast, clear next step makes you",
+    metric: "7x more likely to be booked",
     range: [0.24, 0.32, 0.43],
   },
   {
-    eyebrow: "Question 02",
-    title: "What should happen after someone raises their hand?",
+    eyebrow: "Chef asks",
+    role: "chef",
+    title: "What should happen after a client is interested in booking an event?",
     range: [0.39, 0.47, 0.57],
   },
   {
-    eyebrow: "Answer 02",
+    eyebrow: "BTS answers",
+    role: "bts",
     title: "The page should collect the event details immediately.",
     copy: "Date, guests, timing, menu interest, location, and notes should be captured in the first",
     metric: "5 minutes",
     range: [0.52, 0.61, 0.72],
   },
   {
-    eyebrow: "Question 03",
-    title: "What makes this better than another message thread?",
+    eyebrow: "Chef asks",
+    role: "chef",
+    title: "DMs are working just fine. How is this any better?",
     range: [0.68, 0.76, 0.86],
   },
   {
-    eyebrow: "Answer 03",
-    title: "The next step moves toward money, not more chasing.",
-    copy: "Once the request is a fit, the flow should lead naturally into a",
+    eyebrow: "BTS answers",
+    role: "bts",
+    title: "DMs keep the conversation going. BTS moves the event forward.",
+    copy: "A request can still feel personal while moving the client toward a",
     metric: "paid deposit",
     range: [0.81, 0.91, 1],
   },
@@ -74,6 +82,9 @@ function useBeatOpacity(progress: MotionValue<number>, range: StoryBeat["range"]
 }
 
 function ActiveCaption({ beat, compact = false }: { beat: StoryBeat; compact?: boolean }) {
+  const isChef = beat.role === "chef";
+  const isBts = beat.role === "bts";
+
   return (
     <motion.div
       key={beat.title}
@@ -82,12 +93,22 @@ function ActiveCaption({ beat, compact = false }: { beat: StoryBeat; compact?: b
       transition={{ duration: 0.34, ease: [0.22, 0.68, 0.35, 1] }}
       className={`absolute left-0 right-0 z-30 ${compact ? "bottom-14 px-4" : "bottom-10 px-8 md:px-10"}`}
     >
-      <div className="mx-auto max-w-2xl rounded-2xl border border-white/12 bg-[#111114] p-5 text-center text-white shadow-2xl shadow-black/30 sm:p-6">
-        <p className="text-xs font-medium uppercase text-[#f2a96f]">
-          {beat.eyebrow}
-        </p>
+      <div className={`mx-auto max-w-2xl rounded-2xl border p-5 text-center text-white shadow-2xl shadow-black/30 sm:p-6 ${
+        isChef
+          ? "border-white/14 bg-white/[0.07]"
+          : isBts
+            ? "border-[#f2a96f]/35 bg-[#111114]"
+            : "border-white/12 bg-[#111114]"
+      }`}>
+        <div className="flex items-center justify-center gap-3">
+          <span className={`h-px w-9 ${isChef ? "bg-white/22" : "bg-[#f2a96f]/70"}`} />
+          <p className={`text-xs font-medium uppercase ${isChef ? "text-white/62" : "text-[#f2a96f]"}`}>
+            {beat.eyebrow}
+          </p>
+          <span className={`h-px w-9 ${isChef ? "bg-white/22" : "bg-[#f2a96f]/70"}`} />
+        </div>
         <h3 className={`${compact ? "mt-4 text-3xl" : "mt-4 text-4xl sm:text-5xl"} font-serif font-semibold leading-tight text-white`}>
-          {beat.title}
+          {isChef ? `“${beat.title}”` : beat.title}
         </h3>
         {beat.copy ? (
           <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-white/68 sm:text-lg">
@@ -163,7 +184,7 @@ function BookingFlowStage({ progress, compact = false }: { progress: MotionValue
           <p className="text-xs font-semibold uppercase">Reply while intent is highest</p>
         </div>
         <p className="mt-5 font-serif text-5xl font-semibold leading-none">7x</p>
-        <p className="mt-2 text-sm font-medium">more likely to qualify with fast follow-up</p>
+        <p className="mt-2 text-sm font-medium">more likely to be booked with fast follow-up</p>
       </motion.div>
 
       <motion.div
@@ -188,10 +209,10 @@ function BookingFlowStage({ progress, compact = false }: { progress: MotionValue
       >
         <div className="flex items-center gap-3">
           <CreditCard className="h-5 w-5 text-[#f2a96f]" aria-hidden />
-          <p className="text-xs font-semibold uppercase text-[#f2a96f]">Payment handoff</p>
+          <p className="text-xs font-semibold uppercase text-[#f2a96f]">Beyond DMs</p>
         </div>
         <p className="mt-5 font-serif text-3xl font-semibold">Paid deposit ready</p>
-        <p className="mt-3 text-sm text-white/58">A fit request moves toward money, not another thread.</p>
+        <p className="mt-3 text-sm text-white/58">Keep the conversation personal, but make the next step payable.</p>
         <div className="mt-5 flex items-center gap-2 text-sm text-white">
           <Check className="h-4 w-4 text-emerald-400" aria-hidden />
           Request approved
