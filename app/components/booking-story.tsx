@@ -1,6 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Lenis from "lenis";
+import {
+  motion,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+  type MotionValue,
+} from "framer-motion";
 import { ArrowRight, Check, Clock3, FileCheck2, MessageSquare, Wallet } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { openCalendlyPopup } from "~/components/calendly-badge";
@@ -15,38 +25,42 @@ type StoryScene = {
   imageAlt: string;
   chip: string;
   icon: typeof Clock3;
+  range: [number, number, number];
 };
 
 const scenes: StoryScene[] = [
   {
     id: "hot-inquiry",
     eyebrow: "01",
-    title: "They are ready now.",
-    line: "A private-event inquiry starts hot. Do not make it wait in a DM thread.",
+    title: "The lead is hot.",
+    line: "A private-event inquiry starts while intent is highest.",
     image: "/chefevethub-menus.png",
     imageAlt: "Chef menu storefront preview",
-    chip: "Inquiry is hot",
+    chip: "New inquiry",
     icon: Clock3,
+    range: [0, 0.08, 0.25],
   },
   {
     id: "request",
     eyebrow: "02",
-    title: "The link gets the details.",
-    line: "Menu, date, guests, location, and notes land in one guided request.",
+    title: "The link captures the details.",
+    line: "Menu, date, guests, location, and notes land in one request.",
     image: "/chefeventhub-request.png",
     imageAlt: "Guided event request flow preview",
     chip: "Details captured",
     icon: MessageSquare,
+    range: [0.22, 0.36, 0.52],
   },
   {
     id: "approval",
     eyebrow: "03",
     title: "You approve the fit.",
-    line: "The chef sees the request before anything becomes a real booking.",
+    line: "The chef reviews the event before it becomes a booking.",
     image: "/chefeventhub-admin-request.png",
     imageAlt: "Chef admin request approval preview",
     chip: "Chef in control",
     icon: FileCheck2,
+    range: [0.48, 0.62, 0.78],
   },
   {
     id: "payment",
@@ -57,219 +71,303 @@ const scenes: StoryScene[] = [
     imageAlt: "Accepted request payment handoff preview",
     chip: "Deposit ready",
     icon: Wallet,
+    range: [0.72, 0.88, 1],
   },
 ];
 
-export function BookingStory() {
-  const [activeId, setActiveId] = useState(scenes[0].id);
-  const sceneRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const activeIndex = Math.max(0, scenes.findIndex((scene) => scene.id === activeId));
-  const activeScene = scenes[activeIndex] ?? scenes[0];
-
+function useSpaceLikeScroll(enabled: boolean) {
   useEffect(() => {
+    if (!enabled) return;
+
+    const lenis = new Lenis({
+      lerp: 0.09,
+      smoothWheel: true,
+      touchMultiplier: 1.1,
+      wheelMultiplier: 0.9,
+    });
+
     let frame = 0;
-
-    const updateActiveScene = () => {
-      const viewportCenter = window.innerHeight * 0.48;
-      let closest = scenes[0].id;
-      let closestDistance = Number.POSITIVE_INFINITY;
-
-      for (const scene of scenes) {
-        const node = sceneRefs.current[scene.id];
-        if (!node) continue;
-
-        const rect = node.getBoundingClientRect();
-        const sceneCenter = rect.top + rect.height * 0.42;
-        const distance = Math.abs(sceneCenter - viewportCenter);
-
-        if (distance < closestDistance) {
-          closest = scene.id;
-          closestDistance = distance;
-        }
-      }
-
-      setActiveId(closest);
-      frame = 0;
+    const raf = (time: number) => {
+      lenis.raf(time);
+      frame = requestAnimationFrame(raf);
     };
 
-    const requestUpdate = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(updateActiveScene);
-    };
-
-    updateActiveScene();
-    window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
+    frame = requestAnimationFrame(raf);
 
     return () => {
-      if (frame) window.cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
+      cancelAnimationFrame(frame);
+      lenis.destroy();
     };
-  }, []);
+  }, [enabled]);
+}
+
+function useSceneOpacity(progress: MotionValue<number>, range: StoryScene["range"]) {
+  return useTransform(progress, range, [0, 1, 0]);
+}
+
+function ActiveSceneCaption({ scene, compact = false }: { scene: StoryScene; compact?: boolean }) {
+  return (
+    <motion.div
+      key={scene.id}
+      initial={{ opacity: 0, y: 18, scale: 0.985 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.35, ease: [0.22, 0.68, 0.35, 1] }}
+      className={`absolute left-0 right-0 z-30 ${compact ? "bottom-16 px-5" : "bottom-10 px-8 md:px-10"}`}
+    >
+      <div className="max-w-md rounded-2xl border border-white/12 bg-[#111114] p-4 text-white shadow-2xl shadow-black/30 sm:p-5">
+        <div className="flex items-center gap-3">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#f2a96f] text-[#111114]">
+            <scene.icon className="h-4 w-4" aria-hidden />
+          </span>
+          <span className="text-xs font-medium uppercase text-[#f2a96f]">
+            {scene.eyebrow}
+          </span>
+        </div>
+        <h3 className={`${compact ? "mt-4 text-2xl" : "mt-5 text-3xl sm:text-4xl"} font-serif font-semibold leading-tight text-white`}>
+          {scene.title}
+        </h3>
+        <p className="mt-3 text-sm leading-relaxed text-white/68 sm:text-base">
+          {scene.line}
+        </p>
+      </div>
+    </motion.div>
+  );
+}
+
+function getActiveSceneIndex(value: number) {
+  if (value < 0.25) return 0;
+  if (value < 0.52) return 1;
+  if (value < 0.78) return 2;
+  return 3;
+}
+
+function ProductPanels({ progress, compact = false }: { progress: MotionValue<number>; compact?: boolean }) {
+  const stageScale = useTransform(progress, [0, 0.16, 0.88, 1], compact ? [0.92, 1, 1, 0.96] : [0.86, 1, 1, 0.94]);
+  const stageY = useTransform(progress, [0, 0.18, 0.9, 1], compact ? [32, 0, 0, -24] : [42, 0, 0, -36]);
+  const inquiryX = useTransform(progress, [0, 0.18, 0.38, 1], compact ? [0, 0, -130, -170] : [0, -18, -250, -330]);
+  const requestX = useTransform(progress, [0.18, 0.38, 0.58, 1], compact ? [140, 0, -70, -130] : [310, 0, -130, -230]);
+  const adminX = useTransform(progress, [0.44, 0.62, 0.8, 1], compact ? [150, 0, -30, -70] : [330, 70, 0, -80]);
+  const paymentX = useTransform(progress, [0.68, 0.88, 1], compact ? [130, 0, 0] : [300, 72, 0]);
+  const inquiryOpacity = useTransform(progress, [0, 0.06, 0.28, 0.42], [0, 1, 1, 0.22]);
+  const requestOpacity = useTransform(progress, [0.2, 0.34, 0.58, 0.72], [0, 1, 1, 0.32]);
+  const adminOpacity = useTransform(progress, [0.44, 0.58, 0.78, 0.9], [0, 1, 1, 0.48]);
+  const paymentOpacity = useTransform(progress, [0.68, 0.82, 1], [0, 1, 1]);
+  const connectorScale = useTransform(progress, [0.16, 0.86], [0, 1]);
+  const metricOpacity = useTransform(progress, [0.04, 0.12, 0.34, 0.44], [0, 1, 1, 0]);
+  const approveOpacity = useTransform(progress, [0.52, 0.62, 0.74], [0, 1, 0]);
+  const depositOpacity = useTransform(progress, [0.76, 0.88, 1], [0, 1, 1]);
 
   return (
-    <section id="story" className="bg-[#111114] py-16 text-white md:py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="text-xs font-medium uppercase tracking-[0.16em] text-[#f2a96f]">
-            The booking story
-          </p>
-          <h2 className="mt-3 font-serif text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">
-            From warm inquiry to paid event.
-          </h2>
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/62 sm:text-lg">
-            Less explanation. More proof. Show the chef exactly what happens after a lead raises their hand.
-          </p>
+    <motion.div
+      style={{ scale: stageScale, y: stageY }}
+      className="relative mx-auto h-[min(67svh,650px)] w-full max-w-[1120px] overflow-hidden rounded-[28px] border border-white/12 bg-[#18181c] shadow-2xl shadow-black/40"
+    >
+      <div className="flex h-12 items-center justify-between border-b border-white/10 px-5">
+        <div className="flex items-center gap-2">
+          <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
+          <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
+          <span className="h-3 w-3 rounded-full bg-[#28c840]" />
         </div>
+        <span className="text-xs font-medium text-white/45">BTS booking system</span>
+      </div>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:gap-14">
-          <div className="lg:sticky lg:top-24 lg:h-[calc(100svh-7rem)]">
-            <div className="relative flex h-full min-h-[560px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#1b1b1f] shadow-2xl shadow-black/35 contain-layout">
-              <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
-                <div className="flex items-center gap-2">
-                  <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
-                  <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
-                  <span className="h-3 w-3 rounded-full bg-[#28c840]" />
-                </div>
-                <span className="text-xs font-medium text-white/42">BTS booking flow</span>
-              </div>
+      <div className="absolute inset-x-8 top-1/2 hidden h-px origin-left bg-[#f2a96f]/45 lg:block">
+        <motion.span
+          style={{ scaleX: connectorScale }}
+          className="block h-px origin-left bg-[#f2a96f]"
+        />
+      </div>
 
-              <div className="relative min-h-0 flex-1 p-4 sm:p-5">
-                <div className="relative h-full overflow-hidden rounded-xl border border-white/10 bg-white shadow-2xl shadow-black/20">
-                  {scenes.map((scene, index) => (
-                    <img
-                      key={scene.id}
-                      src={scene.image}
-                      alt={scene.imageAlt}
-                      className={`absolute inset-0 h-full w-full object-cover transition duration-700 ease-out will-change-transform ${
-                        scene.id === activeId
-                          ? "scale-100 opacity-100"
-                          : index < activeIndex
-                            ? "scale-[0.985] opacity-0"
-                            : "scale-[1.015] opacity-0"
-                      }`}
-                      loading={index === 0 ? "eager" : "lazy"}
-                      decoding="async"
-                    />
-                  ))}
+      <motion.div
+        style={{ opacity: inquiryOpacity, x: inquiryX }}
+        className={`${compact ? "left-5 top-16 w-[78%]" : "left-8 top-20 w-[46%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
+      >
+        <img src={scenes[0].image} alt={scenes[0].imageAlt} className="aspect-[16/10] w-full object-cover" loading="eager" decoding="async" />
+      </motion.div>
 
-                  <div className="absolute left-4 top-4 rounded-full border border-black/10 bg-white/90 px-3 py-1 text-xs font-medium text-[#111114] shadow-sm backdrop-blur">
-                    {activeScene.chip}
-                  </div>
-                </div>
-              </div>
+      <motion.div
+        style={{ opacity: requestOpacity, x: requestX }}
+        className={`${compact ? "left-9 top-[24%] w-[78%]" : "left-[27%] top-[22%] w-[48%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
+      >
+        <img src={scenes[1].image} alt={scenes[1].imageAlt} className="aspect-[16/10] w-full object-cover" loading="lazy" decoding="async" />
+      </motion.div>
 
-              <div className="grid gap-3 border-t border-white/10 p-4 sm:grid-cols-[0.8fr_1.2fr] sm:p-5">
-                <div className="rounded-xl border border-white/10 bg-white/[0.06] p-4">
-                  <p className="font-serif text-4xl font-semibold tracking-tight text-[#f2a96f]">
-                    {activeScene.eyebrow}
-                  </p>
-                  <p className="mt-2 text-xs font-medium uppercase tracking-[0.14em] text-white/42">
-                    Scene
-                  </p>
-                </div>
-                <div className="rounded-xl border border-white/10 bg-white/[0.06] p-4">
-                  <p className="font-serif text-xl font-semibold leading-tight text-white">
-                    {activeScene.title}
-                  </p>
-                  <p className="mt-2 text-sm leading-relaxed text-white/60">
-                    {activeScene.line}
-                  </p>
-                </div>
-              </div>
+      <motion.div
+        style={{ opacity: adminOpacity, x: adminX }}
+        className={`${compact ? "left-6 top-[34%] w-[82%]" : "left-[45%] top-[17%] w-[46%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
+      >
+        <img src={scenes[2].image} alt={scenes[2].imageAlt} className="aspect-[16/10] w-full object-cover" loading="lazy" decoding="async" />
+      </motion.div>
 
-              <div className="border-t border-white/10 px-4 pb-4 sm:px-5 sm:pb-5">
-                <div className="grid grid-cols-4 gap-2 pt-4">
-                  {scenes.map((scene) => (
-                    <button
-                      key={scene.id}
-                      type="button"
-                      onClick={() => {
-                        setActiveId(scene.id);
-                        sceneRefs.current[scene.id]?.scrollIntoView({
-                          behavior: "smooth",
-                          block: "center",
-                        });
-                      }}
-                      className={`h-1.5 rounded-full transition-colors ${
-                        scene.id === activeId ? "bg-[#f2a96f]" : "bg-white/15"
-                      }`}
-                      aria-label={`Jump to ${scene.title}`}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+      <motion.div
+        style={{ opacity: paymentOpacity, x: paymentX }}
+        className={`${compact ? "left-10 top-[45%] w-[78%]" : "left-[58%] top-[35%] w-[36%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
+      >
+        <img src={scenes[3].image} alt={scenes[3].imageAlt} className="aspect-[16/10] w-full object-cover" loading="lazy" decoding="async" />
+      </motion.div>
 
-          <div className="space-y-4 lg:space-y-8">
-            {scenes.map((scene, index) => (
-              <div
-                key={scene.id}
-                ref={(node) => {
-                  sceneRefs.current[scene.id] = node;
-                }}
-                data-scene-id={scene.id}
-                className={`rounded-2xl border p-5 transition duration-300 sm:p-6 lg:min-h-[50svh] lg:p-8 ${
-                  scene.id === activeId
-                    ? "border-[#f2a96f]/55 bg-white/[0.08]"
-                    : "border-white/10 bg-white/[0.035]"
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#f2a96f] text-[#111114]">
-                    <scene.icon className="h-5 w-5" aria-hidden />
-                  </div>
-                  <p className="text-xs font-medium uppercase tracking-[0.14em] text-[#f2a96f]">
-                    {scene.eyebrow}
-                  </p>
-                </div>
+      <motion.div
+        style={{ opacity: metricOpacity }}
+        className="absolute right-5 top-16 rounded-2xl border border-[#f2a96f]/35 bg-[#f2a96f] px-4 py-3 text-[#111114] shadow-xl shadow-black/20"
+      >
+        <p className="font-serif text-3xl font-semibold leading-none">7x</p>
+        <p className="mt-1 max-w-[12rem] text-xs font-medium leading-snug">
+          more likely to qualify when contacted within one hour
+        </p>
+      </motion.div>
 
-                <h3 className="mt-6 max-w-xl font-serif text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl">
-                  {scene.title}
-                </h3>
-                <p className="mt-4 max-w-xl text-base leading-relaxed text-white/64 sm:text-lg">
-                  {scene.line}
-                </p>
+      <motion.div
+        style={{ opacity: approveOpacity }}
+        className="absolute bottom-28 left-5 rounded-2xl border border-white/12 bg-white/92 p-4 text-[#111114] shadow-xl backdrop-blur"
+      >
+        <div className="flex items-center gap-2 text-sm font-semibold">
+          <Check className="h-4 w-4 text-emerald-600" aria-hidden />
+          Request approved
+        </div>
+        <p className="mt-1 text-xs text-black/55">Fit checked before the booking is confirmed.</p>
+      </motion.div>
 
-                <div className="mt-6 overflow-hidden rounded-xl border border-white/10 bg-white lg:hidden">
-                  <img
-                    src={scene.image}
-                    alt={scene.imageAlt}
-                    className="aspect-[16/10] w-full object-cover"
-                    loading={index === 0 ? "eager" : "lazy"}
-                    decoding="async"
-                  />
-                </div>
+      <motion.div
+        style={{ opacity: depositOpacity }}
+        className="absolute bottom-20 right-5 rounded-2xl border border-white/12 bg-[#111114]/88 p-4 text-white shadow-xl backdrop-blur"
+      >
+        <p className="text-xs uppercase text-[#f2a96f]">Next step</p>
+        <p className="mt-1 font-serif text-2xl font-semibold">Deposit ready</p>
+      </motion.div>
+    </motion.div>
+  );
+}
 
-                <div className="mt-8 flex items-center gap-2 text-sm font-medium text-white/70">
-                  <Check className="h-4 w-4 text-[#f2a96f]" aria-hidden />
-                  <span>{scene.chip}</span>
-                </div>
-              </div>
+function ProgressPill({ progress, range }: { progress: MotionValue<number>; range: StoryScene["range"] }) {
+  const opacity = useSceneOpacity(progress, range);
+  return (
+    <motion.span
+      style={{ opacity }}
+      className="h-1.5 w-8 rounded-full bg-[#f2a96f]"
+    />
+  );
+}
+
+function TimelineStage({ compact = false }: { compact?: boolean }) {
+  const target = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
+  const [activeSceneIndex, setActiveSceneIndex] = useState(0);
+  const { scrollYProgress } = useScroll({
+    target,
+    offset: ["start start", "end end"],
+  });
+  const progress = useSpring(scrollYProgress, {
+    stiffness: compact ? 130 : 170,
+    damping: compact ? 32 : 38,
+    restDelta: 0.0005,
+  });
+
+  useMotionValueEvent(progress, "change", (value) => {
+    setActiveSceneIndex((current) => {
+      const next = getActiveSceneIndex(value);
+      return current === next ? current : next;
+    });
+  });
+
+  if (reduceMotion) {
+    return <ReducedMotionStory />;
+  }
+
+  return (
+    <div ref={target} className={`relative ${compact ? "h-[260svh]" : "h-[310svh]"}`}>
+      <div className="sticky top-0 flex h-svh items-center overflow-hidden px-4 py-6 sm:px-6 lg:px-8">
+        <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center">
+          <ProductPanels progress={progress} compact={compact} />
+
+          <ActiveSceneCaption scene={scenes[activeSceneIndex]} compact={compact} />
+
+          <div className={`${compact ? "bottom-5" : "bottom-5"} pointer-events-none absolute left-1/2 z-40 flex -translate-x-1/2 gap-2`}>
+            {scenes.map((scene) => (
+              <ProgressPill key={scene.id} progress={progress} range={scene.range} />
             ))}
-
-            <div className="flex flex-col gap-3 pt-2 sm:flex-row">
-              <Button
-                onClick={openCalendlyPopup}
-                className="bg-[#f2a96f] text-[#111114] hover:bg-[#e39455]"
-              >
-                Build this for my chef business
-                <ArrowRight className="h-4 w-4" aria-hidden />
-              </Button>
-              <Button
-                variant="outline"
-                asChild
-                className="border-white/15 bg-transparent text-white hover:bg-white/10 hover:text-white"
-              >
-                <a href={DEMO_STOREFRONT_URL} target="_blank" rel="noopener noreferrer">
-                  Open live demo
-                </a>
-              </Button>
-            </div>
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function ReducedMotionStory() {
+  return (
+    <div className="mx-auto grid max-w-6xl gap-5 px-4 py-12 sm:px-6 lg:grid-cols-4 lg:px-8">
+      {scenes.map((scene) => (
+        <article key={scene.id} className="rounded-2xl border border-white/10 bg-white/[0.05] p-5">
+          <div className="flex items-center gap-3">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f2a96f] text-[#111114]">
+              <scene.icon className="h-4 w-4" aria-hidden />
+            </span>
+            <span className="text-xs font-medium uppercase text-[#f2a96f]">{scene.eyebrow}</span>
+          </div>
+          <h3 className="mt-5 font-serif text-2xl font-semibold text-white">{scene.title}</h3>
+          <p className="mt-3 text-sm leading-relaxed text-white/65">{scene.line}</p>
+          <img
+            src={scene.image}
+            alt={scene.imageAlt}
+            className="mt-5 aspect-[16/10] rounded-xl object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+        </article>
+      ))}
+    </div>
+  );
+}
+
+export function BookingStory() {
+  const reduceMotion = useReducedMotion();
+  useSpaceLikeScroll(!reduceMotion);
+
+  return (
+    <section id="story" className="relative bg-[#111114] text-white">
+      <div className="sr-only">
+        {scenes.map((scene) => (
+          <p key={scene.id}>
+            {scene.title} {scene.line}
+          </p>
+        ))}
+      </div>
+
+      <div className="px-4 pt-20 text-center sm:px-6 lg:px-8 lg:pt-28">
+        <p className="text-xs font-medium uppercase text-[#f2a96f]">
+          The booking story
+        </p>
+        <h2 className="mx-auto mt-3 max-w-3xl font-serif text-4xl font-semibold leading-tight text-white sm:text-5xl">
+          From warm inquiry to paid event.
+        </h2>
+        <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/62 sm:text-lg">
+          Scroll the product story. The site turns urgency into a next step before the lead cools off.
+        </p>
+      </div>
+
+      <div className="lg:hidden">
+        <TimelineStage compact />
+      </div>
+      <div className="hidden lg:block">
+        <TimelineStage />
+      </div>
+
+      <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 pb-20 sm:flex-row sm:justify-center sm:px-6 lg:px-8 lg:pb-28">
+        <Button
+          onClick={openCalendlyPopup}
+          className="bg-[#f2a96f] text-[#111114] hover:bg-[#e39455]"
+        >
+          Build this for my chef business
+          <ArrowRight className="h-4 w-4" aria-hidden />
+        </Button>
+        <Button
+          variant="outline"
+          asChild
+          className="border-white/15 bg-transparent text-white hover:bg-white/10 hover:text-white"
+        >
+          <a href={DEMO_STOREFRONT_URL} target="_blank" rel="noopener noreferrer">
+            Open live demo
+          </a>
+        </Button>
       </div>
     </section>
   );
