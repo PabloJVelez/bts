@@ -104,7 +104,7 @@ export function HowItWorks() {
                   One flow from first look to paid booking.
                 </p>
                 <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-                  The demo keeps each next step clear, so serious inquiries do not disappear into screenshots, texts, and follow-up messages.
+                  The demo keeps each next step clear, so serious inquiries can act while interest is high instead of disappearing into screenshots, texts, and delayed follow-up.
                 </p>
               </div>
               <Button

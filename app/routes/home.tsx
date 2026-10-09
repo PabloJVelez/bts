@@ -1,6 +1,7 @@
 import { Header } from "~/components/header";
 import { Hero } from "~/components/hero";
 import { TrustRail } from "~/components/trust-rail";
+import { SpeedToLead } from "~/components/speed-to-lead";
 import { BeforeVsAfter } from "~/components/before-vs-after";
 import { HowItWorks } from "~/components/how-it-works";
 import { Features } from "~/components/features";
@@ -18,6 +19,7 @@ export default function Home() {
       <main>
         <Hero />
         <TrustRail />
+        <SpeedToLead />
         <HowItWorks />
         <BeforeVsAfter />
         <Features />

@@ -10,6 +10,11 @@ import { FadeInUp } from "~/components/motion-wrapper";
 
 const faqs = [
   {
+    question: "Why does response speed matter for private chef bookings?",
+    answer:
+      "People ask about private events while the need is active. If the next step is slow or unclear, that urgency fades. BTS gives them a booking path they can use right away, while you still keep approval control.",
+  },
+  {
     question: "Do I still control which events I accept?",
     answer:
       "Yes. Every request lands in your dashboard first. You review it, then accept or decline. Nothing is booked without your approval.",
