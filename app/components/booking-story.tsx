@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, CheckCircle2, Clock3, MessageSquare, Wallet } from "lucide-react";
+import { ArrowRight, Check, Clock3, FileCheck2, MessageSquare, Wallet } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { openCalendlyPopup } from "~/components/calendly-badge";
 import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
@@ -10,171 +10,183 @@ type StoryScene = {
   id: string;
   eyebrow: string;
   title: string;
-  copy: string;
+  line: string;
   image: string;
   imageAlt: string;
-  metric: string;
-  metricLabel: string;
+  chip: string;
   icon: typeof Clock3;
-  bullets: string[];
 };
 
 const scenes: StoryScene[] = [
   {
-    id: "hot-lead",
-    eyebrow: "01 / Interest is highest at the start",
-    title: "A private-event lead is not just browsing. They are trying to book a dinner.",
-    copy:
-      "The problem is timing. If the next step is a slow text exchange, their urgency cools before you ever quote the event.",
+    id: "hot-inquiry",
+    eyebrow: "01",
+    title: "They are ready now.",
+    line: "A private-event inquiry starts hot. Do not make it wait in a DM thread.",
     image: "/chefevethub-menus.png",
-    imageAlt: "Chef storefront menu page preview",
-    metric: "Hot",
-    metricLabel: "ready-to-act inquiry",
+    imageAlt: "Chef menu storefront preview",
+    chip: "Inquiry is hot",
     icon: Clock3,
-    bullets: [
-      "Menu options are visible immediately",
-      "The client can move forward without waiting for a reply",
-      "Your brand feels polished before the first conversation",
-    ],
   },
   {
-    id: "guided-request",
-    eyebrow: "02 / The link does the first pass",
-    title: "Instead of chasing details, the booking path asks the important questions.",
-    copy:
-      "Guests, timing, menu preference, location, dietary notes, and event context land in one place before you spend time pricing or prepping.",
+    id: "request",
+    eyebrow: "02",
+    title: "The link gets the details.",
+    line: "Menu, date, guests, location, and notes land in one guided request.",
     image: "/chefeventhub-request.png",
-    imageAlt: "Guided private chef request flow preview",
-    metric: "1 link",
-    metricLabel: "for details, timing, and menu fit",
+    imageAlt: "Guided event request flow preview",
+    chip: "Details captured",
     icon: MessageSquare,
-    bullets: [
-      "Simple enough to complete while interest is high",
-      "Structured enough to protect your quoting process",
-      "Cleaner than screenshots, voice notes, and scattered DMs",
-    ],
   },
   {
-    id: "chef-control",
-    eyebrow: "03 / The chef stays in control",
-    title: "Requests become a reviewable event, not a commitment you did not approve.",
-    copy:
-      "The chef can inspect the event, check the fit, accept or reject it, and keep all operational notes attached to the booking.",
+    id: "approval",
+    eyebrow: "03",
+    title: "You approve the fit.",
+    line: "The chef sees the request before anything becomes a real booking.",
     image: "/chefeventhub-admin-request.png",
-    imageAlt: "Admin view showing a chef event request",
-    metric: "Approve",
-    metricLabel: "only the events that fit",
-    icon: CheckCircle2,
-    bullets: [
-      "Review date, party size, location, menu, and notes",
-      "Avoid accidental bookings and unclear expectations",
-      "Keep client context connected to the event",
-    ],
+    imageAlt: "Chef admin request approval preview",
+    chip: "Chef in control",
+    icon: FileCheck2,
   },
   {
-    id: "paid-handoff",
-    eyebrow: "04 / Payment becomes the natural next step",
-    title: "Once accepted, the client gets a clean payment handoff.",
-    copy:
-      "The booking system turns approval into momentum: deposit, confirmation, event details, and next steps without another manual back-and-forth.",
+    id: "payment",
+    eyebrow: "04",
+    title: "Payment is the next step.",
+    line: "Approval turns into a clean deposit or payment handoff.",
     image: "/chefeventhub-request-accepted.png",
-    imageAlt: "Accepted booking and payment handoff preview",
-    metric: "$",
-    metricLabel: "deposit or payment path",
+    imageAlt: "Accepted request payment handoff preview",
+    chip: "Deposit ready",
     icon: Wallet,
-    bullets: [
-      "Reduce ghosting after the quote",
-      "Collect payment before event details get buried",
-      "Give clients confidence that the booking is real",
-    ],
   },
 ];
 
 export function BookingStory() {
   const [activeId, setActiveId] = useState(scenes[0].id);
   const sceneRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const activeScene = scenes.find((scene) => scene.id === activeId) ?? scenes[0];
+  const activeIndex = Math.max(0, scenes.findIndex((scene) => scene.id === activeId));
+  const activeScene = scenes[activeIndex] ?? scenes[0];
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    let frame = 0;
 
-        if (visible?.target instanceof HTMLElement) {
-          setActiveId(visible.target.dataset.sceneId ?? scenes[0].id);
+    const updateActiveScene = () => {
+      const viewportCenter = window.innerHeight * 0.48;
+      let closest = scenes[0].id;
+      let closestDistance = Number.POSITIVE_INFINITY;
+
+      for (const scene of scenes) {
+        const node = sceneRefs.current[scene.id];
+        if (!node) continue;
+
+        const rect = node.getBoundingClientRect();
+        const sceneCenter = rect.top + rect.height * 0.42;
+        const distance = Math.abs(sceneCenter - viewportCenter);
+
+        if (distance < closestDistance) {
+          closest = scene.id;
+          closestDistance = distance;
         }
-      },
-      {
-        rootMargin: "-25% 0px -45% 0px",
-        threshold: [0.2, 0.45, 0.7],
-      },
-    );
+      }
 
-    Object.values(sceneRefs.current).forEach((node) => {
-      if (node) observer.observe(node);
-    });
+      setActiveId(closest);
+      frame = 0;
+    };
 
-    return () => observer.disconnect();
+    const requestUpdate = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(updateActiveScene);
+    };
+
+    updateActiveScene();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+    };
   }, []);
 
   return (
     <section id="story" className="bg-[#111114] py-16 text-white md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-xs font-medium uppercase tracking-[0.16em] text-[#f2a96f]">
+            The booking story
+          </p>
+          <h2 className="mt-3 font-serif text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">
+            From warm inquiry to paid event.
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/62 sm:text-lg">
+            Less explanation. More proof. Show the chef exactly what happens after a lead raises their hand.
+          </p>
+        </div>
+
+        <div className="mt-12 grid gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:gap-14">
           <div className="lg:sticky lg:top-24 lg:h-[calc(100svh-7rem)]">
-            <div className="flex h-full min-h-[620px] flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-[#1b1b1f] shadow-2xl shadow-black/35">
-              <div className="border-b border-white/10 px-4 py-3">
+            <div className="relative flex h-full min-h-[560px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#1b1b1f] shadow-2xl shadow-black/35 contain-layout">
+              <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
                 <div className="flex items-center gap-2">
                   <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
                   <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
                   <span className="h-3 w-3 rounded-full bg-[#28c840]" />
-                  <span className="ml-3 text-xs font-medium text-white/45">
-                    BTS booking system preview
-                  </span>
                 </div>
+                <span className="text-xs font-medium text-white/42">BTS booking flow</span>
               </div>
 
-              <div className="grid min-h-0 flex-1 gap-5 p-4 sm:p-5">
-                <div className="overflow-hidden rounded-xl border border-white/10 bg-white shadow-2xl shadow-black/20">
-                  <img
-                    key={activeScene.image}
-                    src={activeScene.image}
-                    alt={activeScene.imageAlt}
-                    className="aspect-[16/10] h-full w-full object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-
-                <div className="grid gap-3 sm:grid-cols-[0.7fr_1fr]">
-                  <div className="rounded-xl border border-white/10 bg-white/[0.06] p-4">
-                    <p className="font-serif text-4xl font-semibold tracking-tight text-[#f2a96f]">
-                      {activeScene.metric}
-                    </p>
-                    <p className="mt-2 text-sm leading-snug text-white/70">
-                      {activeScene.metricLabel}
-                    </p>
-                  </div>
-                  <div className="rounded-xl border border-white/10 bg-white/[0.06] p-4">
-                    <p className="text-xs font-medium uppercase tracking-[0.14em] text-[#f2a96f]">
-                      Current scene
-                    </p>
-                    <p className="mt-2 text-base font-medium leading-snug text-white">
-                      {activeScene.title}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="border-t border-white/10 p-4 sm:p-5">
-                <div className="grid grid-cols-4 gap-2">
+              <div className="relative min-h-0 flex-1 p-4 sm:p-5">
+                <div className="relative h-full overflow-hidden rounded-xl border border-white/10 bg-white shadow-2xl shadow-black/20">
                   {scenes.map((scene, index) => (
+                    <img
+                      key={scene.id}
+                      src={scene.image}
+                      alt={scene.imageAlt}
+                      className={`absolute inset-0 h-full w-full object-cover transition duration-700 ease-out will-change-transform ${
+                        scene.id === activeId
+                          ? "scale-100 opacity-100"
+                          : index < activeIndex
+                            ? "scale-[0.985] opacity-0"
+                            : "scale-[1.015] opacity-0"
+                      }`}
+                      loading={index === 0 ? "eager" : "lazy"}
+                      decoding="async"
+                    />
+                  ))}
+
+                  <div className="absolute left-4 top-4 rounded-full border border-black/10 bg-white/90 px-3 py-1 text-xs font-medium text-[#111114] shadow-sm backdrop-blur">
+                    {activeScene.chip}
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid gap-3 border-t border-white/10 p-4 sm:grid-cols-[0.8fr_1.2fr] sm:p-5">
+                <div className="rounded-xl border border-white/10 bg-white/[0.06] p-4">
+                  <p className="font-serif text-4xl font-semibold tracking-tight text-[#f2a96f]">
+                    {activeScene.eyebrow}
+                  </p>
+                  <p className="mt-2 text-xs font-medium uppercase tracking-[0.14em] text-white/42">
+                    Scene
+                  </p>
+                </div>
+                <div className="rounded-xl border border-white/10 bg-white/[0.06] p-4">
+                  <p className="font-serif text-xl font-semibold leading-tight text-white">
+                    {activeScene.title}
+                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-white/60">
+                    {activeScene.line}
+                  </p>
+                </div>
+              </div>
+
+              <div className="border-t border-white/10 px-4 pb-4 sm:px-5 sm:pb-5">
+                <div className="grid grid-cols-4 gap-2 pt-4">
+                  {scenes.map((scene) => (
                     <button
                       key={scene.id}
                       type="button"
                       onClick={() => {
+                        setActiveId(scene.id);
                         sceneRefs.current[scene.id]?.scrollIntoView({
                           behavior: "smooth",
                           block: "center",
@@ -183,7 +195,7 @@ export function BookingStory() {
                       className={`h-1.5 rounded-full transition-colors ${
                         scene.id === activeId ? "bg-[#f2a96f]" : "bg-white/15"
                       }`}
-                      aria-label={`Jump to story scene ${index + 1}`}
+                      aria-label={`Jump to ${scene.title}`}
                     />
                   ))}
                 </div>
@@ -191,77 +203,54 @@ export function BookingStory() {
             </div>
           </div>
 
-          <div>
-            <div className="max-w-2xl">
-              <p className="text-xs font-medium uppercase tracking-[0.16em] text-[#f2a96f]">
-                The BTS story
-              </p>
-              <h2 className="mt-3 font-serif text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">
-                From a warm inquiry to a paid private event.
-              </h2>
-              <p className="mt-5 text-base leading-relaxed text-white/65 sm:text-lg">
-                Space tells its story by showing the product doing the work. BTS should do the same: show chefs exactly how a messy inquiry becomes a structured request, an approval decision, and a payment path.
-              </p>
-            </div>
-
-            <div className="mt-10 space-y-5 lg:mt-16 lg:space-y-10">
-              {scenes.map((scene, index) => (
-                <div
-                  key={scene.id}
-                  ref={(node) => {
-                    sceneRefs.current[scene.id] = node;
-                  }}
-                  data-scene-id={scene.id}
-                  className={`rounded-2xl border p-5 transition-colors sm:p-6 lg:min-h-[58svh] lg:p-8 ${
-                    scene.id === activeId
-                      ? "border-[#f2a96f]/50 bg-white/[0.08]"
-                      : "border-white/10 bg-white/[0.04]"
-                  }`}
-                >
-                  <div className="mb-5 flex items-center gap-3">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#f2a96f] text-[#111114]">
-                      <scene.icon className="h-5 w-5" aria-hidden />
-                    </div>
-                    <div>
-                      <p className="text-xs font-medium uppercase tracking-[0.14em] text-[#f2a96f]">
-                        {scene.eyebrow}
-                      </p>
-                      <p className="mt-1 text-xs text-white/40">
-                        Scene {index + 1} of {scenes.length}
-                      </p>
-                    </div>
+          <div className="space-y-4 lg:space-y-8">
+            {scenes.map((scene, index) => (
+              <div
+                key={scene.id}
+                ref={(node) => {
+                  sceneRefs.current[scene.id] = node;
+                }}
+                data-scene-id={scene.id}
+                className={`rounded-2xl border p-5 transition duration-300 sm:p-6 lg:min-h-[50svh] lg:p-8 ${
+                  scene.id === activeId
+                    ? "border-[#f2a96f]/55 bg-white/[0.08]"
+                    : "border-white/10 bg-white/[0.035]"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#f2a96f] text-[#111114]">
+                    <scene.icon className="h-5 w-5" aria-hidden />
                   </div>
-
-                  <h3 className="font-serif text-2xl font-semibold leading-tight tracking-tight text-white sm:text-3xl">
-                    {scene.title}
-                  </h3>
-                  <p className="mt-4 text-base leading-relaxed text-white/68">
-                    {scene.copy}
+                  <p className="text-xs font-medium uppercase tracking-[0.14em] text-[#f2a96f]">
+                    {scene.eyebrow}
                   </p>
-
-                  <div className="mt-6 overflow-hidden rounded-xl border border-white/10 bg-white lg:hidden">
-                    <img
-                      src={scene.image}
-                      alt={scene.imageAlt}
-                      className="aspect-[16/10] w-full object-cover"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-
-                  <ul className="mt-6 space-y-3">
-                    {scene.bullets.map((bullet) => (
-                      <li key={bullet} className="flex gap-3 text-sm leading-relaxed text-white/70 sm:text-base">
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#f2a96f]" aria-hidden />
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
-              ))}
-            </div>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <h3 className="mt-6 max-w-xl font-serif text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl">
+                  {scene.title}
+                </h3>
+                <p className="mt-4 max-w-xl text-base leading-relaxed text-white/64 sm:text-lg">
+                  {scene.line}
+                </p>
+
+                <div className="mt-6 overflow-hidden rounded-xl border border-white/10 bg-white lg:hidden">
+                  <img
+                    src={scene.image}
+                    alt={scene.imageAlt}
+                    className="aspect-[16/10] w-full object-cover"
+                    loading={index === 0 ? "eager" : "lazy"}
+                    decoding="async"
+                  />
+                </div>
+
+                <div className="mt-8 flex items-center gap-2 text-sm font-medium text-white/70">
+                  <Check className="h-4 w-4 text-[#f2a96f]" aria-hidden />
+                  <span>{scene.chip}</span>
+                </div>
+              </div>
+            ))}
+
+            <div className="flex flex-col gap-3 pt-2 sm:flex-row">
               <Button
                 onClick={openCalendlyPopup}
                 className="bg-[#f2a96f] text-[#111114] hover:bg-[#e39455]"
@@ -275,7 +264,7 @@ export function BookingStory() {
                 className="border-white/15 bg-transparent text-white hover:bg-white/10 hover:text-white"
               >
                 <a href={DEMO_STOREFRONT_URL} target="_blank" rel="noopener noreferrer">
-                  Open the live demo
+                  Open live demo
                 </a>
               </Button>
             </div>

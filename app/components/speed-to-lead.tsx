@@ -12,21 +12,21 @@ import {
 const metrics = [
   {
     value: "7x",
-    label: "more likely to qualify",
+    label: "within one hour",
     detail:
-      "Companies that contacted online leads within an hour were nearly seven times as likely to qualify them as companies that waited even one hour longer.",
+      "HBR found companies that contacted online leads within an hour were nearly seven times as likely to qualify them.",
   },
   {
     value: "60x",
-    label: "the penalty for waiting",
+    label: "versus waiting a day",
     detail:
-      "The same HBR research found one-hour responders were more than sixty times as likely to qualify a lead as companies that waited 24 hours or longer.",
+      "The same research found one-hour responders were more than sixty times as likely to qualify a lead as companies that waited 24 hours.",
   },
   {
     value: "5 min",
     label: "the hot window",
     detail:
-      "Lead-response research shows the odds of reaching and qualifying a web lead fall hard when the first real response slips from five minutes to thirty.",
+      "Lead-response research shows contact and qualification odds fall hard when the first real response slips from five minutes to thirty.",
   },
 ];
 
@@ -62,14 +62,12 @@ export function SpeedToLead() {
                 Why speed matters
               </p>
               <h2 className="mt-3 max-w-3xl font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                The chef who makes the next step easiest usually wins the event.
+                The fastest clear next step has the advantage.
               </h2>
             </div>
             <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
-              When someone asks about a private dinner, they are not casually browsing.
-              They are trying to solve a party, anniversary, client dinner, or birthday
-              problem. A fast, clear booking path keeps that intent from cooling off in
-              a messy inbox.
+              When someone asks about a private dinner, they are trying to solve a real event.
+              A clear booking path keeps that intent from cooling off in a messy inbox.
             </p>
           </div>
         </FadeInUp>
@@ -116,12 +114,10 @@ export function SpeedToLead() {
                   <Clock3 className="h-5 w-5" aria-hidden />
                 </div>
                 <h3 className="font-serif text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-                  The website should not just collect a lead. It should give the lead
-                  something useful to do.
+                  The site should not just collect a lead. It should move the lead.
                 </h3>
                 <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
-                  BTS is built around that idea: reduce the delay between "I want this"
-                  and "here is the dinner I want to book."
+                  BTS reduces the delay between "I want this" and "here is the dinner I want to book."
                 </p>
                 <Button
                   onClick={openCalendlyPopup}
