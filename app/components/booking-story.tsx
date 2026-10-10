@@ -11,7 +11,7 @@ import {
   useTransform,
   type MotionValue,
 } from "framer-motion";
-import { ArrowRight, Check, Clock3, FileCheck2, MessageSquare, Wallet } from "lucide-react";
+import { ArrowRight, CalendarDays, Check, Clock3, FileCheck2, Link2, MessageSquare } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { openCalendlyPopup } from "~/components/calendly-badge";
 import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
@@ -43,7 +43,7 @@ const scenes: StoryScene[] = [
   {
     id: "request",
     eyebrow: "02",
-    title: "The link captures the details.",
+    title: "Your page captures the event details.",
     line: "Menu, date, guests, location, and notes land in one request.",
     image: "/chefeventhub-request.png",
     imageAlt: "Guided event request flow preview",
@@ -55,23 +55,34 @@ const scenes: StoryScene[] = [
     id: "approval",
     eyebrow: "03",
     title: "You approve the fit.",
-    line: "The chef reviews the event before it becomes a booking.",
+    line: "Once the event is accepted, the client gets a clear payment link to secure the date.",
     image: "/chefeventhub-admin-request.png",
     imageAlt: "Chef admin request approval preview",
-    chip: "Chef in control",
+    chip: "Payment link sent",
     icon: FileCheck2,
-    range: [0.48, 0.62, 0.78],
+    range: [0.44, 0.56, 0.68],
   },
   {
     id: "payment",
     eyebrow: "04",
-    title: "Payment is the next step.",
-    line: "Approval turns into a clean deposit or payment handoff.",
+    title: "The date gets secured.",
+    line: "The client pays the deposit from the link instead of sending another loose DM.",
     image: "/chefeventhub-request-accepted.png",
     imageAlt: "Accepted request payment handoff preview",
-    chip: "Deposit ready",
-    icon: Wallet,
-    range: [0.72, 0.88, 1],
+    chip: "Deposit paid",
+    icon: Link2,
+    range: [0.62, 0.74, 0.86],
+  },
+  {
+    id: "admin-calendar",
+    eyebrow: "05",
+    title: "Then you run the event from one place.",
+    line: "Keep the date, client, menu, payment status, and prep notes visible from the admin calendar.",
+    image: "",
+    imageAlt: "Chef admin event calendar preview",
+    chip: "Event on calendar",
+    icon: CalendarDays,
+    range: [0.8, 0.92, 1],
   },
 ];
 
@@ -136,26 +147,71 @@ function ActiveSceneCaption({ scene, compact = false }: { scene: StoryScene; com
 
 function getActiveSceneIndex(value: number) {
   if (value < 0.25) return 0;
-  if (value < 0.52) return 1;
-  if (value < 0.78) return 2;
-  return 3;
+  if (value < 0.5) return 1;
+  if (value < 0.68) return 2;
+  if (value < 0.86) return 3;
+  return 4;
+}
+
+function AdminCalendarPanel() {
+  return (
+    <div className="aspect-[16/10] w-full bg-[#f7f2ed] p-4 text-[#111114]">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-xs font-semibold uppercase text-[#c97c45]">Admin calendar</p>
+          <p className="mt-1 font-serif text-2xl font-semibold">October events</p>
+        </div>
+        <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">
+          Deposit paid
+        </span>
+      </div>
+      <div className="mt-4 grid grid-cols-7 gap-2 text-center text-xs font-medium text-black/45">
+        {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
+          <span key={day}>{day}</span>
+        ))}
+      </div>
+      <div className="mt-2 grid grid-cols-7 gap-2">
+        {Array.from({ length: 21 }, (_, index) => {
+          const day = index + 7;
+          const isEvent = day === 18;
+          return (
+            <div
+              key={day}
+              className={`min-h-14 rounded-xl border p-2 text-sm ${
+                isEvent ? "border-[#c97c45]/40 bg-white shadow-sm" : "border-black/5 bg-white/55 text-black/45"
+              }`}
+            >
+              <span className="font-semibold">{day}</span>
+              {isEvent ? (
+                <div className="mt-2 rounded-lg bg-[#111114] px-2 py-1 text-left text-[11px] leading-tight text-white">
+                  Sushi dinner
+                  <span className="mt-1 block text-[#f2a96f]">14 guests · Austin</span>
+                </div>
+              ) : null}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
 function ProductPanels({ progress, compact = false }: { progress: MotionValue<number>; compact?: boolean }) {
   const stageScale = useTransform(progress, [0, 0.16, 0.88, 1], compact ? [0.92, 1, 1, 0.96] : [0.86, 1, 1, 0.94]);
   const stageY = useTransform(progress, [0, 0.18, 0.9, 1], compact ? [32, 0, 0, -24] : [42, 0, 0, -36]);
   const inquiryX = useTransform(progress, [0, 0.18, 0.38, 1], compact ? [0, 0, -130, -170] : [0, -18, -250, -330]);
-  const requestX = useTransform(progress, [0.18, 0.38, 0.58, 1], compact ? [140, 0, -70, -130] : [310, 0, -130, -230]);
-  const adminX = useTransform(progress, [0.44, 0.62, 0.8, 1], compact ? [150, 0, -30, -70] : [330, 70, 0, -80]);
-  const paymentX = useTransform(progress, [0.68, 0.88, 1], compact ? [130, 0, 0] : [300, 72, 0]);
+  const requestX = useTransform(progress, [0.18, 0.36, 0.54, 1], compact ? [140, 0, -82, -145] : [310, 0, -150, -250]);
+  const adminX = useTransform(progress, [0.42, 0.56, 0.7, 1], compact ? [150, 0, -42, -88] : [330, 70, 0, -100]);
+  const paymentX = useTransform(progress, [0.58, 0.74, 0.88, 1], compact ? [140, 0, -22, -62] : [300, 72, 0, -80]);
+  const calendarX = useTransform(progress, [0.78, 0.92, 1], compact ? [150, 0, 0] : [320, 68, 0]);
   const inquiryOpacity = useTransform(progress, [0, 0.06, 0.28, 0.42], [0, 1, 1, 0.22]);
-  const requestOpacity = useTransform(progress, [0.2, 0.34, 0.58, 0.72], [0, 1, 1, 0.32]);
-  const adminOpacity = useTransform(progress, [0.44, 0.58, 0.78, 0.9], [0, 1, 1, 0.48]);
-  const paymentOpacity = useTransform(progress, [0.68, 0.82, 1], [0, 1, 1]);
+  const requestOpacity = useTransform(progress, [0.2, 0.34, 0.54, 0.68], [0, 1, 1, 0.28]);
+  const adminOpacity = useTransform(progress, [0.42, 0.54, 0.7, 0.84], [0, 1, 1, 0.34]);
+  const paymentOpacity = useTransform(progress, [0.6, 0.72, 0.88, 0.96], [0, 1, 1, 0.28]);
+  const calendarOpacity = useTransform(progress, [0.78, 0.9, 1], [0, 1, 1]);
   const connectorScale = useTransform(progress, [0.16, 0.86], [0, 1]);
   const metricOpacity = useTransform(progress, [0.04, 0.12, 0.34, 0.44], [0, 1, 1, 0]);
   const approveOpacity = useTransform(progress, [0.52, 0.62, 0.74], [0, 1, 0]);
-  const depositOpacity = useTransform(progress, [0.76, 0.88, 1], [0, 1, 1]);
 
   return (
     <motion.div
@@ -201,9 +257,16 @@ function ProductPanels({ progress, compact = false }: { progress: MotionValue<nu
 
       <motion.div
         style={{ opacity: paymentOpacity, x: paymentX }}
-        className={`${compact ? "left-10 top-[45%] w-[78%]" : "left-[58%] top-[35%] w-[36%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
+        className={`${compact ? "left-10 top-[45%] w-[78%]" : "left-[58%] top-[33%] w-[36%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
         <img src={scenes[3].image} alt={scenes[3].imageAlt} className="aspect-[16/10] w-full object-cover" loading="lazy" decoding="async" />
+      </motion.div>
+
+      <motion.div
+        style={{ opacity: calendarOpacity, x: calendarX }}
+        className={`${compact ? "left-5 top-[39%] w-[86%]" : "left-[50%] top-[19%] w-[44%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
+      >
+        <AdminCalendarPanel />
       </motion.div>
 
       <motion.div
@@ -227,13 +290,6 @@ function ProductPanels({ progress, compact = false }: { progress: MotionValue<nu
         <p className="mt-1 text-xs text-black/55">Fit checked before the booking is confirmed.</p>
       </motion.div>
 
-      <motion.div
-        style={{ opacity: depositOpacity }}
-        className="absolute bottom-20 right-5 rounded-2xl border border-white/12 bg-[#111114]/88 p-4 text-white shadow-xl backdrop-blur"
-      >
-        <p className="text-xs uppercase text-[#f2a96f]">Next step</p>
-        <p className="mt-1 font-serif text-2xl font-semibold">Deposit ready</p>
-      </motion.div>
     </motion.div>
   );
 }
@@ -305,13 +361,19 @@ function ReducedMotionStory() {
           </div>
           <h3 className="mt-5 font-serif text-2xl font-semibold text-white">{scene.title}</h3>
           <p className="mt-3 text-sm leading-relaxed text-white/65">{scene.line}</p>
-          <img
-            src={scene.image}
-            alt={scene.imageAlt}
-            className="mt-5 aspect-[16/10] rounded-xl object-cover"
-            loading="lazy"
-            decoding="async"
-          />
+          {scene.image ? (
+            <img
+              src={scene.image}
+              alt={scene.imageAlt}
+              className="mt-5 aspect-[16/10] rounded-xl object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <div className="mt-5 overflow-hidden rounded-xl">
+              <AdminCalendarPanel />
+            </div>
+          )}
         </article>
       ))}
     </div>

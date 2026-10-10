@@ -44,7 +44,7 @@ const storyBeats: StoryBeat[] = [
   },
   {
     role: "answer",
-    title: "The page should collect the event details immediately.",
+    title: "Your page should collect the event details and respond immediately.",
     copy: "Date, guests, timing, menu interest, location, and notes should be captured in the first",
     metric: "5 minutes",
     range: [0.56, 0.64, 0.74],
