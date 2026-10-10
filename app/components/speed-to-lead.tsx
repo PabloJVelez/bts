@@ -10,7 +10,6 @@ import {
   useTransform,
   type MotionValue,
 } from "framer-motion";
-import { Check, Clock3, CreditCard, MessageSquareText, Send } from "lucide-react";
 
 type StoryBeat = {
   role: "intro" | "question" | "answer";
@@ -65,12 +64,16 @@ const storyBeats: StoryBeat[] = [
 ];
 
 const dmBubbles = [
-  { text: "Are you available Saturday?", side: "left", range: [0.11, 0.18, 0.8] },
-  { text: "How many guests can you do?", side: "right", range: [0.2, 0.27, 0.82] },
-  { text: "Can you send menu options?", side: "left", range: [0.37, 0.45, 0.84] },
-  { text: "What is the deposit?", side: "right", range: [0.48, 0.56, 0.86] },
-  { text: "Do you travel to West Austin?", side: "left", range: [0.62, 0.7, 0.88] },
-  { text: "Following up here...", side: "right", range: [0.72, 0.78, 0.9] },
+  { text: "Are you available Saturday?", x: 6, compactX: 4, y: 14, compactY: 14, width: 250, range: [0.1, 0.17, 0.82], rotate: -1.5 },
+  { text: "How many guests can you do?", x: 62, compactX: 24, y: 20, compactY: 19, width: 300, range: [0.18, 0.25, 0.84], rotate: 1.4 },
+  { text: "Can you send menu options?", x: 18, compactX: 6, y: 31, compactY: 27, width: 280, range: [0.28, 0.35, 0.86], rotate: -0.8 },
+  { text: "What is the deposit?", x: 72, compactX: 50, y: 38, compactY: 36, width: 230, range: [0.4, 0.48, 0.88], rotate: 1.1 },
+  { text: "Do you travel to West Austin?", x: 8, compactX: 8, y: 50, compactY: 45, width: 290, range: [0.52, 0.6, 0.9], rotate: -1.1 },
+  { text: "Can I see plated menu examples?", x: 46, compactX: 18, y: 9, compactY: 53, width: 310, range: [0.58, 0.66, 0.9], rotate: 0.7 },
+  { text: "Is service included?", x: 34, compactX: 46, y: 44, compactY: 62, width: 220, range: [0.64, 0.72, 0.92], rotate: -0.6 },
+  { text: "Following up here...", x: 76, compactX: 34, y: 55, compactY: 70, width: 220, range: [0.72, 0.79, 0.94], rotate: 1.7 },
+  { text: "Can you hold the date?", x: 25, compactX: 7, y: 20, compactY: 78, width: 240, range: [0.76, 0.83, 0.96], rotate: -1.8 },
+  { text: "Ready to book if the date works.", x: 52, compactX: 35, y: 61, compactY: 86, width: 310, range: [0.8, 0.88, 0.98], rotate: 0.9 },
 ] as const;
 
 function getActiveBeatIndex(value: number) {
@@ -124,38 +127,24 @@ function ActiveCaption({ beat, compact = false }: { beat: StoryBeat; compact?: b
 
 function DmBubble({
   bubble,
-  index,
   progress,
   compact,
 }: {
   bubble: (typeof dmBubbles)[number];
-  index: number;
   progress: MotionValue<number>;
   compact?: boolean;
 }) {
-  const opacity = useTransform(progress, [bubble.range[0], bubble.range[1], bubble.range[2], 0.98], [0, 1, 1, 0.18]);
-  const y = useTransform(progress, [bubble.range[0], bubble.range[1], 0.98], compact ? [20, 0, -24] : [28, 0, -36]);
-  const x = useTransform(
-    progress,
-    [bubble.range[0], bubble.range[1], 0.98],
-    bubble.side === "left" ? [-18, 0, -28] : [18, 0, 28],
-  );
-  const top = compact ? 70 + index * 34 : 74 + index * 42;
-  const rotate = bubble.side === "left" ? -1.5 + index * 0.25 : 1.5 - index * 0.25;
-  const horizontal = compact
-    ? bubble.side === "left"
-      ? "left-5"
-      : "right-5"
-    : bubble.side === "left"
-      ? "left-10"
-      : "right-10";
+  const opacity = useTransform(progress, [bubble.range[0], bubble.range[1], bubble.range[2], 1], [0, 1, 1, 0.16]);
+  const y = useTransform(progress, [bubble.range[0], bubble.range[1], 1], compact ? [-34, 0, 18] : [-46, 0, 26]);
+  const scale = useTransform(progress, [bubble.range[0], bubble.range[1], 1], [0.96, 1, 0.98]);
+  const left = `${compact ? bubble.compactX : bubble.x}%`;
+  const top = `${compact ? bubble.compactY : bubble.y}%`;
+  const width = compact ? "min(76vw, 300px)" : `${bubble.width}px`;
 
   return (
     <motion.div
-      style={{ opacity, y, x, rotate, top }}
-      className={`absolute ${horizontal} z-10 max-w-[76%] rounded-2xl border border-white/10 bg-white px-4 py-3 text-sm font-medium text-[#111114] shadow-2xl shadow-black/20 sm:text-base ${
-        compact ? "" : "max-w-[300px]"
-      }`}
+      style={{ opacity, y, scale, rotate: bubble.rotate, left, top, width }}
+      className="absolute z-10 rounded-2xl border border-white/10 bg-white px-4 py-3 text-sm font-medium text-[#111114] shadow-2xl shadow-black/20 sm:text-base"
       aria-hidden
     >
       {bubble.text}
@@ -166,16 +155,7 @@ function DmBubble({
 function BookingFlowStage({ progress, compact = false }: { progress: MotionValue<number>; compact?: boolean }) {
   const stageScale = useTransform(progress, [0, 0.12, 0.9, 1], compact ? [0.9, 1, 1, 0.96] : [0.84, 1, 1, 0.94]);
   const stageY = useTransform(progress, [0, 0.12, 0.9, 1], compact ? [28, 0, 0, -20] : [42, 0, 0, -32]);
-  const dmDimOpacity = useTransform(progress, [0.74, 0.9, 1], [1, 0.34, 0.08]);
-  const inquiryOpacity = useTransform(progress, [0.08, 0.16, 0.28, 0.36], [0, 1, 1, 0]);
-  const responseOpacity = useTransform(progress, [0.26, 0.33, 0.4, 0.47], [0, 1, 1, 0]);
-  const detailsOpacity = useTransform(progress, [0.55, 0.63, 0.7, 0.77], [0, 1, 1, 0]);
-  const depositOpacity = useTransform(progress, compact ? [0.72, 0.8, 0.84, 0.88] : [0.82, 0.9, 1], compact ? [0, 1, 0.2, 0] : [0, 1, 1]);
-  const inquiryX = useTransform(progress, [0.08, 0.2, 0.32, 0.36], compact ? [0, 0, -42, -70] : [0, 0, -80, -150]);
-  const responseX = useTransform(progress, [0.26, 0.35, 0.43, 0.47], compact ? [96, 0, -28, -58] : [270, 0, -48, -120]);
-  const detailsX = useTransform(progress, [0.55, 0.65, 0.73, 0.77], compact ? [96, 0, -16, -44] : [290, 52, 0, -50]);
-  const depositX = useTransform(progress, [0.77, 0.88, 1], compact ? [96, 0, 0] : [270, 42, 0]);
-  const connectorScale = useTransform(progress, [0.18, 0.86], [0, 1]);
+  const dmDimOpacity = useTransform(progress, compact ? [0.5, 0.7, 1] : [0.74, 0.9, 1], compact ? [1, 0.18, 0.06] : [1, 0.34, 0.08]);
 
   return (
     <motion.div
@@ -191,80 +171,10 @@ function BookingFlowStage({ progress, compact = false }: { progress: MotionValue
         <span className="text-xs font-medium text-white/45">BTS lead flow</span>
       </div>
 
-      <div className="absolute inset-x-8 top-1/2 hidden h-px origin-left bg-[#f2a96f]/35 lg:block">
-        <motion.span style={{ scaleX: connectorScale }} className="block h-px origin-left bg-[#f2a96f]" />
-      </div>
-
       <motion.div style={{ opacity: dmDimOpacity }} className="absolute inset-0">
-        {dmBubbles.map((bubble, index) => (
-          <DmBubble key={bubble.text} bubble={bubble} index={index} progress={progress} compact={compact} />
+        {dmBubbles.map((bubble) => (
+          <DmBubble key={bubble.text} bubble={bubble} progress={progress} compact={compact} />
         ))}
-      </motion.div>
-
-      <motion.div
-        style={{ opacity: inquiryOpacity, x: inquiryX }}
-        className={`${compact ? "left-5 top-16 w-[82%]" : "left-8 top-20 w-[42%]"} absolute z-20 rounded-2xl border border-white/12 bg-white p-5 text-[#111114] shadow-2xl shadow-black/25`}
-      >
-        <div className="flex items-center gap-3">
-          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#f2a96f]/18 text-[#c97c45]">
-            <MessageSquareText className="h-5 w-5" aria-hidden />
-          </span>
-          <div>
-            <p className="text-xs font-semibold uppercase text-[#c97c45]">New private event inquiry</p>
-            <p className="mt-1 text-sm text-black/55">Dinner for 14 · Saturday · Austin</p>
-          </div>
-        </div>
-        <p className="mt-5 font-serif text-2xl font-semibold">“Are you available?”</p>
-        <div className="mt-5 space-y-2">
-          <span className="block h-2 rounded-full bg-black/10" />
-          <span className="block h-2 w-3/4 rounded-full bg-black/10" />
-        </div>
-      </motion.div>
-
-      <motion.div
-        style={{ opacity: responseOpacity, x: responseX }}
-        className={`${compact ? "left-8 top-[28%] w-[80%]" : "left-[28%] top-[24%] w-[42%]"} absolute z-20 rounded-2xl border border-[#f2a96f]/35 bg-[#f2a96f] p-5 text-[#111114] shadow-2xl shadow-black/25`}
-      >
-        <div className="flex items-center gap-3">
-          <Clock3 className="h-5 w-5" aria-hidden />
-          <p className="text-xs font-semibold uppercase">Reply while intent is highest</p>
-        </div>
-        <p className="mt-5 font-serif text-5xl font-semibold leading-none">7x</p>
-        <p className="mt-2 text-sm font-medium">more likely to be booked for the event</p>
-      </motion.div>
-
-      <motion.div
-        style={{ opacity: detailsOpacity, x: detailsX }}
-        className={`${compact ? "left-5 top-[39%] w-[84%]" : "left-[47%] top-[18%] w-[40%]"} absolute z-20 rounded-2xl border border-white/12 bg-white p-5 text-[#111114] shadow-2xl shadow-black/25`}
-      >
-        <div className="flex items-center gap-3">
-          <Send className="h-5 w-5 text-[#c97c45]" aria-hidden />
-          <p className="text-xs font-semibold uppercase text-[#c97c45]">Guided request</p>
-        </div>
-        <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
-          {["Date", "Guests", "Menu", "Location"].map((item) => (
-            <span key={item} className="rounded-xl bg-[#f6f1ec] px-3 py-2 font-medium">
-              {item}
-            </span>
-          ))}
-        </div>
-        <p className="mt-4 text-sm text-black/55">The first 5 minutes collect what usually gets chased later.</p>
-      </motion.div>
-
-      <motion.div
-        style={{ opacity: depositOpacity, x: depositX }}
-        className={`${compact ? "left-9 top-[52%] w-[78%]" : "left-[60%] top-[38%] w-[34%]"} absolute z-20 rounded-2xl border border-white/12 bg-[#111114] p-5 text-white shadow-2xl shadow-black/25`}
-      >
-        <div className="flex items-center gap-3">
-          <CreditCard className="h-5 w-5 text-[#f2a96f]" aria-hidden />
-          <p className="text-xs font-semibold uppercase text-[#f2a96f]">Deposit ready</p>
-        </div>
-        <p className="mt-5 font-serif text-3xl font-semibold">Paid deposit ready</p>
-        <p className="mt-3 text-sm text-white/58">Keep the conversation personal, but make the next step payable.</p>
-        <div className="mt-5 flex items-center gap-2 text-sm text-white">
-          <Check className="h-4 w-4 text-emerald-400" aria-hidden />
-          Request approved
-        </div>
       </motion.div>
     </motion.div>
   );
