@@ -210,7 +210,6 @@ function ProductPanels({ progress, compact = false }: { progress: MotionValue<nu
   const paymentOpacity = useTransform(progress, [0.6, 0.72, 0.88, 0.96], [0, 1, 1, 0.28]);
   const calendarOpacity = useTransform(progress, [0.78, 0.9, 1], [0, 1, 1]);
   const connectorScale = useTransform(progress, [0.16, 0.86], [0, 1]);
-  const metricOpacity = useTransform(progress, [0.04, 0.12, 0.34, 0.44], [0, 1, 1, 0]);
   const approveOpacity = useTransform(progress, [0.52, 0.62, 0.74], [0, 1, 0]);
 
   return (
@@ -267,16 +266,6 @@ function ProductPanels({ progress, compact = false }: { progress: MotionValue<nu
         className={`${compact ? "left-5 top-[39%] w-[86%]" : "left-[50%] top-[19%] w-[44%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
         <AdminCalendarPanel />
-      </motion.div>
-
-      <motion.div
-        style={{ opacity: metricOpacity }}
-        className="absolute right-5 top-16 rounded-2xl border border-[#f2a96f]/35 bg-[#f2a96f] px-4 py-3 text-[#111114] shadow-xl shadow-black/20"
-      >
-        <p className="font-serif text-3xl font-semibold leading-none">7x</p>
-        <p className="mt-1 max-w-[12rem] text-xs font-medium leading-snug">
-          more likely to qualify when contacted within one hour
-        </p>
       </motion.div>
 
       <motion.div
