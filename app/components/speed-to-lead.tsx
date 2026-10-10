@@ -1,9 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import {
   motion,
-  useMotionValueEvent,
   useReducedMotion,
   useScroll,
   useSpring,
@@ -76,28 +75,32 @@ const dmBubbles = [
   { text: "Ready to book if the date works.", x: 52, compactX: 35, y: 61, compactY: 86, width: 310, range: [0.8, 0.88, 0.98], rotate: 0.9 },
 ] as const;
 
-function getActiveBeatIndex(value: number) {
-  const next = storyBeats.findIndex((beat) => value <= beat.range[2]);
-  return next === -1 ? storyBeats.length - 1 : next;
-}
-
 function useBeatOpacity(progress: MotionValue<number>, range: StoryBeat["range"]) {
   return useTransform(progress, range, [0, 1, 0]);
 }
 
-function ActiveCaption({ beat, compact = false }: { beat: StoryBeat; compact?: boolean }) {
+function StoryCard({
+  beat,
+  progress,
+  compact = false,
+}: {
+  beat: StoryBeat;
+  progress: MotionValue<number>;
+  compact?: boolean;
+}) {
   const isQuestion = beat.role === "question";
   const isAnswer = beat.role === "answer";
   const isIntro = beat.role === "intro";
   const titleSize = compact ? (isAnswer ? "text-2xl" : "text-3xl") : "text-4xl sm:text-5xl";
+  const distance = compact ? 44 : 46;
+  const x = useTransform(progress, beat.range, [`${distance}%`, "0%", `-${distance}%`]);
+  const opacity = useTransform(progress, beat.range, [0, 1, 0]);
+  const scale = useTransform(progress, beat.range, [0.96, 1, 0.96]);
 
   return (
     <motion.div
-      key={beat.title}
-      initial={{ opacity: 0, y: 18, scale: 0.99 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.34, ease: [0.22, 0.68, 0.35, 1] }}
-      className={`absolute left-0 right-0 z-[60] ${compact ? "bottom-14 px-4" : "bottom-10 px-8 md:px-10"}`}
+      style={{ opacity, x, scale }}
+      className="absolute inset-x-0"
     >
       <div
         className={`mx-auto rounded-2xl border p-5 text-center text-white shadow-2xl shadow-black/30 sm:p-6 ${
@@ -122,6 +125,24 @@ function ActiveCaption({ beat, compact = false }: { beat: StoryBeat; compact?: b
         ) : null}
       </div>
     </motion.div>
+  );
+}
+
+function StoryCarousel({
+  progress,
+  compact = false,
+}: {
+  progress: MotionValue<number>;
+  compact?: boolean;
+}) {
+  return (
+    <div className={`absolute left-0 right-0 z-[60] ${compact ? "bottom-14 overflow-hidden px-4" : "bottom-10 px-8 md:px-10"}`}>
+      <div className="relative h-[260px] sm:h-[250px]">
+        {storyBeats.map((beat) => (
+          <StoryCard key={beat.title} beat={beat} progress={progress} compact={compact} />
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -188,7 +209,6 @@ function ProgressPill({ progress, range }: { progress: MotionValue<number>; rang
 function StoryStage({ compact = false }: { compact?: boolean }) {
   const target = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
-  const [activeIndex, setActiveIndex] = useState(0);
   const { scrollYProgress } = useScroll({
     target,
     offset: ["start start", "end end"],
@@ -197,13 +217,6 @@ function StoryStage({ compact = false }: { compact?: boolean }) {
     stiffness: compact ? 140 : 180,
     damping: compact ? 34 : 40,
     restDelta: 0.0005,
-  });
-
-  useMotionValueEvent(progress, "change", (value) => {
-    setActiveIndex((current) => {
-      const next = getActiveBeatIndex(value);
-      return current === next ? current : next;
-    });
   });
 
   if (reduceMotion) {
@@ -215,7 +228,7 @@ function StoryStage({ compact = false }: { compact?: boolean }) {
       <div className="sticky top-0 flex h-svh items-center overflow-hidden px-4 py-6 sm:px-6 lg:px-8">
         <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center">
           <BookingFlowStage progress={progress} compact={compact} />
-          <ActiveCaption beat={storyBeats[activeIndex]} compact={compact} />
+          <StoryCarousel progress={progress} compact={compact} />
           <div className="pointer-events-none absolute bottom-5 left-1/2 z-40 flex -translate-x-1/2 gap-2">
             {storyBeats.map((beat) => (
               <ProgressPill key={beat.title} progress={progress} range={beat.range} />
