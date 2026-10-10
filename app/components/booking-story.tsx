@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Lenis from "lenis";
 import {
   motion,
+  useAnimationFrame,
   useMotionValueEvent,
   useReducedMotion,
   useScroll,
@@ -22,6 +23,7 @@ type StoryScene = {
   title: string;
   line: string;
   image: string;
+  video?: string;
   imageAlt: string;
   chip: string;
   icon: typeof Clock3;
@@ -35,6 +37,7 @@ const scenes: StoryScene[] = [
     title: "The lead is hot.",
     line: "A private-event inquiry starts while intent is highest.",
     image: "/chefevethub-menus.png",
+    video: "/videos/menu-browsing.mp4",
     imageAlt: "Chef menu storefront preview",
     chip: "New inquiry",
     icon: Clock3,
@@ -196,6 +199,95 @@ function AdminCalendarPanel() {
   );
 }
 
+function ScrollScrubVideoPanel({
+  progress,
+  range,
+  src,
+  fallback,
+  alt,
+}: {
+  progress: MotionValue<number>;
+  range: StoryScene["range"];
+  src: string;
+  fallback: string;
+  alt: string;
+}) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const durationRef = useRef(0);
+  const [canScrub, setCanScrub] = useState(false);
+  const scrubProgress = useTransform(progress, [range[0], range[2]], [0, 1]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const markReady = () => {
+      durationRef.current = video.duration || 0;
+      setCanScrub(Boolean(durationRef.current));
+      setVideoTime(scrubProgress.get());
+    };
+
+    if (video.readyState >= 1 && video.duration) {
+      markReady();
+    }
+
+    video.addEventListener("loadedmetadata", markReady);
+    video.addEventListener("durationchange", markReady);
+
+    return () => {
+      video.removeEventListener("loadedmetadata", markReady);
+      video.removeEventListener("durationchange", markReady);
+    };
+  }, [src, scrubProgress]);
+
+  const setVideoTime = (value: number) => {
+    const video = videoRef.current;
+    const duration = durationRef.current;
+    if (!video || !duration) return;
+
+    const localProgress = Math.min(1, Math.max(0, value));
+    const targetTime = localProgress * duration;
+
+    if (Number.isFinite(targetTime) && Math.abs(video.currentTime - targetTime) > 0.04) {
+      video.currentTime = targetTime;
+    }
+  };
+
+  useAnimationFrame(() => {
+    setVideoTime(scrubProgress.get());
+  });
+
+  return (
+    <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#f6f1ec]">
+      <img
+        src={fallback}
+        alt={alt}
+        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${canScrub ? "opacity-0" : "opacity-100"}`}
+        loading="eager"
+        decoding="async"
+      />
+      <video
+        ref={videoRef}
+        src={src}
+        aria-label={alt}
+        muted
+        playsInline
+        preload="auto"
+        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${canScrub ? "opacity-100" : "opacity-0"}`}
+        onLoadedMetadata={(event) => {
+          durationRef.current = event.currentTarget.duration || 0;
+          setCanScrub(true);
+          setVideoTime(scrubProgress.get());
+        }}
+        onError={() => {
+          durationRef.current = 0;
+          setCanScrub(false);
+        }}
+      />
+    </div>
+  );
+}
+
 function ProductPanels({ progress, compact = false }: { progress: MotionValue<number>; compact?: boolean }) {
   const stageScale = useTransform(progress, [0, 0.16, 0.88, 1], compact ? [0.92, 1, 1, 0.96] : [0.86, 1, 1, 0.94]);
   const stageY = useTransform(progress, [0, 0.18, 0.9, 1], compact ? [32, 0, 0, -24] : [42, 0, 0, -36]);
@@ -237,7 +329,17 @@ function ProductPanels({ progress, compact = false }: { progress: MotionValue<nu
         style={{ opacity: inquiryOpacity, x: inquiryX }}
         className={`${compact ? "left-5 top-16 w-[78%]" : "left-8 top-20 w-[46%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
-        <img src={scenes[0].image} alt={scenes[0].imageAlt} className="aspect-[16/10] w-full object-cover" loading="eager" decoding="async" />
+        {scenes[0].video ? (
+          <ScrollScrubVideoPanel
+            progress={progress}
+            range={scenes[0].range}
+            src={scenes[0].video}
+            fallback={scenes[0].image}
+            alt={scenes[0].imageAlt}
+          />
+        ) : (
+          <img src={scenes[0].image} alt={scenes[0].imageAlt} className="aspect-[16/10] w-full object-cover" loading="eager" decoding="async" />
+        )}
       </motion.div>
 
       <motion.div
