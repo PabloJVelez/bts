@@ -49,6 +49,7 @@ const scenes: StoryScene[] = [
     title: "Your page captures the event details.",
     line: "Menu, date, guests, location, and notes land in one request.",
     image: "/chefeventhub-request.png",
+    video: "/videos/event-request-scroll.mp4",
     imageAlt: "Guided event request flow preview",
     chip: "Details captured",
     icon: MessageSquare,
@@ -288,6 +289,36 @@ function ScrollScrubVideoPanel({
   );
 }
 
+function StoryPanelMedia({
+  scene,
+  progress,
+}: {
+  scene: StoryScene;
+  progress: MotionValue<number>;
+}) {
+  if (scene.video) {
+    return (
+      <ScrollScrubVideoPanel
+        progress={progress}
+        range={scene.range}
+        src={scene.video}
+        fallback={scene.image}
+        alt={scene.imageAlt}
+      />
+    );
+  }
+
+  return (
+    <img
+      src={scene.image}
+      alt={scene.imageAlt}
+      className="aspect-[16/10] w-full object-cover"
+      loading="lazy"
+      decoding="async"
+    />
+  );
+}
+
 function ProductPanels({ progress, compact = false }: { progress: MotionValue<number>; compact?: boolean }) {
   const stageScale = useTransform(progress, [0, 0.16, 0.88, 1], compact ? [0.92, 1, 1, 0.96] : [0.86, 1, 1, 0.94]);
   const stageY = useTransform(progress, [0, 0.18, 0.9, 1], compact ? [32, 0, 0, -24] : [42, 0, 0, -36]);
@@ -329,24 +360,14 @@ function ProductPanels({ progress, compact = false }: { progress: MotionValue<nu
         style={{ opacity: inquiryOpacity, x: inquiryX }}
         className={`${compact ? "left-5 top-16 w-[78%]" : "left-8 top-20 w-[46%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
-        {scenes[0].video ? (
-          <ScrollScrubVideoPanel
-            progress={progress}
-            range={scenes[0].range}
-            src={scenes[0].video}
-            fallback={scenes[0].image}
-            alt={scenes[0].imageAlt}
-          />
-        ) : (
-          <img src={scenes[0].image} alt={scenes[0].imageAlt} className="aspect-[16/10] w-full object-cover" loading="eager" decoding="async" />
-        )}
+        <StoryPanelMedia scene={scenes[0]} progress={progress} />
       </motion.div>
 
       <motion.div
         style={{ opacity: requestOpacity, x: requestX }}
         className={`${compact ? "left-9 top-[24%] w-[78%]" : "left-[27%] top-[22%] w-[48%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
-        <img src={scenes[1].image} alt={scenes[1].imageAlt} className="aspect-[16/10] w-full object-cover" loading="lazy" decoding="async" />
+        <StoryPanelMedia scene={scenes[1]} progress={progress} />
       </motion.div>
 
       <motion.div
