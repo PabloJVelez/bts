@@ -65,7 +65,7 @@ const scenes: StoryScene[] = [
     imageAlt: "Chef admin request approval preview",
     chip: "Payment link sent",
     icon: FileCheck2,
-    range: [0.44, 0.58, 0.72],
+    range: [0.44, 0.6, 0.76],
   },
   {
     id: "payment",
@@ -77,7 +77,7 @@ const scenes: StoryScene[] = [
     imageAlt: "Accepted request payment handoff preview",
     chip: "Deposit paid",
     icon: Link2,
-    range: [0.68, 0.78, 0.88],
+    range: [0.72, 0.82, 0.91],
   },
   {
     id: "admin-calendar",
@@ -154,8 +154,8 @@ function ActiveSceneCaption({ scene, compact = false }: { scene: StoryScene; com
 function getActiveSceneIndex(value: number) {
   if (value < 0.25) return 0;
   if (value < 0.5) return 1;
-  if (value < 0.72) return 2;
-  if (value < 0.88) return 3;
+  if (value < 0.76) return 2;
+  if (value < 0.91) return 3;
   return 4;
 }
 
@@ -324,16 +324,26 @@ function StoryPanelMedia({
 function ProductPanels({ progress, compact = false }: { progress: MotionValue<number>; compact?: boolean }) {
   const stageScale = useTransform(progress, [0, 0.16, 0.88, 1], compact ? [0.92, 1, 1, 0.96] : [0.86, 1, 1, 0.94]);
   const stageY = useTransform(progress, [0, 0.18, 0.9, 1], compact ? [32, 0, 0, -24] : [42, 0, 0, -36]);
-  const inquiryX = useTransform(progress, [0, 0.18, 0.38, 1], compact ? [0, 0, -130, -170] : [0, -18, -250, -330]);
-  const requestX = useTransform(progress, [0.18, 0.36, 0.54, 1], compact ? [140, 0, -82, -145] : [310, 0, -150, -250]);
-  const adminX = useTransform(progress, [0.42, 0.56, 0.7, 1], compact ? [150, 0, -42, -88] : [330, 70, 0, -100]);
-  const paymentX = useTransform(progress, [0.64, 0.78, 0.9, 1], compact ? [140, 0, -22, -62] : [300, 72, 0, -80]);
-  const calendarX = useTransform(progress, [0.78, 0.92, 1], compact ? [150, 0, 0] : [320, 68, 0]);
-  const inquiryOpacity = useTransform(progress, [0, 0.06, 0.28, 0.42], [0, 1, 1, 0.22]);
-  const requestOpacity = useTransform(progress, [0.2, 0.34, 0.54, 0.68], [0, 1, 1, 0.28]);
-  const adminOpacity = useTransform(progress, [0.42, 0.54, 0.7, 0.84], [0, 1, 1, 0.34]);
-  const paymentOpacity = useTransform(progress, [0.66, 0.76, 0.9, 0.97], [0, 1, 1, 0.28]);
-  const calendarOpacity = useTransform(progress, [0.78, 0.9, 1], [0, 1, 1]);
+  const inquiryX = useTransform(progress, [0, 0.18, 0.38, 1], compact ? [0, 0, -128, -158] : [0, -18, -266, -306]);
+  const inquiryY = useTransform(progress, [0, 0.3, 0.62, 1], compact ? [0, 0, -20, -48] : [0, 0, -32, -64]);
+  const inquiryScale = useTransform(progress, [0, 0.3, 0.62, 1], [1, 1, 0.74, 0.62]);
+  const requestX = useTransform(progress, [0.18, 0.36, 0.56, 1], compact ? [138, 0, -118, -148] : [310, 0, -356, -396]);
+  const requestY = useTransform(progress, [0.18, 0.42, 0.66, 1], compact ? [12, 0, 10, -18] : [0, 0, 34, 10]);
+  const requestScale = useTransform(progress, [0.18, 0.42, 0.66, 1], [0.96, 1, 0.72, 0.62]);
+  const adminX = useTransform(progress, [0.42, 0.6, 0.76, 1], compact ? [144, 0, -72, -112] : [246, -184, -446, -486]);
+  const adminY = useTransform(progress, [0.42, 0.64, 0.82, 1], compact ? [24, 0, 42, 20] : [0, 0, 92, 68]);
+  const adminScale = useTransform(progress, [0.42, 0.64, 0.82, 1], [0.96, 1, 0.72, 0.62]);
+  const paymentX = useTransform(progress, [0.7, 0.82, 0.94, 1], compact ? [128, 0, -18, -54] : [280, 0, -30, -72]);
+  const paymentY = useTransform(progress, [0.7, 0.82, 0.94, 1], compact ? [30, 0, -4, -16] : [18, 0, -10, -20]);
+  const paymentScale = useTransform(progress, [0.7, 0.82, 0.94, 1], [0.96, 1, 1, 0.92]);
+  const calendarX = useTransform(progress, [0.9, 0.96, 1], compact ? [160, 18, 0] : [380, 96, 0]);
+  const calendarY = useTransform(progress, [0.9, 0.96, 1], compact ? [24, 8, 0] : [22, 4, 0]);
+  const calendarScale = useTransform(progress, [0.9, 0.96, 1], [0.96, 0.98, 1]);
+  const inquiryOpacity = useTransform(progress, [0, 0.06, 0.28, 0.62, 1], [0, 1, 1, 0.28, 0.18]);
+  const requestOpacity = useTransform(progress, [0.2, 0.34, 0.54, 0.76, 1], [0, 1, 1, 0.32, 0.18]);
+  const adminOpacity = useTransform(progress, [0.42, 0.54, 0.74, 0.9, 1], [0, 1, 1, 0.36, 0.2]);
+  const paymentOpacity = useTransform(progress, [0.7, 0.8, 0.94, 0.99], [0, 1, 1, 0.32]);
+  const calendarOpacity = useTransform(progress, [0.9, 0.96, 1], [0, 0.85, 1]);
   const connectorScale = useTransform(progress, [0.16, 0.86], [0, 1]);
   const approveOpacity = useTransform(progress, [0.52, 0.62, 0.74], [0, 1, 0]);
 
@@ -359,35 +369,35 @@ function ProductPanels({ progress, compact = false }: { progress: MotionValue<nu
       </div>
 
       <motion.div
-        style={{ opacity: inquiryOpacity, x: inquiryX }}
+        style={{ opacity: inquiryOpacity, x: inquiryX, y: inquiryY, scale: inquiryScale }}
         className={`${compact ? "left-5 top-16 w-[78%]" : "left-8 top-20 w-[46%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
         <StoryPanelMedia scene={scenes[0]} progress={progress} />
       </motion.div>
 
       <motion.div
-        style={{ opacity: requestOpacity, x: requestX }}
+        style={{ opacity: requestOpacity, x: requestX, y: requestY, scale: requestScale }}
         className={`${compact ? "left-9 top-[24%] w-[78%]" : "left-[27%] top-[22%] w-[48%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
         <StoryPanelMedia scene={scenes[1]} progress={progress} />
       </motion.div>
 
       <motion.div
-        style={{ opacity: adminOpacity, x: adminX }}
+        style={{ opacity: adminOpacity, x: adminX, y: adminY, scale: adminScale }}
         className={`${compact ? "left-6 top-[34%] w-[82%]" : "left-[45%] top-[17%] w-[46%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
         <StoryPanelMedia scene={scenes[2]} progress={progress} />
       </motion.div>
 
       <motion.div
-        style={{ opacity: paymentOpacity, x: paymentX }}
-        className={`${compact ? "left-10 top-[45%] w-[78%]" : "left-[58%] top-[33%] w-[36%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
+        style={{ opacity: paymentOpacity, x: paymentX, y: paymentY, scale: paymentScale }}
+        className={`${compact ? "left-10 top-[42%] w-[78%]" : "left-[30%] top-[25%] w-[48%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
         <StoryPanelMedia scene={scenes[3]} progress={progress} />
       </motion.div>
 
       <motion.div
-        style={{ opacity: calendarOpacity, x: calendarX }}
+        style={{ opacity: calendarOpacity, x: calendarX, y: calendarY, scale: calendarScale }}
         className={`${compact ? "left-5 top-[39%] w-[86%]" : "left-[50%] top-[19%] w-[44%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
         <AdminCalendarPanel />
@@ -444,7 +454,7 @@ function TimelineStage({ compact = false }: { compact?: boolean }) {
   }
 
   return (
-    <div ref={target} className={`relative ${compact ? "h-[260svh]" : "h-[310svh]"}`}>
+    <div ref={target} className={`relative ${compact ? "h-[330svh]" : "h-[310svh]"}`}>
       <div className="sticky top-0 flex h-svh items-center overflow-hidden px-4 py-6 sm:px-6 lg:px-8">
         <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center">
           <ProductPanels progress={progress} compact={compact} />
