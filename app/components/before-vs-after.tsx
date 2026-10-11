@@ -3,13 +3,13 @@
 import { FadeInUp } from "~/components/motion-wrapper";
 
 const beforeItems = [
+  "A lead asks about a dinner while they are ready to solve it, then waits hours for a clear next step.",
   "You answer the same 20 questions in DMs and email threads.",
-  "Headcount changes twice, then allergy notes get buried.",
   "You are on a grocery run and still chasing the kitchen address and deposit.",
 ];
 
 const afterItems = [
-  "You send one link and the client picks a menu and date.",
+  "You send one link while the inquiry is hot, and the client can take action immediately.",
   "They fill in headcount, allergies, timing, and kitchen address in one form.",
   "You approve or decline, payment is collected, and event details stay in one place.",
 ];
@@ -21,10 +21,10 @@ export function BeforeVsAfter() {
         <FadeInUp>
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              The DM spiral vs one booking link
+              The slow DM spiral vs one fast booking path
             </h2>
             <p className="mt-4 text-base text-muted-foreground sm:text-lg">
-              Keep texting if you want. This just gives you one link for details and payment.
+              Keep texting if you want. This gives interested clients a clear next step before the moment passes.
             </p>
           </div>
         </FadeInUp>

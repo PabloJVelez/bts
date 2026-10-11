@@ -5,9 +5,9 @@ import { FadeInUp, StaggerContainer, StaggerItem } from "~/components/motion-wra
 
 const painPoints = [
   {
-    pain: "I got three booking requests today and each one is buried in a different text thread.",
+    pain: "Someone asked about a private dinner, but I could not send a clear next step until later.",
     solution:
-      "Send one link. People pick a menu and submit details in one place, so you stop hunting through old messages.",
+      "Send one link. People can pick a menu, submit details, and keep moving while the event is still top of mind.",
   },
   {
     pain: "I am still asking for headcount, allergies, and the kitchen address the day before the event.",
@@ -29,7 +29,7 @@ export function WhyChefsLoveIt() {
         <FadeInUp>
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Why chefs stick with it
+              Why chefs need more than a contact form
             </h2>
           </div>
         </FadeInUp>

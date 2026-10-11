@@ -10,6 +10,11 @@ import { FadeInUp } from "~/components/motion-wrapper";
 
 const faqs = [
   {
+    question: "Why does response speed matter for private chef bookings?",
+    answer:
+      "People ask about private events while the need is active. If the next step is slow or unclear, that urgency fades. BTS gives them a booking path they can use right away, while you still keep approval control.",
+  },
+  {
     question: "Do I still control which events I accept?",
     answer:
       "Yes. Every request lands in your dashboard first. You review it, then accept or decline. Nothing is booked without your approval.",
@@ -17,21 +22,17 @@ const faqs = [
   {
     question: "Can I collect deposits?",
     answer:
-      "Yes. You can collect a deposit or full payment online.",
+      "Yes. After you accept the event, the client gets a confirmation email with a link to pay the deposit or purchase tickets online.",
   },
   {
-    question: "Can guests split the payment?",
+    question: "Can clients purchase tickets?",
     answer:
-      "Yes. The host can pay for everyone, or share the link so guests can chip in.",
-  },
-  {
-    question: "What payment processor do you use?",
-    answer: "Payments go through a normal online checkout your clients can use on their phone.",
+      "Yes. If the event is ticketed, clients can purchase tickets from the same booking flow instead of coordinating payment through DMs.",
   },
   {
     question: "What if I want to keep texting my clients?",
     answer:
-      "Keep texting. This gives you one link for details and payment, so you stop losing info and chasing money in long threads.",
+      "Keep texting. BTS gives you one place to collect event details, approve the fit, and send the payment link, so DMs stay personal without becoming the place you chase every detail.",
   },
   {
     question: "What if I already have a website?",
@@ -46,7 +47,7 @@ const faqs = [
   {
     question: "Do I need any technical skills?",
     answer:
-      "No. We set it up for you. Your day to day is reviewing requests and clicking approve.",
+      "No. We set it up for you. Your day to day is reviewing requests, accepting the right events, and managing upcoming bookings from the admin overview.",
   },
 ];
 
