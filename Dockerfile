@@ -31,6 +31,7 @@ COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --production
 
 COPY --from=builder /app/build ./build
+COPY --from=builder /app/server.mjs ./server.mjs
 
 RUN chown -R node:node /app
 USER node
