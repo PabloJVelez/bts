@@ -74,8 +74,8 @@ const scenes: StoryScene[] = [
   {
     id: "payment",
     eyebrow: "04",
-    title: "The date gets secured.",
-    line: "The client pays the deposit from the link instead of sending another loose DM.",
+    title: "The date is confirmed.",
+    line: "Once confirmed, your client gets an email with a link to pay the deposit or purchase tickets instead of sending another loose DM.",
     image: "/chefeventhub-request-accepted.png",
     video: "/videos/accepted-email-scroll.mp4",
     videoRange: [0.78, 0.9],

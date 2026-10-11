@@ -7,7 +7,7 @@ import { openCalendlyPopup } from "~/components/calendly-badge";
 import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
 
 const navLinks = [
-  { href: "#story", label: "The Story" },
+  { href: "#story", label: "How It Works" },
   { href: "#features", label: "What You Get" },
   // { href: "#pricing", label: "Pricing" }, // Re-enable with <Pricing /> on home
   { href: DEMO_STOREFRONT_URL, label: "Live Booking Flow", external: true as const },

@@ -22,21 +22,22 @@ const faqs = [
   {
     question: "Can I collect deposits?",
     answer:
-      "Yes. You can collect a deposit or full payment online.",
+      "Yes. After you accept the event, the client gets a confirmation email with a link to pay the deposit or complete checkout online.",
   },
   {
-    question: "Can guests split the payment?",
+    question: "Can clients purchase tickets?",
     answer:
-      "Yes. The host can pay for everyone, or share the link so guests can chip in.",
+      "Yes. If the event is ticketed, clients can purchase tickets from the same booking flow instead of coordinating payment through DMs.",
   },
   {
     question: "What payment processor do you use?",
-    answer: "Payments go through a normal online checkout your clients can use on their phone.",
+    answer:
+      "Payments go through an online checkout your clients can use on their phone. The goal is to move from accepted event to paid deposit or ticket purchase without extra back-and-forth.",
   },
   {
     question: "What if I want to keep texting my clients?",
     answer:
-      "Keep texting. This gives you one link for details and payment, so you stop losing info and chasing money in long threads.",
+      "Keep texting. BTS gives you one place to collect event details, approve the fit, and send the payment link, so DMs stay personal without becoming the place you chase every detail.",
   },
   {
     question: "What if I already have a website?",
@@ -51,7 +52,7 @@ const faqs = [
   {
     question: "Do I need any technical skills?",
     answer:
-      "No. We set it up for you. Your day to day is reviewing requests and clicking approve.",
+      "No. We set it up for you. Your day to day is reviewing requests, accepting the right events, and managing upcoming bookings from the admin overview.",
   },
 ];
 
