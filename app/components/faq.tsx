@@ -22,17 +22,12 @@ const faqs = [
   {
     question: "Can I collect deposits?",
     answer:
-      "Yes. After you accept the event, the client gets a confirmation email with a link to pay the deposit or complete checkout online.",
+      "Yes. After you accept the event, the client gets a confirmation email with a link to pay the deposit or purchase tickets online.",
   },
   {
     question: "Can clients purchase tickets?",
     answer:
       "Yes. If the event is ticketed, clients can purchase tickets from the same booking flow instead of coordinating payment through DMs.",
-  },
-  {
-    question: "What payment processor do you use?",
-    answer:
-      "Payments go through an online checkout your clients can use on their phone. The goal is to move from accepted event to paid deposit or ticket purchase without extra back-and-forth.",
   },
   {
     question: "What if I want to keep texting my clients?",
