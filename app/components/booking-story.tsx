@@ -226,27 +226,29 @@ function ScrollScrubVideoPanel({
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const durationRef = useRef(0);
+  const [canScrub, setCanScrub] = useState(false);
   const scrubProgress = useTransform(progress, scrubRange ?? [range[0], range[2]], [0, 1]);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    const markMetadataReady = () => {
+    const markReady = () => {
       durationRef.current = video.duration || 0;
+      setCanScrub(Boolean(durationRef.current));
       setVideoTime(scrubProgress.get());
     };
 
     if (video.readyState >= 1 && video.duration) {
-      markMetadataReady();
+      markReady();
     }
 
-    video.addEventListener("loadedmetadata", markMetadataReady);
-    video.addEventListener("durationchange", markMetadataReady);
+    video.addEventListener("loadedmetadata", markReady);
+    video.addEventListener("durationchange", markReady);
 
     return () => {
-      video.removeEventListener("loadedmetadata", markMetadataReady);
-      video.removeEventListener("durationchange", markMetadataReady);
+      video.removeEventListener("loadedmetadata", markReady);
+      video.removeEventListener("durationchange", markReady);
     };
   }, [src, scrubProgress]);
 
@@ -273,7 +275,7 @@ function ScrollScrubVideoPanel({
         <img
           src={fallback}
           alt={alt}
-          className="absolute inset-0 h-full w-full object-cover"
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${canScrub ? "opacity-0" : "opacity-100"}`}
           loading="eager"
           decoding="async"
         />
@@ -285,14 +287,15 @@ function ScrollScrubVideoPanel({
         muted
         playsInline
         preload="auto"
-        poster={fallback || undefined}
-        className="absolute inset-0 h-full w-full object-cover"
+        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${canScrub ? "opacity-100" : "opacity-0"}`}
         onLoadedMetadata={(event) => {
           durationRef.current = event.currentTarget.duration || 0;
+          setCanScrub(true);
           setVideoTime(scrubProgress.get());
         }}
         onError={() => {
           durationRef.current = 0;
+          setCanScrub(false);
         }}
       />
     </div>
