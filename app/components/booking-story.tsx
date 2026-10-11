@@ -12,7 +12,7 @@ import {
   useTransform,
   type MotionValue,
 } from "framer-motion";
-import { ArrowRight, CalendarDays, Check, Clock3, FileCheck2, Link2, MessageSquare } from "lucide-react";
+import { ArrowRight, CalendarDays, Clock3, FileCheck2, Link2, MessageSquare } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { openCalendlyPopup } from "~/components/calendly-badge";
 import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
@@ -39,10 +39,11 @@ const scenes: StoryScene[] = [
     line: "A private-event inquiry starts while intent is highest.",
     image: "/chefevethub-menus.png",
     video: "/videos/menu-browsing.mp4",
+    videoRange: [0.11, 0.23],
     imageAlt: "Chef menu storefront preview",
     chip: "New inquiry",
     icon: Clock3,
-    range: [0, 0.08, 0.25],
+    range: [0, 0.1, 0.23],
   },
   {
     id: "request",
@@ -51,10 +52,11 @@ const scenes: StoryScene[] = [
     line: "Menu, date, guests, location, and notes land in one request.",
     image: "/chefeventhub-request.png",
     video: "/videos/event-request-scroll.mp4",
+    videoRange: [0.35, 0.48],
     imageAlt: "Guided event request flow preview",
     chip: "Details captured",
     icon: MessageSquare,
-    range: [0.22, 0.36, 0.52],
+    range: [0.22, 0.34, 0.48],
   },
   {
     id: "approval",
@@ -63,10 +65,11 @@ const scenes: StoryScene[] = [
     line: "Once the event is accepted, the client gets a clear payment link to secure the date.",
     image: "/chefeventhub-admin-request.png",
     video: "/videos/accept-event-scroll.mp4",
+    videoRange: [0.59, 0.72],
     imageAlt: "Chef admin request approval preview",
     chip: "Payment link sent",
     icon: FileCheck2,
-    range: [0.44, 0.6, 0.76],
+    range: [0.46, 0.58, 0.72],
   },
   {
     id: "payment",
@@ -75,6 +78,7 @@ const scenes: StoryScene[] = [
     line: "The client pays the deposit from the link instead of sending another loose DM.",
     image: "/chefeventhub-request-accepted.png",
     video: "/videos/accepted-email-scroll.mp4",
+    videoRange: [0.83, 0.9],
     imageAlt: "Accepted request payment handoff preview",
     chip: "Deposit paid",
     icon: Link2,
@@ -87,11 +91,11 @@ const scenes: StoryScene[] = [
     line: "See requests, payments, event details, and prep notes from one clean admin overview.",
     image: "",
     video: "/videos/admin-overview-scroll.mp4",
-    videoRange: [0.97, 1],
+    videoRange: [0.925, 1],
     imageAlt: "Chef admin overview preview",
     chip: "Admin overview",
     icon: CalendarDays,
-    range: [0.8, 0.92, 1],
+    range: [0.88, 0.92, 1],
   },
 ];
 
@@ -132,9 +136,9 @@ function ActiveSceneCaption({ scene, compact = false }: { scene: StoryScene; com
       initial={{ opacity: 0, y: 18, scale: 0.985 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.35, ease: [0.22, 0.68, 0.35, 1] }}
-      className={`absolute left-0 right-0 z-30 ${compact ? "bottom-16 px-5" : "bottom-10 px-8 md:px-10"}`}
+      className={`absolute left-0 right-0 z-30 ${compact ? "bottom-8 px-4" : "-bottom-4 px-8 md:px-10"}`}
     >
-      <div className="max-w-md rounded-2xl border border-white/12 bg-[#111114] p-4 text-white shadow-2xl shadow-black/30 sm:p-5">
+      <div className={`${compact ? "max-w-[min(92vw,360px)]" : "max-w-xs"} rounded-2xl border border-white/12 bg-[#111114]/92 p-3 text-white shadow-2xl shadow-black/30 backdrop-blur sm:p-4`}>
         <div className="flex items-center gap-3">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#f2a96f] text-[#111114]">
             <scene.icon className="h-4 w-4" aria-hidden />
@@ -143,10 +147,10 @@ function ActiveSceneCaption({ scene, compact = false }: { scene: StoryScene; com
             {scene.eyebrow}
           </span>
         </div>
-        <h3 className={`${compact ? "mt-4 text-2xl" : "mt-5 text-3xl sm:text-4xl"} font-serif font-semibold leading-tight text-white`}>
+        <h3 className={`${compact ? "mt-4 text-2xl" : "mt-4 text-2xl"} font-serif font-semibold leading-tight text-white`}>
           {scene.title}
         </h3>
-        <p className="mt-3 text-sm leading-relaxed text-white/68 sm:text-base">
+        <p className="mt-3 text-sm leading-relaxed text-white/68">
           {scene.line}
         </p>
       </div>
@@ -155,10 +159,10 @@ function ActiveSceneCaption({ scene, compact = false }: { scene: StoryScene; com
 }
 
 function getActiveSceneIndex(value: number) {
-  if (value < 0.25) return 0;
-  if (value < 0.5) return 1;
-  if (value < 0.76) return 2;
-  if (value < 0.91) return 3;
+  if (value < 0.22) return 0;
+  if (value < 0.46) return 1;
+  if (value < 0.7) return 2;
+  if (value < 0.88) return 3;
   return 4;
 }
 
@@ -330,35 +334,34 @@ function StoryPanelMedia({
 }
 
 function ProductPanels({ progress, compact = false }: { progress: MotionValue<number>; compact?: boolean }) {
-  const stageScale = useTransform(progress, [0, 0.16, 0.88, 1], compact ? [0.92, 1, 1, 0.96] : [0.86, 1, 1, 0.94]);
-  const stageY = useTransform(progress, [0, 0.18, 0.9, 1], compact ? [32, 0, 0, -24] : [42, 0, 0, -36]);
-  const inquiryX = useTransform(progress, [0, 0.18, 0.38, 1], compact ? [0, 0, -128, -158] : [0, -18, -266, -306]);
-  const inquiryY = useTransform(progress, [0, 0.3, 0.62, 1], compact ? [0, 0, -20, -48] : [0, 0, -32, -64]);
-  const inquiryScale = useTransform(progress, [0, 0.3, 0.62, 1], [1, 1, 0.74, 0.62]);
-  const requestX = useTransform(progress, [0.18, 0.36, 0.56, 1], compact ? [138, 0, -118, -148] : [310, 0, -356, -396]);
-  const requestY = useTransform(progress, [0.18, 0.42, 0.66, 1], compact ? [12, 0, 10, -18] : [0, 0, 34, 10]);
-  const requestScale = useTransform(progress, [0.18, 0.42, 0.66, 1], [0.96, 1, 0.72, 0.62]);
-  const adminX = useTransform(progress, [0.42, 0.6, 0.76, 1], compact ? [144, 0, -72, -112] : [246, -184, -446, -486]);
-  const adminY = useTransform(progress, [0.42, 0.64, 0.82, 1], compact ? [24, 0, 42, 20] : [0, 0, 92, 68]);
-  const adminScale = useTransform(progress, [0.42, 0.64, 0.82, 1], [0.96, 1, 0.72, 0.62]);
-  const paymentX = useTransform(progress, [0.7, 0.82, 0.94, 1], compact ? [128, 0, -18, -54] : [280, 0, -30, -72]);
-  const paymentY = useTransform(progress, [0.7, 0.82, 0.94, 1], compact ? [30, 0, -4, -16] : [18, 0, -10, -20]);
-  const paymentScale = useTransform(progress, [0.7, 0.82, 0.94, 1], [0.96, 1, 1, 0.92]);
-  const calendarX = useTransform(progress, [0.86, 0.9, 0.91], compact ? [160, 18, 0] : [380, 96, 0]);
-  const calendarY = useTransform(progress, [0.86, 0.9, 0.91], compact ? [24, 8, 0] : [22, 4, 0]);
-  const calendarScale = useTransform(progress, [0.86, 0.9, 0.91], [0.96, 0.98, 1]);
-  const inquiryOpacity = useTransform(progress, [0, 0.06, 0.28, 0.62, 1], [0, 1, 1, 0.28, 0.18]);
-  const requestOpacity = useTransform(progress, [0.2, 0.34, 0.54, 0.76, 1], [0, 1, 1, 0.32, 0.18]);
-  const adminOpacity = useTransform(progress, [0.42, 0.54, 0.74, 0.9, 1], [0, 1, 1, 0.36, 0.2]);
-  const paymentOpacity = useTransform(progress, [0.7, 0.8, 0.94, 0.99], [0, 1, 1, 0.32]);
-  const calendarOpacity = useTransform(progress, [0.86, 0.9, 1], [0, 0.85, 1]);
-  const connectorScale = useTransform(progress, [0.16, 0.86], [0, 1]);
-  const approveOpacity = useTransform(progress, [0.52, 0.62, 0.74], [0, 1, 0]);
+  const stageScale = useTransform(progress, [0, 0.12, 0.92, 1], compact ? [0.94, 1, 1, 0.97] : [0.9, 1, 1, 0.96]);
+  const stageY = useTransform(progress, [0, 0.16, 0.9, 1], compact ? [24, 0, 0, -18] : [28, 0, 0, -24]);
+  const inquiryX = useTransform(progress, [0, 0.18, 0.34, 1], compact ? [0, 0, -92, -122] : [0, 0, -378, -438]);
+  const inquiryY = useTransform(progress, [0, 0.26, 0.48, 1], compact ? [0, 0, -14, -34] : [0, 0, -70, -112]);
+  const inquiryScale = useTransform(progress, [0, 0.26, 0.48, 1], [1, 1, 0.72, 0.58]);
+  const requestX = useTransform(progress, [0.18, 0.31, 0.5, 1], compact ? [118, 0, -96, -126] : [438, 0, -390, -450]);
+  const requestY = useTransform(progress, [0.18, 0.34, 0.58, 1], compact ? [18, 0, 4, -20] : [8, 0, -36, -76]);
+  const requestScale = useTransform(progress, [0.18, 0.34, 0.58, 1], [0.98, 1, 0.72, 0.58]);
+  const adminX = useTransform(progress, [0.44, 0.55, 0.74, 1], compact ? [118, 0, -92, -122] : [438, 0, -402, -462]);
+  const adminY = useTransform(progress, [0.44, 0.58, 0.78, 1], compact ? [20, 0, 20, 0] : [8, 0, 0, -36]);
+  const adminScale = useTransform(progress, [0.44, 0.58, 0.78, 1], [0.98, 1, 0.72, 0.58]);
+  const paymentX = useTransform(progress, [0.7, 0.8, 0.92, 1], compact ? [116, 0, -78, -108] : [438, 0, -384, -444]);
+  const paymentY = useTransform(progress, [0.7, 0.82, 0.92, 1], compact ? [22, 0, 32, 20] : [10, 0, 28, 0]);
+  const paymentScale = useTransform(progress, [0.7, 0.82, 0.92, 1], [0.98, 1, 0.74, 0.62]);
+  const calendarX = useTransform(progress, [0.86, 0.92, 1], compact ? [118, 0, 0] : [438, 0, 0]);
+  const calendarY = useTransform(progress, [0.86, 0.92, 1], compact ? [24, 0, 0] : [10, 0, 0]);
+  const calendarScale = useTransform(progress, [0.86, 0.92, 1], [0.98, 1, 1]);
+  const inquiryOpacity = useTransform(progress, [0, 0.04, 0.23, 0.38, 1], [0, 1, 1, 0.24, 0.12]);
+  const requestOpacity = useTransform(progress, [0.2, 0.28, 0.48, 0.62, 1], [0, 1, 1, 0.24, 0.12]);
+  const adminOpacity = useTransform(progress, [0.44, 0.52, 0.72, 0.84, 1], [0, 1, 1, 0.24, 0.14]);
+  const paymentOpacity = useTransform(progress, [0.7, 0.76, 0.9, 0.96, 1], [0, 1, 1, 0.28, 0.16]);
+  const calendarOpacity = useTransform(progress, [0.86, 0.92, 1], [0, 1, 1]);
+  const connectorScale = useTransform(progress, [0.12, 0.92], [0, 1]);
 
   return (
     <motion.div
       style={{ scale: stageScale, y: stageY }}
-      className="relative mx-auto h-[min(67svh,650px)] w-full max-w-[1120px] overflow-hidden rounded-[28px] border border-white/12 bg-[#18181c] shadow-2xl shadow-black/40"
+      className="relative mx-auto h-[min(74svh,740px)] w-full max-w-[1240px] overflow-hidden rounded-[28px] border border-white/12 bg-[#18181c] shadow-2xl shadow-black/40"
     >
       <div className="flex h-12 items-center justify-between border-b border-white/10 px-5">
         <div className="flex items-center gap-2">
@@ -378,48 +381,37 @@ function ProductPanels({ progress, compact = false }: { progress: MotionValue<nu
 
       <motion.div
         style={{ opacity: inquiryOpacity, x: inquiryX, y: inquiryY, scale: inquiryScale }}
-        className={`${compact ? "left-5 top-16 w-[78%]" : "left-8 top-20 w-[46%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
+        className={`${compact ? "left-[4%] top-[17%] w-[92%]" : "left-[19%] top-[12%] w-[62%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
         <StoryPanelMedia scene={scenes[0]} progress={progress} />
       </motion.div>
 
       <motion.div
         style={{ opacity: requestOpacity, x: requestX, y: requestY, scale: requestScale }}
-        className={`${compact ? "left-9 top-[24%] w-[78%]" : "left-[27%] top-[22%] w-[48%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
+        className={`${compact ? "left-[4%] top-[17%] w-[92%]" : "left-[19%] top-[12%] w-[62%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
         <StoryPanelMedia scene={scenes[1]} progress={progress} />
       </motion.div>
 
       <motion.div
         style={{ opacity: adminOpacity, x: adminX, y: adminY, scale: adminScale }}
-        className={`${compact ? "left-6 top-[34%] w-[82%]" : "left-[45%] top-[17%] w-[46%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
+        className={`${compact ? "left-[4%] top-[17%] w-[92%]" : "left-[19%] top-[12%] w-[62%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
         <StoryPanelMedia scene={scenes[2]} progress={progress} />
       </motion.div>
 
       <motion.div
         style={{ opacity: paymentOpacity, x: paymentX, y: paymentY, scale: paymentScale }}
-        className={`${compact ? "left-10 top-[42%] w-[78%]" : "left-[30%] top-[25%] w-[48%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
+        className={`${compact ? "left-[4%] top-[17%] w-[92%]" : "left-[19%] top-[12%] w-[62%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
         <StoryPanelMedia scene={scenes[3]} progress={progress} />
       </motion.div>
 
       <motion.div
         style={{ opacity: calendarOpacity, x: calendarX, y: calendarY, scale: calendarScale }}
-        className={`${compact ? "left-5 top-[39%] w-[86%]" : "left-[50%] top-[19%] w-[44%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
+        className={`${compact ? "left-[4%] top-[17%] w-[92%]" : "left-[19%] top-[12%] w-[62%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
         <StoryPanelMedia scene={scenes[4]} progress={progress} />
-      </motion.div>
-
-      <motion.div
-        style={{ opacity: approveOpacity }}
-        className="absolute bottom-28 left-5 rounded-2xl border border-white/12 bg-white/92 p-4 text-[#111114] shadow-xl backdrop-blur"
-      >
-        <div className="flex items-center gap-2 text-sm font-semibold">
-          <Check className="h-4 w-4 text-emerald-600" aria-hidden />
-          Request approved
-        </div>
-        <p className="mt-1 text-xs text-black/55">Fit checked before the booking is confirmed.</p>
       </motion.div>
 
     </motion.div>
@@ -462,7 +454,7 @@ function TimelineStage({ compact = false }: { compact?: boolean }) {
   }
 
   return (
-    <div ref={target} className={`relative ${compact ? "h-[390svh]" : "h-[370svh]"}`}>
+    <div ref={target} className={`relative ${compact ? "h-[720svh]" : "h-[700svh]"}`}>
       <div className="sticky top-0 flex h-svh items-center overflow-hidden px-4 py-6 sm:px-6 lg:px-8">
         <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center">
           <ProductPanels progress={progress} compact={compact} />
