@@ -125,6 +125,22 @@ function useSpaceLikeScroll(enabled: boolean) {
   }, [enabled]);
 }
 
+function useDesktopStoryLayout() {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const updateLayout = () => setIsDesktop(mediaQuery.matches);
+
+    updateLayout();
+    mediaQuery.addEventListener("change", updateLayout);
+
+    return () => mediaQuery.removeEventListener("change", updateLayout);
+  }, []);
+
+  return isDesktop;
+}
+
 function useSceneOpacity(progress: MotionValue<number>, range: StoryScene["range"]) {
   return useTransform(progress, range, [0, 1, 0]);
 }
@@ -256,6 +272,10 @@ function ScrollScrubVideoPanel({
     const video = videoRef.current;
     const duration = durationRef.current;
     if (!video || !duration) return;
+
+    // Reassigning currentTime while a seek is in flight restarts decoding and
+    // can leave Chromium and Safari permanently stuck on the first frame.
+    if (video.seeking) return;
 
     const localProgress = Math.min(1, Math.max(0, value));
     const targetTime = localProgress * duration;
@@ -524,6 +544,7 @@ function ReducedMotionStory() {
 
 export function BookingStory() {
   const reduceMotion = useReducedMotion();
+  const isDesktop = useDesktopStoryLayout();
   useSpaceLikeScroll(!reduceMotion);
 
   return (
@@ -548,12 +569,7 @@ export function BookingStory() {
         </p>
       </div>
 
-      <div className="md:hidden">
-        <TimelineStage compact />
-      </div>
-      <div className="hidden md:block">
-        <TimelineStage />
-      </div>
+      {isDesktop ? <TimelineStage /> : <TimelineStage compact />}
 
       <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 pb-20 sm:flex-row sm:justify-center sm:px-6 lg:px-8 lg:pb-28">
         <Button
