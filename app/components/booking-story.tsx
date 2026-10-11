@@ -61,6 +61,7 @@ const scenes: StoryScene[] = [
     title: "You approve the fit.",
     line: "Once the event is accepted, the client gets a clear payment link to secure the date.",
     image: "/chefeventhub-admin-request.png",
+    video: "/videos/accept-event-scroll.mp4",
     imageAlt: "Chef admin request approval preview",
     chip: "Payment link sent",
     icon: FileCheck2,
@@ -374,7 +375,7 @@ function ProductPanels({ progress, compact = false }: { progress: MotionValue<nu
         style={{ opacity: adminOpacity, x: adminX }}
         className={`${compact ? "left-6 top-[34%] w-[82%]" : "left-[45%] top-[17%] w-[46%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
-        <img src={scenes[2].image} alt={scenes[2].imageAlt} className="aspect-[16/10] w-full object-cover" loading="lazy" decoding="async" />
+        <StoryPanelMedia scene={scenes[2]} progress={progress} />
       </motion.div>
 
       <motion.div
