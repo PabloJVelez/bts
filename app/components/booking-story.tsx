@@ -226,44 +226,27 @@ function ScrollScrubVideoPanel({
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const durationRef = useRef(0);
-  const [hasPaintedFrame, setHasPaintedFrame] = useState(false);
   const scrubProgress = useTransform(progress, scrubRange ?? [range[0], range[2]], [0, 1]);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    setHasPaintedFrame(false);
-
     const markMetadataReady = () => {
       durationRef.current = video.duration || 0;
       setVideoTime(scrubProgress.get());
-    };
-    const markFrameReady = () => {
-      durationRef.current = video.duration || durationRef.current;
-      setHasPaintedFrame(Boolean(durationRef.current));
     };
 
     if (video.readyState >= 1 && video.duration) {
       markMetadataReady();
     }
 
-    if (video.readyState >= 2 && video.duration) {
-      markFrameReady();
-    }
-
     video.addEventListener("loadedmetadata", markMetadataReady);
     video.addEventListener("durationchange", markMetadataReady);
-    video.addEventListener("loadeddata", markFrameReady);
-    video.addEventListener("canplay", markFrameReady);
-    video.addEventListener("seeked", markFrameReady);
 
     return () => {
       video.removeEventListener("loadedmetadata", markMetadataReady);
       video.removeEventListener("durationchange", markMetadataReady);
-      video.removeEventListener("loadeddata", markFrameReady);
-      video.removeEventListener("canplay", markFrameReady);
-      video.removeEventListener("seeked", markFrameReady);
     };
   }, [src, scrubProgress]);
 
@@ -290,7 +273,7 @@ function ScrollScrubVideoPanel({
         <img
           src={fallback}
           alt={alt}
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${hasPaintedFrame ? "opacity-0" : "opacity-100"}`}
+          className="absolute inset-0 h-full w-full object-cover"
           loading="eager"
           decoding="async"
         />
@@ -303,14 +286,13 @@ function ScrollScrubVideoPanel({
         playsInline
         preload="auto"
         poster={fallback || undefined}
-        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${hasPaintedFrame ? "opacity-100" : "opacity-0"}`}
+        className="absolute inset-0 h-full w-full object-cover"
         onLoadedMetadata={(event) => {
           durationRef.current = event.currentTarget.duration || 0;
           setVideoTime(scrubProgress.get());
         }}
         onError={() => {
           durationRef.current = 0;
-          setHasPaintedFrame(false);
         }}
       />
     </div>
