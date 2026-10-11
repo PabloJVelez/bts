@@ -63,7 +63,7 @@ export function Hero() {
                   rel="noopener noreferrer"
                   className="font-medium text-primary underline-offset-4 transition-colors hover:text-primary/85 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
-                  View the live demo storefront
+                  View the demo
                 </a>
                 . It shows the exact menu, request, approval, and payment path.
               </p>
