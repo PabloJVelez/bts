@@ -24,6 +24,10 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3000
 
+# Coolify attaches the `gzip` Traefik middleware to the HTTPS router. Video
+# responses must stay uncompressed so byte-range seeking remains available.
+LABEL traefik.http.middlewares.gzip.compress.excludedcontenttypes="video/mp4"
+
 RUN corepack disable 2>/dev/null || true \
   && npm install -g yarn@1.22.22
 
