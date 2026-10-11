@@ -65,7 +65,7 @@ const scenes: StoryScene[] = [
     imageAlt: "Chef admin request approval preview",
     chip: "Payment link sent",
     icon: FileCheck2,
-    range: [0.44, 0.56, 0.68],
+    range: [0.44, 0.58, 0.72],
   },
   {
     id: "payment",
@@ -73,10 +73,11 @@ const scenes: StoryScene[] = [
     title: "The date gets secured.",
     line: "The client pays the deposit from the link instead of sending another loose DM.",
     image: "/chefeventhub-request-accepted.png",
+    video: "/videos/accepted-email-scroll.mp4",
     imageAlt: "Accepted request payment handoff preview",
     chip: "Deposit paid",
     icon: Link2,
-    range: [0.62, 0.74, 0.86],
+    range: [0.68, 0.78, 0.88],
   },
   {
     id: "admin-calendar",
@@ -153,8 +154,8 @@ function ActiveSceneCaption({ scene, compact = false }: { scene: StoryScene; com
 function getActiveSceneIndex(value: number) {
   if (value < 0.25) return 0;
   if (value < 0.5) return 1;
-  if (value < 0.68) return 2;
-  if (value < 0.86) return 3;
+  if (value < 0.72) return 2;
+  if (value < 0.88) return 3;
   return 4;
 }
 
@@ -326,12 +327,12 @@ function ProductPanels({ progress, compact = false }: { progress: MotionValue<nu
   const inquiryX = useTransform(progress, [0, 0.18, 0.38, 1], compact ? [0, 0, -130, -170] : [0, -18, -250, -330]);
   const requestX = useTransform(progress, [0.18, 0.36, 0.54, 1], compact ? [140, 0, -82, -145] : [310, 0, -150, -250]);
   const adminX = useTransform(progress, [0.42, 0.56, 0.7, 1], compact ? [150, 0, -42, -88] : [330, 70, 0, -100]);
-  const paymentX = useTransform(progress, [0.58, 0.74, 0.88, 1], compact ? [140, 0, -22, -62] : [300, 72, 0, -80]);
+  const paymentX = useTransform(progress, [0.64, 0.78, 0.9, 1], compact ? [140, 0, -22, -62] : [300, 72, 0, -80]);
   const calendarX = useTransform(progress, [0.78, 0.92, 1], compact ? [150, 0, 0] : [320, 68, 0]);
   const inquiryOpacity = useTransform(progress, [0, 0.06, 0.28, 0.42], [0, 1, 1, 0.22]);
   const requestOpacity = useTransform(progress, [0.2, 0.34, 0.54, 0.68], [0, 1, 1, 0.28]);
   const adminOpacity = useTransform(progress, [0.42, 0.54, 0.7, 0.84], [0, 1, 1, 0.34]);
-  const paymentOpacity = useTransform(progress, [0.6, 0.72, 0.88, 0.96], [0, 1, 1, 0.28]);
+  const paymentOpacity = useTransform(progress, [0.66, 0.76, 0.9, 0.97], [0, 1, 1, 0.28]);
   const calendarOpacity = useTransform(progress, [0.78, 0.9, 1], [0, 1, 1]);
   const connectorScale = useTransform(progress, [0.16, 0.86], [0, 1]);
   const approveOpacity = useTransform(progress, [0.52, 0.62, 0.74], [0, 1, 0]);
@@ -382,7 +383,7 @@ function ProductPanels({ progress, compact = false }: { progress: MotionValue<nu
         style={{ opacity: paymentOpacity, x: paymentX }}
         className={`${compact ? "left-10 top-[45%] w-[78%]" : "left-[58%] top-[33%] w-[36%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
-        <img src={scenes[3].image} alt={scenes[3].imageAlt} className="aspect-[16/10] w-full object-cover" loading="lazy" decoding="async" />
+        <StoryPanelMedia scene={scenes[3]} progress={progress} />
       </motion.div>
 
       <motion.div
