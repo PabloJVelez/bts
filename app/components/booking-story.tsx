@@ -82,11 +82,12 @@ const scenes: StoryScene[] = [
   {
     id: "admin-calendar",
     eyebrow: "05",
-    title: "Then you run the event from one place.",
-    line: "Keep the date, client, menu, payment status, and prep notes visible from the admin calendar.",
+    title: "Manage your events from one place.",
+    line: "See requests, payments, event details, and prep notes from one clean admin overview.",
     image: "",
-    imageAlt: "Chef admin event calendar preview",
-    chip: "Event on calendar",
+    video: "/videos/admin-overview-scroll.mp4",
+    imageAlt: "Chef admin overview preview",
+    chip: "Admin overview",
     icon: CalendarDays,
     range: [0.8, 0.92, 1],
   },
@@ -262,13 +263,15 @@ function ScrollScrubVideoPanel({
 
   return (
     <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#f6f1ec]">
-      <img
-        src={fallback}
-        alt={alt}
-        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${canScrub ? "opacity-0" : "opacity-100"}`}
-        loading="eager"
-        decoding="async"
-      />
+      {fallback ? (
+        <img
+          src={fallback}
+          alt={alt}
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${canScrub ? "opacity-0" : "opacity-100"}`}
+          loading="eager"
+          decoding="async"
+        />
+      ) : null}
       <video
         ref={videoRef}
         src={src}
@@ -400,7 +403,7 @@ function ProductPanels({ progress, compact = false }: { progress: MotionValue<nu
         style={{ opacity: calendarOpacity, x: calendarX, y: calendarY, scale: calendarScale }}
         className={`${compact ? "left-5 top-[39%] w-[86%]" : "left-[50%] top-[19%] w-[44%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
-        <AdminCalendarPanel />
+        <StoryPanelMedia scene={scenes[4]} progress={progress} />
       </motion.div>
 
       <motion.div
