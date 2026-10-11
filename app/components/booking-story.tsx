@@ -226,29 +226,44 @@ function ScrollScrubVideoPanel({
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const durationRef = useRef(0);
-  const [canScrub, setCanScrub] = useState(false);
+  const [hasPaintedFrame, setHasPaintedFrame] = useState(false);
   const scrubProgress = useTransform(progress, scrubRange ?? [range[0], range[2]], [0, 1]);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    const markReady = () => {
+    setHasPaintedFrame(false);
+
+    const markMetadataReady = () => {
       durationRef.current = video.duration || 0;
-      setCanScrub(Boolean(durationRef.current));
       setVideoTime(scrubProgress.get());
+    };
+    const markFrameReady = () => {
+      durationRef.current = video.duration || durationRef.current;
+      setHasPaintedFrame(Boolean(durationRef.current));
     };
 
     if (video.readyState >= 1 && video.duration) {
-      markReady();
+      markMetadataReady();
     }
 
-    video.addEventListener("loadedmetadata", markReady);
-    video.addEventListener("durationchange", markReady);
+    if (video.readyState >= 2 && video.duration) {
+      markFrameReady();
+    }
+
+    video.addEventListener("loadedmetadata", markMetadataReady);
+    video.addEventListener("durationchange", markMetadataReady);
+    video.addEventListener("loadeddata", markFrameReady);
+    video.addEventListener("canplay", markFrameReady);
+    video.addEventListener("seeked", markFrameReady);
 
     return () => {
-      video.removeEventListener("loadedmetadata", markReady);
-      video.removeEventListener("durationchange", markReady);
+      video.removeEventListener("loadedmetadata", markMetadataReady);
+      video.removeEventListener("durationchange", markMetadataReady);
+      video.removeEventListener("loadeddata", markFrameReady);
+      video.removeEventListener("canplay", markFrameReady);
+      video.removeEventListener("seeked", markFrameReady);
     };
   }, [src, scrubProgress]);
 
@@ -275,7 +290,7 @@ function ScrollScrubVideoPanel({
         <img
           src={fallback}
           alt={alt}
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${canScrub ? "opacity-0" : "opacity-100"}`}
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${hasPaintedFrame ? "opacity-0" : "opacity-100"}`}
           loading="eager"
           decoding="async"
         />
@@ -287,15 +302,15 @@ function ScrollScrubVideoPanel({
         muted
         playsInline
         preload="auto"
-        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${canScrub ? "opacity-100" : "opacity-0"}`}
+        poster={fallback || undefined}
+        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${hasPaintedFrame ? "opacity-100" : "opacity-0"}`}
         onLoadedMetadata={(event) => {
           durationRef.current = event.currentTarget.duration || 0;
-          setCanScrub(true);
           setVideoTime(scrubProgress.get());
         }}
         onError={() => {
           durationRef.current = 0;
-          setCanScrub(false);
+          setHasPaintedFrame(false);
         }}
       />
     </div>
@@ -305,10 +320,28 @@ function ScrollScrubVideoPanel({
 function StoryPanelMedia({
   scene,
   progress,
+  staticOnly = false,
 }: {
   scene: StoryScene;
   progress: MotionValue<number>;
+  staticOnly?: boolean;
 }) {
+  if (staticOnly) {
+    if (scene.image) {
+      return (
+        <img
+          src={scene.image}
+          alt={scene.imageAlt}
+          className="aspect-[16/10] w-full object-cover"
+          loading="eager"
+          decoding="async"
+        />
+      );
+    }
+
+    return <AdminCalendarPanel />;
+  }
+
   if (scene.video) {
     return (
       <ScrollScrubVideoPanel
@@ -383,35 +416,35 @@ function ProductPanels({ progress, compact = false }: { progress: MotionValue<nu
         style={{ opacity: inquiryOpacity, x: inquiryX, y: inquiryY, scale: inquiryScale }}
         className={`${compact ? "left-[4%] top-[17%] w-[92%]" : "left-[19%] top-[12%] w-[62%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
-        <StoryPanelMedia scene={scenes[0]} progress={progress} />
+        <StoryPanelMedia scene={scenes[0]} progress={progress} staticOnly={compact} />
       </motion.div>
 
       <motion.div
         style={{ opacity: requestOpacity, x: requestX, y: requestY, scale: requestScale }}
         className={`${compact ? "left-[4%] top-[17%] w-[92%]" : "left-[19%] top-[12%] w-[62%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
-        <StoryPanelMedia scene={scenes[1]} progress={progress} />
+        <StoryPanelMedia scene={scenes[1]} progress={progress} staticOnly={compact} />
       </motion.div>
 
       <motion.div
         style={{ opacity: adminOpacity, x: adminX, y: adminY, scale: adminScale }}
         className={`${compact ? "left-[4%] top-[17%] w-[92%]" : "left-[19%] top-[12%] w-[62%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
-        <StoryPanelMedia scene={scenes[2]} progress={progress} />
+        <StoryPanelMedia scene={scenes[2]} progress={progress} staticOnly={compact} />
       </motion.div>
 
       <motion.div
         style={{ opacity: paymentOpacity, x: paymentX, y: paymentY, scale: paymentScale }}
         className={`${compact ? "left-[4%] top-[17%] w-[92%]" : "left-[19%] top-[12%] w-[62%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
-        <StoryPanelMedia scene={scenes[3]} progress={progress} />
+        <StoryPanelMedia scene={scenes[3]} progress={progress} staticOnly={compact} />
       </motion.div>
 
       <motion.div
         style={{ opacity: calendarOpacity, x: calendarX, y: calendarY, scale: calendarScale }}
         className={`${compact ? "left-[4%] top-[17%] w-[92%]" : "left-[19%] top-[12%] w-[62%]"} absolute overflow-hidden rounded-2xl border border-white/12 bg-white shadow-2xl shadow-black/25`}
       >
-        <StoryPanelMedia scene={scenes[4]} progress={progress} />
+        <StoryPanelMedia scene={scenes[4]} progress={progress} staticOnly={compact} />
       </motion.div>
 
     </motion.div>
