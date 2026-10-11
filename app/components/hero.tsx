@@ -52,7 +52,7 @@ export function Hero() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    See Live Booking Flow
+                    View the demo booking page
                   </a>
                 </Button>
               </div>
