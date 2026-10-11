@@ -24,6 +24,7 @@ type StoryScene = {
   line: string;
   image: string;
   video?: string;
+  videoRange?: [number, number];
   imageAlt: string;
   chip: string;
   icon: typeof Clock3;
@@ -86,6 +87,7 @@ const scenes: StoryScene[] = [
     line: "See requests, payments, event details, and prep notes from one clean admin overview.",
     image: "",
     video: "/videos/admin-overview-scroll.mp4",
+    videoRange: [0.97, 1],
     imageAlt: "Chef admin overview preview",
     chip: "Admin overview",
     icon: CalendarDays,
@@ -206,12 +208,14 @@ function AdminCalendarPanel() {
 function ScrollScrubVideoPanel({
   progress,
   range,
+  scrubRange,
   src,
   fallback,
   alt,
 }: {
   progress: MotionValue<number>;
   range: StoryScene["range"];
+  scrubRange?: StoryScene["videoRange"];
   src: string;
   fallback: string;
   alt: string;
@@ -219,7 +223,7 @@ function ScrollScrubVideoPanel({
   const videoRef = useRef<HTMLVideoElement>(null);
   const durationRef = useRef(0);
   const [canScrub, setCanScrub] = useState(false);
-  const scrubProgress = useTransform(progress, [range[0], range[2]], [0, 1]);
+  const scrubProgress = useTransform(progress, scrubRange ?? [range[0], range[2]], [0, 1]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -306,6 +310,7 @@ function StoryPanelMedia({
       <ScrollScrubVideoPanel
         progress={progress}
         range={scene.range}
+        scrubRange={scene.videoRange}
         src={scene.video}
         fallback={scene.image}
         alt={scene.imageAlt}
@@ -339,14 +344,14 @@ function ProductPanels({ progress, compact = false }: { progress: MotionValue<nu
   const paymentX = useTransform(progress, [0.7, 0.82, 0.94, 1], compact ? [128, 0, -18, -54] : [280, 0, -30, -72]);
   const paymentY = useTransform(progress, [0.7, 0.82, 0.94, 1], compact ? [30, 0, -4, -16] : [18, 0, -10, -20]);
   const paymentScale = useTransform(progress, [0.7, 0.82, 0.94, 1], [0.96, 1, 1, 0.92]);
-  const calendarX = useTransform(progress, [0.9, 0.96, 1], compact ? [160, 18, 0] : [380, 96, 0]);
-  const calendarY = useTransform(progress, [0.9, 0.96, 1], compact ? [24, 8, 0] : [22, 4, 0]);
-  const calendarScale = useTransform(progress, [0.9, 0.96, 1], [0.96, 0.98, 1]);
+  const calendarX = useTransform(progress, [0.86, 0.9, 0.91], compact ? [160, 18, 0] : [380, 96, 0]);
+  const calendarY = useTransform(progress, [0.86, 0.9, 0.91], compact ? [24, 8, 0] : [22, 4, 0]);
+  const calendarScale = useTransform(progress, [0.86, 0.9, 0.91], [0.96, 0.98, 1]);
   const inquiryOpacity = useTransform(progress, [0, 0.06, 0.28, 0.62, 1], [0, 1, 1, 0.28, 0.18]);
   const requestOpacity = useTransform(progress, [0.2, 0.34, 0.54, 0.76, 1], [0, 1, 1, 0.32, 0.18]);
   const adminOpacity = useTransform(progress, [0.42, 0.54, 0.74, 0.9, 1], [0, 1, 1, 0.36, 0.2]);
   const paymentOpacity = useTransform(progress, [0.7, 0.8, 0.94, 0.99], [0, 1, 1, 0.32]);
-  const calendarOpacity = useTransform(progress, [0.9, 0.96, 1], [0, 0.85, 1]);
+  const calendarOpacity = useTransform(progress, [0.86, 0.9, 1], [0, 0.85, 1]);
   const connectorScale = useTransform(progress, [0.16, 0.86], [0, 1]);
   const approveOpacity = useTransform(progress, [0.52, 0.62, 0.74], [0, 1, 0]);
 
@@ -457,7 +462,7 @@ function TimelineStage({ compact = false }: { compact?: boolean }) {
   }
 
   return (
-    <div ref={target} className={`relative ${compact ? "h-[330svh]" : "h-[310svh]"}`}>
+    <div ref={target} className={`relative ${compact ? "h-[390svh]" : "h-[370svh]"}`}>
       <div className="sticky top-0 flex h-svh items-center overflow-hidden px-4 py-6 sm:px-6 lg:px-8">
         <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center">
           <ProductPanels progress={progress} compact={compact} />
