@@ -94,7 +94,7 @@ export function CalendlyBookingDialog() {
         <div className="booking-header">
           <div>
             <h2 id="booking-title">Let’s talk about your booking page</h2>
-            <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">Open directly in Calendly ↗</a>
+            {!ready && <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">Open directly in Calendly ↗</a>}
           </div>
           <button type="button" autoFocus onClick={() => dialog.current?.close()} aria-label="Close booking">✕</button>
         </div>

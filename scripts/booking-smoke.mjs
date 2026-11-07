@@ -23,6 +23,7 @@ try {
     const frame = page.frameLocator('.booking-frame');
     await frame.getByText(mobile ? 'Select a Day' : 'Select a Date & Time', { exact: true }).waitFor({ timeout: 30000 });
     await page.locator('.booking-status').waitFor({ state: 'hidden', timeout: 10000 });
+    assert.equal(await page.getByRole('link', { name: 'Open directly in Calendly' }).count(), 0, 'Ready scheduler should hide the direct fallback');
     const bounds = await page.locator('.booking-dialog').boundingBox();
     assert(bounds.x >= 0 && bounds.width <= page.viewportSize().width);
     const originalFrame = page.frames().find(f => f.url().startsWith('https://calendly.com/pmltechpile/30min'));
@@ -33,6 +34,7 @@ try {
     await cta.click();
     await page.locator('dialog[open]').waitFor();
     assert(page.frames().includes(originalFrame), 'Reopening should retain the loaded scheduler');
+    assert.equal(await page.getByRole('link', { name: 'Open directly in Calendly' }).count(), 0, 'Retained scheduler should keep the fallback hidden');
     await page.keyboard.press('Escape');
     await page.locator('dialog[open]').waitFor({ state: 'hidden' });
     assert.deepEqual(errors, []);
