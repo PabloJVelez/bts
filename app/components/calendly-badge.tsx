@@ -41,7 +41,25 @@ export function CalendlyBookingDialog() {
     window.addEventListener(PREPARE_EVENT, prepare);
     window.addEventListener(OPEN_EVENT, show);
     window.addEventListener("message", onMessage);
+    // Start after initial page load and an idle opportunity so the scheduler
+    // does not compete with critical page downloads. Intent can start sooner.
+    let idle: number | undefined;
+    let started = false;
+    const start = () => {
+      if (started) return;
+      started = true;
+      if ("requestIdleCallback" in window) {
+        idle = window.requestIdleCallback(prepare, { timeout: 1000 });
+      } else {
+        prepare();
+      }
+    };
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
+
     return () => {
+      window.removeEventListener("load", start);
+      if (idle !== undefined) window.cancelIdleCallback(idle);
       window.removeEventListener(PREPARE_EVENT, prepare);
       window.removeEventListener(OPEN_EVENT, show);
       window.removeEventListener("message", onMessage);
@@ -66,6 +84,8 @@ export function CalendlyBookingDialog() {
     <dialog
       ref={dialog}
       className="booking-dialog"
+      aria-hidden={!open}
+      inert={!open}
       aria-labelledby="booking-title"
       onClose={() => setOpen(false)}
       onClick={(event) => { if (event.target === dialog.current) dialog.current?.close(); }}
