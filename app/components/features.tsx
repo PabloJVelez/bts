@@ -9,7 +9,7 @@ import {
   Check,
 } from "lucide-react";
 import { Button } from "~/components/ui/button";
-import { openCalendlyPopup } from "~/components/calendly-badge";
+import { openCalendlyPopup, prepareCalendly } from "~/components/calendly-badge";
 import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
 import { FadeInUp, StaggerContainer, StaggerItem, HoverScale } from "~/components/motion-wrapper";
 
@@ -182,6 +182,9 @@ export function Features() {
             </p>
             <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
               <Button
+                onPointerEnter={prepareCalendly}
+                onFocus={prepareCalendly}
+                onPointerDown={prepareCalendly}
                 onClick={openCalendlyPopup}
                 className="w-full bg-primary text-primary-foreground hover:bg-accent-hover sm:w-auto"
               >

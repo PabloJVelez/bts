@@ -3,7 +3,7 @@
 import { Check } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Badge } from "~/components/ui/badge";
-import { openCalendlyPopup } from "~/components/calendly-badge";
+import { openCalendlyPopup, prepareCalendly } from "~/components/calendly-badge";
 import { FadeInUp, StaggerContainer, StaggerItem, HoverScale } from "~/components/motion-wrapper";
 
 const tiers = [
@@ -106,6 +106,9 @@ export function Pricing() {
 
                     {/* CTA Button */}
                     <Button
+                      onPointerEnter={prepareCalendly}
+                      onFocus={prepareCalendly}
+                      onPointerDown={prepareCalendly}
                       onClick={openCalendlyPopup}
                       className="mt-8 w-full bg-primary text-primary-foreground hover:bg-accent-hover"
                     >

@@ -74,3 +74,31 @@
     scroll-behavior: smooth;
   }
 }
+
+/* Native modal supplies focus containment, Escape, and focus restoration. */
+.booking-dialog {
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 16px;
+  width: min(1000px, calc(100vw - 24px));
+  max-width: none;
+  height: min(820px, calc(100dvh - 32px));
+  max-height: none;
+  background: white;
+  color: #242424;
+  overflow: hidden;
+}
+.booking-dialog::backdrop { background: rgb(0 0 0 / 65%); }
+.booking-panel { display: flex; flex-direction: column; height: 100%; }
+.booking-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 16px 20px; border-bottom: 1px solid #e5e5e5; }
+.booking-header h2 { font-weight: 600; font-size: 17px; }
+.booking-header a { display: inline-block; margin-top: 6px; font-size: 14px; text-decoration: underline; text-underline-offset: 3px; }
+.booking-header button { flex-shrink: 0; min-width: 44px; min-height: 44px; cursor: pointer; border-radius: 6px; }
+.booking-header button:focus-visible, .booking-header a:focus-visible { outline: 2px solid #242424; outline-offset: 3px; }
+.booking-status { padding: 12px 20px; font-size: 14px; background: #faf7f2; }
+.booking-frame { width: 100%; flex: 1; min-height: 0; border: 0; }
+@media (max-width: 480px) {
+  .booking-dialog { width: 100%; height: 100dvh; border-radius: 0; }
+  .booking-header { padding: 12px; }
+}

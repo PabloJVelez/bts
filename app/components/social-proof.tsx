@@ -2,7 +2,7 @@
 
 import { User } from "lucide-react";
 import { Button } from "~/components/ui/button";
-import { openCalendlyPopup } from "~/components/calendly-badge";
+import { openCalendlyPopup, prepareCalendly } from "~/components/calendly-badge";
 import { FadeInUp, StaggerContainer, StaggerItem, HoverScale } from "~/components/motion-wrapper";
 
 const personas = [
@@ -76,6 +76,9 @@ export function SocialProof() {
           <div className="mt-12 text-center">
             <p className="mb-4 text-muted-foreground">Want to see if it fits your workflow?</p>
             <Button
+              onPointerEnter={prepareCalendly}
+              onFocus={prepareCalendly}
+              onPointerDown={prepareCalendly}
               onClick={openCalendlyPopup}
               className="bg-primary px-8 text-primary-foreground hover:bg-accent-hover"
             >

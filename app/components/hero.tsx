@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "~/components/ui/button";
-import { openCalendlyPopup } from "~/components/calendly-badge";
+import { openCalendlyPopup, prepareCalendly } from "~/components/calendly-badge";
 import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
 import { FadeInUp } from "~/components/motion-wrapper";
 
@@ -35,6 +35,9 @@ export function Hero() {
             <FadeInUp delay={0.2}>
               <div className="mt-9 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
                 <Button
+                  onPointerEnter={prepareCalendly}
+                  onFocus={prepareCalendly}
+                  onPointerDown={prepareCalendly}
                   onClick={openCalendlyPopup}
                   size="lg"
                   className="bg-primary px-8 text-base text-primary-foreground shadow-sm shadow-black/5 hover:bg-accent-hover hover:shadow-md focus-visible:ring-offset-2 sm:text-lg"

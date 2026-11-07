@@ -2,7 +2,7 @@
 
 import { ExternalLink } from "lucide-react";
 import { Button } from "~/components/ui/button";
-import { openCalendlyPopup } from "~/components/calendly-badge";
+import { openCalendlyPopup, prepareCalendly } from "~/components/calendly-badge";
 import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
 import { FadeInUp } from "~/components/motion-wrapper";
 
@@ -25,6 +25,9 @@ export function FinalCTA() {
         <FadeInUp delay={0.2}>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:flex-wrap sm:items-center">
             <Button
+              onPointerEnter={prepareCalendly}
+              onFocus={prepareCalendly}
+              onPointerDown={prepareCalendly}
               onClick={openCalendlyPopup}
               size="lg"
               className="px-8 text-lg"

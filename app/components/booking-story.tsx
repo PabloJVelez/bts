@@ -14,7 +14,7 @@ import {
 } from "framer-motion";
 import { ArrowRight, CalendarDays, Clock3, FileCheck2, Link2, MessageSquare } from "lucide-react";
 import { Button } from "~/components/ui/button";
-import { openCalendlyPopup } from "~/components/calendly-badge";
+import { openCalendlyPopup, prepareCalendly } from "~/components/calendly-badge";
 import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
 
 type StoryScene = {
@@ -573,6 +573,9 @@ export function BookingStory() {
 
       <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 pb-20 sm:flex-row sm:justify-center sm:px-6 lg:px-8 lg:pb-28">
         <Button
+          onPointerEnter={prepareCalendly}
+          onFocus={prepareCalendly}
+          onPointerDown={prepareCalendly}
           onClick={openCalendlyPopup}
           className="bg-[#f2a96f] text-[#111114] hover:bg-[#e39455]"
         >

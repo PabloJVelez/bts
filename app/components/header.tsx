@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "~/components/ui/button";
-import { openCalendlyPopup } from "~/components/calendly-badge";
+import { openCalendlyPopup, prepareCalendly } from "~/components/calendly-badge";
 import { DEMO_STOREFRONT_URL } from "~/lib/demo-storefront";
 
 const navLinks = [
@@ -45,6 +45,9 @@ export function Header() {
         {/* Desktop CTA */}
         <div className="hidden md:block">
           <Button
+            onPointerEnter={prepareCalendly}
+            onFocus={prepareCalendly}
+            onPointerDown={prepareCalendly}
             onClick={openCalendlyPopup}
             className="bg-primary text-primary-foreground hover:bg-accent-hover"
           >
@@ -80,6 +83,9 @@ export function Header() {
               </a>
             ))}
             <Button
+              onPointerEnter={prepareCalendly}
+              onFocus={prepareCalendly}
+              onPointerDown={prepareCalendly}
               onClick={() => {
                 setIsOpen(false);
                 openCalendlyPopup();

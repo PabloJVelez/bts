@@ -7,7 +7,7 @@ import {
 } from "react-router";
 import type { LinksFunction, MetaFunction } from "react-router";
 import "./globals.css";
-import { CalendlyScriptLoader } from "~/components/calendly-badge";
+import { CalendlyBookingDialog } from "~/components/calendly-badge";
 
 export const links: LinksFunction = () => [
   {
@@ -15,8 +15,8 @@ export const links: LinksFunction = () => [
     href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap",
   },
   {
-    rel: "stylesheet",
-    href: "https://assets.calendly.com/assets/external/widget.css",
+    rel: "preconnect",
+    href: "https://calendly.com",
   },
 ];
 
@@ -50,7 +50,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         {children}
-        <CalendlyScriptLoader />
+        <CalendlyBookingDialog />
         <ScrollRestoration />
         <Scripts />
       </body>
